@@ -9,6 +9,7 @@ package entity;
  * @author mings
  */
 public class Interview {
+
     private String interviewID;
     private String jobPostingID;
     private String jobSeekerID;
@@ -18,5 +19,6 @@ public class Interview {
     private String mode;
     private String location;
     private String status;
-    private String score;
+    private int score;
+
 }

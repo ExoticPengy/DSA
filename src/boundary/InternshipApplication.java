@@ -17,12 +17,15 @@ import control.InterviewArrangement;
  */
 public class InternshipApplication {
 
+    private static InterviewArrangement interviewArrangement = new InterviewArrangement();
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int num = 0;
 
-        System.out.println("""
-                               +----------------------------+
+        do {
+            System.out.println("""
+                               \n+----------------------------+
                                |  Internship Application    |
                                +----------------------------+
                                |  1. Job Management         |
@@ -32,8 +35,6 @@ public class InternshipApplication {
                                |  5. Exit                   |
                                +----------------------------+
                                """);
-
-        do {
             System.out.print("Enter a choice: ");
 
             if (sc.hasNextInt()) {
@@ -47,7 +48,7 @@ public class InternshipApplication {
                     case 3:
                         break;
                     case 4:
-                        interviewArrangement.
+                        interviewArrangement.runInterviewArrangement();
                         break;
                     case 5:
                         MessageUI.displayExitMessage();
