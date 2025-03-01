@@ -4,7 +4,6 @@
  */
 package control;
 
-import boundary.InterviewArrangementUI;
 import java.util.Scanner;
 import utility.MessageUI;
 
@@ -13,37 +12,19 @@ import utility.MessageUI;
  * @author mings
  */
 public class InterviewArrangement {
-
-    private InterviewArrangementUI interviewArrangementUI;
-
-    private Scanner sc = new Scanner(System.in);
-
-    public InterviewArrangement() {
-        interviewArrangementUI = new InterviewArrangementUI();
+    public void displayStudentSchedule(){
+        
     }
-
-    public void runInterviewArrangement() {
-        int num = 0;
-
-        do {
-            interviewArrangementUI.InterviewArrangementMenu();
-            if (sc.hasNextInt()) {
-                num = sc.nextInt();
-                switch (num) {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    default:
-                        MessageUI.displayInvalidChoiceMessage();
-                        break;
-                }
-            } else {
-                MessageUI.displayInvalidCharacterMessage();
-                sc.next();
-            }
-        } while (num != 3);
+    
+    public void displayCompanySchedule(){
+        
+    }
+    
+    public void displayResult(){
+        
+    }
+    
+    public void displayInterviewResult(){
+        
     }
 }
