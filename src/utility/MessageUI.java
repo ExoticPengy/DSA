@@ -9,5 +9,15 @@ package utility;
  * @author mings
  */
 public class MessageUI {
+    public static void displayInvalidChoiceMessage(){
+        System.out.println("Invalid choice. Please enter a valid number.\n");
+    }
     
+    public static void displayInvalidCharacterMessage(){
+        System.out.println("Invalid input. Please enter a number.\n");
+    }
+    
+    public static void displayExitMessage(){
+        System.out.println("Exiting the system...");
+    }
 }
