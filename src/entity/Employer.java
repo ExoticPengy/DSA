@@ -9,5 +9,39 @@ package entity;
  * @author mings
  */
 public class Employer {
+    private int employerId;
+    private String name;
+    private String email;
+
+    public Employer(int employerId, String name, String email) {
+        this.employerId = employerId;
+        this.name = name;
+        this.email = email;
+    }
+
+    public int getEmployerId() {
+        return employerId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmployerId(int employerId) {
+        this.employerId = employerId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
     
 }
