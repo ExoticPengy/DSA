@@ -15,5 +15,12 @@ public interface DoublyLinkedListInterface<T> {
     public boolean insertPosition(T newEntry, int position);
     public T deleteFront();
     public T deleteBack();
+    public T deletePosition(int position);
+    public boolean replacePosition(T newEntry, int position);
+    public T getFront();
+    public T getBack();
+    public T getPosition(int position);
+    public int getCount();
+    public boolean contains(T entry);
     public boolean isEmpty();
 }
