@@ -7,6 +7,7 @@ package adt;
 /**
  *
  * @author MingLi
+ * @param <T>
  */
 public class DoublyLinkedList<T> implements DoublyLinkedListInterface<T> {
     private Node firstNode;
@@ -22,13 +23,13 @@ public class DoublyLinkedList<T> implements DoublyLinkedListInterface<T> {
         if (isEmpty()) {
             firstNode = newNode;
             lastNode = newNode;
-            nodeCount += 1;
+            nodeCount++;
         }
         else {
             newNode.next = firstNode;
             firstNode.previous = newNode;
             firstNode = newNode;
-            nodeCount += 1;
+            nodeCount++;
         }
         return true;
     }
@@ -42,69 +43,155 @@ public class DoublyLinkedList<T> implements DoublyLinkedListInterface<T> {
         if (isEmpty()){
             firstNode = newNode;
             lastNode = newNode;
-            nodeCount += 1;
+            nodeCount++;
         }
         else {
             newNode.previous = lastNode;
             lastNode.next = newNode;
             lastNode = newNode;
-            nodeCount += 1;
+            nodeCount++;
         }
         return true;
     }
     
     public boolean insertPosition(T newEntry, int position) {
-        if (newEntry == null) {
+        if (newEntry == null || position < 1 || position > nodeCount + 1) {
             return false;
         }
         
-        if (position > 0 && position <= nodeCount + 1) {
-            Node newNode = new Node(newEntry); 
-            
-            if(position == 1) {
-                insertFront(newEntry);
-            }
-            else if(position == nodeCount + 1) {
-                insertBack(newEntry);
-            }
-            else {
-                Node navigator = firstNode;
-            for (int i = 0; i < position; i++) {
-                navigator = navigator.next;
-            }
-            newNode.previous = navigator;
-            newNode.next = navigator.next;
-            navigator.next = newNode;
-            }
+        Node newNode = new Node(newEntry); 
+
+        if(position == 1) {
+            insertFront(newEntry);
         }
+        else if(position == nodeCount + 1) {
+            insertBack(newEntry);
+        }
+        else {
+            Node navigator = firstNode;
+        for (int i = 1; i < position; i++) {
+            navigator = navigator.next;
+        }
+        newNode.previous = navigator;
+        newNode.next = navigator.next;
+        navigator.next = newNode;
+        nodeCount++;
+        }
+        
         return true;
     }
     
     public T deleteFront() {
-        
-        if(!isEmpty()) {
-            T result = firstNode.data;
-            firstNode = firstNode.next;
-            firstNode.previous = null;
-            nodeCount--;
-            return result;
-        }
-        else {
+        if(isEmpty()) {
             return null;
         }
+        T result = firstNode.data;
+        firstNode = firstNode.next;
+        firstNode.previous = null;
+        nodeCount--;
+        return result;
     }
     
     public T deleteBack() {
-        if(!isEmpty()) {
-            T result = lastNode.data;
-            lastNode = lastNode.previous;
-            lastNode.next = null;
-            nodeCount--;
-            return result;
-        }
-        else {
+        if(isEmpty()) {
             return null;
         }
+        T result = lastNode.data;
+        lastNode = lastNode.previous;
+        lastNode.next = null;
+        nodeCount--;
+        return result;
+    }
+    
+    public T deletePosition(int position) {
+        if (isEmpty() || position < 1 || position > nodeCount) {
+            return null;
+        }
+        
+        T result;
+        if (position == 1) {
+            result = deleteFront();
+        }
+        else if (position == nodeCount) {
+            result = deleteBack();
+        }
+        else {
+            Node navigator = firstNode;
+            for (int i = 1; i < position; i++) {
+                navigator = navigator.next;
+            }
+            result = navigator.data;
+            navigator.previous.next = navigator.next;
+            navigator.next.previous = navigator.previous;
+            nodeCount--;
+        }
+        
+        return result;
+    }
+    
+    public boolean replacePosition(T newEntry, int position) {
+        if (isEmpty() || newEntry == null || position < 1 || position > nodeCount) {
+            return false;
+        }
+        
+        Node navigator = firstNode;
+        for (int i = 1; i < position; i++) {
+            navigator = navigator.next;
+        }
+        
+        Node newNode = new Node(newEntry, navigator.next, navigator.previous);
+        
+        navigator.previous.next = newNode;
+        navigator.next.previous = newNode;
+        
+        return true;
+    }
+    
+    public T getFront() {
+        return firstNode.data;
+    }
+    
+    public T getBack() {
+        return lastNode.data;
+    }
+    
+    public T getPosition(int position) {
+        if (isEmpty() || position < 1 || position > nodeCount) {
+            return null;
+        }
+        
+        T result;
+        if (position == 1) {
+            result = getFront();
+        }
+        else if (position == nodeCount) {
+            result = getBack();
+        }
+        else {
+            Node navigator = firstNode;
+            for (int i = 1; i < position; i++) {
+                navigator = navigator.next;
+            }
+            result = navigator.data;
+        }
+        return result;
+    }
+    
+    public int getCount() {
+        return nodeCount;
+    }
+    
+    public boolean contains(T entry) {
+        if (entry != null) {
+            Node navigator = firstNode;
+            while(navigator != null) {
+                if (navigator.data == entry) {
+                    return true;
+                }
+                navigator = navigator.next;
+            }
+        }
+        return false;
     }
     
     public boolean isEmpty() {
