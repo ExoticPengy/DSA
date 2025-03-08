@@ -9,17 +9,17 @@ package entity;
  * @author mings
  */
 public class Employer {
-    private int employerId;
+    private String employerId;
     private String name;
     private String email;
 
-    public Employer(int employerId, String name, String email) {
+    public Employer(String employerId, String name, String email) {
         this.employerId = employerId;
         this.name = name;
         this.email = email;
     }
 
-    public int getEmployerId() {
+    public String getEmployerId() {
         return employerId;
     }
 
@@ -31,7 +31,7 @@ public class Employer {
         return email;
     }
 
-    public void setEmployerId(int employerId) {
+    public void setEmployerId(String employerId) {
         this.employerId = employerId;
     }
 

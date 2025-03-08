@@ -4,12 +4,14 @@
  */
 package boundary;
 
+import adt.DoublyLinkedList;
 import java.util.Scanner;
 import utility.MessageUI;
 import control.JobManagement;
 import control.ApplicantManagement;
 import control.MatchingEngine;
 import control.InterviewArrangement;
+import entity.Employer;
 
 /**
  *
@@ -23,10 +25,11 @@ public class InternshipApplication {
     private static InterviewArrangement interviewArrangement = new InterviewArrangement();
 
     private static Scanner sc = new Scanner(System.in);
-    private static int num = 0;
     private static boolean isNum = true;
 
     public static void main(String[] args) {
+        int num = 0;
+
         do {
             if (isNum) {
                 System.out.println("""
@@ -50,10 +53,12 @@ public class InternshipApplication {
 
                 switch (num) {
                     case 1:
-                        studentMenu();
+                        studentNameMenu();
                         break;
                     case 2:
-                        companyMenu();
+                        jobManagement.runJobManagement();
+                        //num = 0;
+                        //companyNameMenu();
                         break;
                     case 3:
                         adminMenu();
@@ -74,42 +79,42 @@ public class InternshipApplication {
         } while (num != 4);
     }
 
-    public static void studentMenu() {
+    public static void studentNameMenu() {
+        int studentNameNum = 0;
+
         do {
             if (isNum) {
-            System.out.println("""
-                               \n+------------------------------+
-                               |  Student                     |
-                               +------------------------------+
-                               |  What do you want?           |
-                               |  1. Register                 |
-                               |  2. Apply Job                |
-                               |  3. View Interview Schedule  |
-                               |  4. View Result              |
-                               |                              |
-                               |  5. Exit                     |
-                               +------------------------------+
+                System.out.println("""
+                               \n+------------------------+
+                               |  Student               |
+                               +------------------------+
+                               |  What is your name?    |
+                               |  1. Name 1             |              
+                               |  2. Name 2             |
+                               |  3. Name 3             |
+                               |                        |
+                               |  4. Register           |
+                               |  5. Back to Main Menu  |
+                               +------------------------+
                                """);
             }
             System.out.print("Enter a choice: ");
 
             if (sc.hasNextInt()) {
-                num = sc.nextInt();
+                studentNameNum = sc.nextInt();
                 isNum = true;
 
-                switch (num) {
+                switch (studentNameNum) {
                     case 1:
+                        //studentMenu();
                         break;
                     case 2:
                         break;
                     case 3:
-                        interviewArrangement.displayStudentSchedule();
                         break;
                     case 4:
-                        interviewArrangement.displayResult();
                         break;
                     case 5:
-                        MessageUI.displayExitMessage();
                         break;
                     default:
                         isNum = false;
@@ -121,15 +126,112 @@ public class InternshipApplication {
                 MessageUI.displayInvalidCharacterMessage();
                 sc.next();
             }
-        } while (num != 5);
+        } while (studentNameNum != 5);
     }
 
-    public static void companyMenu() {
+    public static void studentMenu(String name) {
+        int studentNum = 0;
+
         do {
             if (isNum) {
-            System.out.println("""
+                System.out.println("""
+                               \n+------------------------+
+                               |  Name                  |
+                               +------------------------+
+                               |  What do you want?     |
+                               |  1. Apply Job          |              
+                               |  2. View Schedule      |
+                               |  3. View Result        |
+                               |                        |
+                               |  4. Register           |
+                               |  5. Previous Page      |
+                               +------------------------+
+                               """);
+            }
+            System.out.print("Enter a choice: ");
+
+            if (sc.hasNextInt()) {
+                studentNum = sc.nextInt();
+                isNum = true;
+
+                switch (studentNum) {
+                    case 1:
+                        break;
+                    case 2:
+                        //interviewArrangement.displayStudentSchedule();
+                        break;
+                    case 3:
+                        //interviewArrangement.displayResult();
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    default:
+                        isNum = false;
+                        MessageUI.displayInvalidChoiceMessage();
+                        break;
+                }
+            } else {
+                isNum = false;
+                MessageUI.displayInvalidCharacterMessage();
+                sc.next();
+            }
+        } while (studentNum != 5);
+    }
+
+    public static void companyNameMenu(DoublyLinkedList<Employer> employerList) {
+        int companyNameNum = 0;
+
+        do {
+            if (isNum) {
+                int i;
+
+                System.out.println("\n+-------------------------+");
+                System.out.println("|  Company                |");
+                System.out.println("+-------------------------+");
+                System.out.println("|  What is your company?  |");
+                for (i = 1; i <= employerList.getCount(); i++) {
+                    System.out.printf("|  %d. %-13s       |\n", i, employerList.getPosition(i).getName());
+                }
+                System.out.println("|                         |");
+                System.out.println("|  " + i++ + ". Back to Main Menu   |");
+                System.out.println("+-------------------------+");
+            }
+            System.out.print("Enter a choice: ");
+
+            if (sc.hasNextInt()) {
+                companyNameNum = sc.nextInt();
+                isNum = true;
+
+                switch (companyNameNum) {
+                    default:
+                        if (companyNameNum >= 1 && companyNameNum <= employerList.getCount()) {
+                            companyMenu(employerList.getPosition(companyNameNum).getName());
+                        } else if (companyNameNum == employerList.getCount() + 1) {
+
+                        } else {
+                            isNum = false;
+                            MessageUI.displayInvalidChoiceMessage();
+                        }
+                        break;
+                }
+            } else {
+                isNum = false;
+                MessageUI.displayInvalidCharacterMessage();
+                sc.next();
+            }
+        } while (companyNameNum != employerList.getCount() + 1);
+    }
+
+    public static void companyMenu(String name) {
+        int companyNum = 0;
+
+        do {
+            if (isNum) {
+                System.out.println("""
                                \n+-------------------------------------+
-                               |  Company                            |
+                               |  CompanyName                        |
                                +-------------------------------------+
                                |  What do you want?                  |
                                |  1. Create Job Posting              |
@@ -138,17 +240,18 @@ public class InternshipApplication {
                                |  4. View Interview Schedule         |
                                |  5. View Interview Result           |
                                |                                     |
-                               |  6. Exit                            |
+                               |  6. Previous Page                   |
                                +-------------------------------------+
                                """);
             }
+            System.out.print(name);
             System.out.print("Enter a choice: ");
 
             if (sc.hasNextInt()) {
-                num = sc.nextInt();
+                companyNum = sc.nextInt();
                 isNum = true;
 
-                switch (num) {
+                switch (companyNum) {
                     case 1:
                         break;
                     case 2:
@@ -162,7 +265,6 @@ public class InternshipApplication {
                         interviewArrangement.displayInterviewResult();
                         break;
                     case 6:
-                        MessageUI.displayExitMessage();
                         break;
                     default:
                         isNum = false;
@@ -174,35 +276,37 @@ public class InternshipApplication {
                 MessageUI.displayInvalidCharacterMessage();
                 sc.next();
             }
-        } while (num != 6);
+        } while (companyNum != 6);
     }
 
     public static void adminMenu() {
+        int adminNum = 0;
+
         do {
             if (isNum) {
-            System.out.println("""
+                System.out.println("""
                                \n+-------------------------------------+
                                |  Admin                              |
                                +-------------------------------------+
                                |  What do you want?                  |
                                |  1. Update / Remove Job Posting     |
-                               |  2. Update / Remove Applicant       |
+                               |  2. Update / Remove Job Seeker      |
                                |  3. Job Posting Report              |
                                |  4. Applicant Report                |
                                |  5. Match Report                    |
-                               |  6. Interview and Candidate Report  |
+                               |  6. Interview Report                |
                                |                                     |
-                               |  7. Exit                            |
+                               |  7. Back to Main Menu               |
                                +-------------------------------------+
                                """);
             }
             System.out.print("Enter a choice: ");
 
             if (sc.hasNextInt()) {
-                num = sc.nextInt();
+                adminNum = sc.nextInt();
                 isNum = true;
 
-                switch (num) {
+                switch (adminNum) {
                     case 1:
                         break;
                     case 2:
@@ -216,7 +320,6 @@ public class InternshipApplication {
                     case 6:
                         break;
                     case 7:
-                        MessageUI.displayExitMessage();
                         break;
                     default:
                         isNum = false;
@@ -228,6 +331,6 @@ public class InternshipApplication {
                 MessageUI.displayInvalidCharacterMessage();
                 sc.next();
             }
-        } while (num != 7);
+        } while (adminNum != 7);
     }
 }
