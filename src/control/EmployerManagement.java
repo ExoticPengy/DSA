@@ -6,24 +6,24 @@ package control;
 
 import adt.DoublyLinkedList;
 import boundary.InternshipApplication;
-import dao.EmployerDao;
+import dao.EmployerInitializer;
 
 /**
  *
  * @author Taruc
  */
 public class EmployerManagement {
-    private EmployerDao employerDao;
+    private EmployerInitializer employerInitializer;
     private DoublyLinkedList<entity.Employer> employerList;
     private InternshipApplication internshipApplication;
     
     public EmployerManagement(){
-        employerDao = new EmployerDao();
+        employerInitializer = new EmployerInitializer();
         employerList = new DoublyLinkedList<>();
     }
     
     public void runEmployerManagement(){
-        employerList = employerDao.getEmployer();
+        employerList = employerInitializer.getEmployer();
         
         internshipApplication.companyNameMenu(employerList);
     }

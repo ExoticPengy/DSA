@@ -11,11 +11,13 @@ package entity;
 public class Employer {
     private String employerId;
     private String name;
+    private String location;
     private String email;
 
-    public Employer(String employerId, String name, String email) {
+    public Employer(String employerId, String name, String location, String email) {
         this.employerId = employerId;
         this.name = name;
+        this.location = location;
         this.email = email;
     }
 
@@ -25,6 +27,10 @@ public class Employer {
 
     public String getName() {
         return name;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public String getEmail() {
@@ -39,9 +45,13 @@ public class Employer {
         this.name = name;
     }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     
 }
