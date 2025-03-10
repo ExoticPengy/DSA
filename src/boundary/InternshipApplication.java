@@ -11,6 +11,7 @@ import control.JobManagement;
 import control.ApplicantManagement;
 import control.MatchingEngine;
 import control.InterviewArrangement;
+import control.EmployerManagement;
 import entity.Employer;
 
 /**
@@ -23,6 +24,7 @@ public class InternshipApplication {
     private static ApplicantManagement applicantManagement = new ApplicantManagement();
     private static MatchingEngine matchingEngine = new MatchingEngine();
     private static InterviewArrangement interviewArrangement = new InterviewArrangement();
+    private static EmployerManagement employerManagement = new EmployerManagement();
 
     private static Scanner sc = new Scanner(System.in);
     private static boolean isNum = true;
@@ -56,9 +58,7 @@ public class InternshipApplication {
                         studentNameMenu();
                         break;
                     case 2:
-                        jobManagement.runJobManagement();
-                        //num = 0;
-                        //companyNameMenu();
+                        employerManagement.runEmployerManagement();
                         break;
                     case 3:
                         adminMenu();
@@ -229,22 +229,21 @@ public class InternshipApplication {
 
         do {
             if (isNum) {
+                System.out.println("\n+-------------------------------------+");
+                System.out.printf("|  %-10s                         |\n",name);
                 System.out.println("""
-                               \n+-------------------------------------+
-                               |  CompanyName                        |
                                +-------------------------------------+
                                |  What do you want?                  |
                                |  1. Create Job Posting              |
                                |  2. View Job Applicant              |
                                |  3. Select Candidate for Interview  |
-                               |  4. View Interview Schedule         |
-                               |  5. View Interview Result           |
+                               |  4. View Schedule                   |
+                               |  5. View Result                     |
                                |                                     |
                                |  6. Previous Page                   |
                                +-------------------------------------+
                                """);
             }
-            System.out.print(name);
             System.out.print("Enter a choice: ");
 
             if (sc.hasNextInt()) {
