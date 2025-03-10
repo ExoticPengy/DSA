@@ -12,16 +12,14 @@ public class JobPosting {
     private int jobId;
     private String title;
     private String description;
-    private Skill skills; //Need to use adt
     private String location;
     private String jobType;
     private double salaryRange;
 
-    public JobPosting(int jobId, String title, String description, Skill skills, String location, String jobType, double salaryRange) {
+    public JobPosting(int jobId, String title, String description, String location, String jobType, double salaryRange) {
         this.jobId = jobId;
         this.title = title;
         this.description = description;
-        this.skills = skills;
         this.location = location;
         this.jobType = jobType;
         this.salaryRange = salaryRange;
@@ -37,10 +35,6 @@ public class JobPosting {
 
     public String getDescription() {
         return description;
-    }
-
-    public Skill getSkills() {
-        return skills;
     }
 
     public String getLocation() {
@@ -67,10 +61,6 @@ public class JobPosting {
         this.description = description;
     }
 
-    public void setSkills(Skill skills) {
-        this.skills = skills;
-    }
-
     public void setLocation(String location) {
         this.location = location;
     }
@@ -82,7 +72,4 @@ public class JobPosting {
     public void setSalaryRange(double salaryRange) {
         this.salaryRange = salaryRange;
     }
-
-    
-    
 }

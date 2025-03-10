@@ -4,6 +4,7 @@
  */
 package control;
 
+import boundary.InternshipApplication;
 import java.util.Scanner;
 import utility.MessageUI;
 
@@ -11,7 +12,7 @@ import utility.MessageUI;
  *
  * @author mings
  */
-public class InterviewArrangement {
+public class InterviewArrangement {    
     public void displayStudentSchedule(){
         
     }

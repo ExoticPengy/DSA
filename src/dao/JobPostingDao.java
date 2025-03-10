@@ -6,8 +6,8 @@ package dao;
 
 /**
  *
- * @author mings
+ * @author Taruc
  */
-public class EmployerInitializer {
+public class JobPostingDao {
     
 }
