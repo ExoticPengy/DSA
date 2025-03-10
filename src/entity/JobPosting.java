@@ -4,29 +4,37 @@
  */
 package entity;
 
+import adt.DoublyLinkedList;
+
 /**
  *
  * 
  */
 public class JobPosting {
-    private int jobId;
+    private String jobID;
+    private String employerID;
     private String title;
     private String description;
-    private String location;
-    private String jobType;
-    private double salaryRange;
+    private String salaryRange;
+    private String qualification;
+    private Skill skillScore;
 
-    public JobPosting(int jobId, String title, String description, String location, String jobType, double salaryRange) {
-        this.jobId = jobId;
+    public JobPosting(String jobID, String employerID, String title, String description, String salaryRange, String qualification, Skill skillScore) {
+        this.jobID = jobID;
+        this.employerID = employerID;
         this.title = title;
         this.description = description;
-        this.location = location;
-        this.jobType = jobType;
         this.salaryRange = salaryRange;
+        this.qualification = qualification;
+        this.skillScore = skillScore;
     }
 
-    public int getJobId() {
-        return jobId;
+    public String getJobID() {
+        return jobID;
+    }
+
+    public String getEmployerID() {
+        return employerID;
     }
 
     public String getTitle() {
@@ -37,20 +45,24 @@ public class JobPosting {
         return description;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public String getJobType() {
-        return jobType;
-    }
-
-    public double getSalaryRange() {
+    public String getSalaryRange() {
         return salaryRange;
     }
 
-    public void setJobId(int jobId) {
-        this.jobId = jobId;
+    public String getQualification() {
+        return qualification;
+    }
+
+    public Skill getSkillScore() {
+        return skillScore;
+    }
+
+    public void setJobID(String jobID) {
+        this.jobID = jobID;
+    }
+
+    public void setEmployerID(String employerID) {
+        this.employerID = employerID;
     }
 
     public void setTitle(String title) {
@@ -61,15 +73,17 @@ public class JobPosting {
         this.description = description;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setJobType(String jobType) {
-        this.jobType = jobType;
-    }
-
-    public void setSalaryRange(double salaryRange) {
+    public void setSalaryRange(String salaryRange) {
         this.salaryRange = salaryRange;
     }
+
+    public void setQualification(String qualification) {
+        this.qualification = qualification;
+    }
+
+    public void setSkillScore(Skill skillScore) {
+        this.skillScore = skillScore;
+    }
+    
+    
 }

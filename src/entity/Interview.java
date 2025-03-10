@@ -9,15 +9,12 @@ package entity;
  * @author mings
  */
 public class Interview {
-
     private String interviewID;
     private String jobPostingID;
     private String jobSeekerID;
     private String employerID;
     private String date;
     private String time;
-    private String mode;
-    private String location;
     private String status;
     private int score;
 

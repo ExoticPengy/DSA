@@ -11,18 +11,19 @@ import entity.Employer;
  *
  * @author mings
  */
-public class EmployerDao {
-    public DoublyLinkedList<Employer> getEmployer(){
+public class EmployerInitializer {
+
+    public DoublyLinkedList<Employer> getEmployer() {
         DoublyLinkedList<Employer> employerList = new DoublyLinkedList<>();
-        
-        Employer employer1 = new Employer("E001", "Macrosoft", "macrobecausenotmicrosoft@gmail.com");
-        Employer employer2 = new Employer("E002", "Amazoff", "amazoffbecausenoton@gmail.com");
-        Employer employer3 = new Employer("E003", "Mayblank", "mayblankbecausenomoney@gmail.com");
-        
+
+        Employer employer1 = new Employer("E001", "Macrosoft", "No.288, Jalan Damansara, 47800, Petaling Jaya, Selangor", "macrobecausenotmicrosoft@gmail.com");
+        Employer employer2 = new Employer("E002", "Amazoff", "No.42, Jalan KL 3, 53000, Kuala Lumpur", "amazoffbecausenoton@gmail.com");
+        Employer employer3 = new Employer("E003", "Mayblank", "No.1, Jalan Puchong, 47100, Puchong, Selangor", "mayblankbecausenomoney@gmail.com");
+
         employerList.insertBack(employer1);
         employerList.insertBack(employer2);
         employerList.insertBack(employer3);
-        
+
         return employerList;
     }
 }
