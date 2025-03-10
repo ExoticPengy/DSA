@@ -13,6 +13,9 @@ public interface DoublyLinkedListInterface<T> {
     public boolean insertFront(T newEntry);
     public boolean insertBack(T newEntry);
     public boolean insertPosition(T newEntry, int position);
+    public boolean insertUniqueFront(T newEntry);
+    public boolean insertUniqueBack(T newEntry);
+    public boolean insertUniquePosition(T newEntry, int position);
     public T deleteFront();
     public T deleteBack();
     public T deletePosition(int position);
