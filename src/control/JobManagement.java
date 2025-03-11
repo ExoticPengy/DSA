@@ -5,6 +5,7 @@
 package control;
 
 import adt.DoublyLinkedListInterface;
+import entity.JobPosting;
 import entity.Skill;
 import java.util.Scanner;
 
@@ -18,18 +19,18 @@ public class JobManagement {
     private JobManagement jobManagement;
     
      private void createJobPosting() {
+        System.out.print("Enter Job ID: ");
+        String jobID = scanner.nextLine();
+        System.out.print("Enter Employer ID: ");
+        String employerID = scanner.nextLine();
         System.out.print("Enter Job Title: ");
         String title = scanner.nextLine();
-        System.out.print("Enter Company Name: ");
-        String company = scanner.nextLine();
-        System.out.print("Enter Location: ");
-        String location = scanner.nextLine();
         System.out.print("Enter Job Description: ");
         String description = scanner.nextLine();
-        System.out.print("Enter Employment Type: ");
-        String type = scanner.nextLine();
-        System.out.print("Enter Salary: ");
-        double salary = scanner.nextDouble();
+        System.out.print("Enter Salary Range: ");
+        String salaryRange = scanner.nextLine();
+        System.out.print("Enter Qualification: ");
+        double qualification = scanner.nextDouble();
         scanner.nextLine(); // Consume newline
         System.out.print("Enter Required Skills (comma-separated): ");
         String[] skills = scanner.nextLine().split(",");
@@ -39,7 +40,7 @@ public class JobManagement {
         String deadline = scanner.nextLine();
 
         JobPosting job = new JobPosting(jobID, employerID, title, description, salaryRange, qualification, skills);
-        jobManagement.createJobPosting(job);
+        jobPosting.createJobPosting(job);
         System.out.println("Job posting created successfully!");
     }
 }
