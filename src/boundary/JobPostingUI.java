@@ -55,7 +55,7 @@ public class JobPostingUI {
                     //filterByLocation();
                     break;
                 case 6:
-                    //jobManagement.viewAllJobs(); // View all job postings
+                    jobManagement.viewAllJobs(); 
                     break;
                 case 7:
                     System.out.println("Exiting...");
@@ -66,6 +66,14 @@ public class JobPostingUI {
             }
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
 }
     
     
@@ -82,4 +90,4 @@ public class JobPostingUI {
     
     
     
-}
+

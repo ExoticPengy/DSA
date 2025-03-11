@@ -4,6 +4,7 @@
  */
 package control;
 
+import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
 import entity.JobPosting;
 import entity.Skill;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author mings
+ * @author 
  */
 public class JobManagement {
     private Scanner scanner = new Scanner(System.in);
@@ -22,7 +23,6 @@ public class JobManagement {
         this.jobPostings = jobPostings;
     }
 
-    // Method to create a job posting
     public void createJobPosting() {
         System.out.print("Enter Job ID: ");
         String jobID = scanner.nextLine();
@@ -36,41 +36,53 @@ public class JobManagement {
         String salaryRange = scanner.nextLine();
         System.out.print("Enter Qualification: ");
         String qualification = scanner.nextLine();
+
+        // Prompt for required skills
         System.out.print("What is the skill required?\n"
-                + "1. Communication \n2. Leadership \n3. Programming \n4. Analysis");
-        String skillName ;
-        switch(scanner.nextInt()) {
+                + "1. Communication \n2. Leadership \n3. Programming \n4. Analysis\n"
+                + "Enter your choice: ");
+        int skillChoice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        String skillName;
+        switch (skillChoice) {
             case 1:
-                    skillName = "Communication";
+                skillName = "Communication";
                 break;
             case 2:
-                    skillName = "Leadership";
+                skillName = "Leadership";
                 break;
             case 3:
-                    skillName = "Programming";
+                skillName = "Programming";
                 break;
             case 4:
-                    
+                skillName = "Analysis";
                 break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
         }
+        
 
+        // Create a list of required skills
+        DoublyLinkedListInterface<Skill> skills = new DoublyLinkedList<>();
+        skills.insertBack(new Skill(skillName, proficiency)); // Add the selected skill
 
         // Create a new JobPosting object
         JobPosting job = new JobPosting(jobID, employerID, title, description, salaryRange, qualification, skills);
 
         // Add the job posting to the list
-        jobPostings.add(job);
+        jobPostings.insertUniqueBack(job);
         System.out.println("Job posting created successfully!");
     }
 
-    // Method to display all job postings
+    //display all job postings
     public void viewAllJobs() {
         if (jobPostings.isEmpty()) {
             System.out.println("No job postings available.");
         } else {
             System.out.println("\nAll Job Postings:");
-            for (int i = 0; i < jobPostings.size(); i++) {
-                JobPosting job = jobPostings.get(i);
+            for (int i = 1; i <= jobPostings.getCount(); i++) { // Use getCount for size
+                JobPosting job = jobPostings.getPosition(i); // Use getPosition to retrieve job postings
                 System.out.println("Job ID: " + job.getJobID());
                 System.out.println("Title: " + job.getTitle());
                 System.out.println("Description: " + job.getDescription());
