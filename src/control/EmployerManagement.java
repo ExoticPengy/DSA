@@ -12,7 +12,7 @@ import entity.Employer;
 
 /**
  *
- * @author Taruc
+ * @author Chea Ming Shen
  */
 public class EmployerManagement {
     private EmployerInitializer employerInitializer;
