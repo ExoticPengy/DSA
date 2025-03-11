@@ -4,82 +4,76 @@
  */
 package entity;
 
+import adt.DoublyLinkedListInterface;
+
 /**
  *
  * @author mings
  */
 public class Interview {
     private String jobPostingID;
-    private String jobSeekerID;     //direct interview list of jobseeker
-    private String employerID;
-    private String date;
-    private String time;
-    private String status;
-    private int score;
+    private DoublyLinkedListInterface<JobSeeker> jobSeekerList;
+    private DoublyLinkedListInterface<String> dateList;
+    private DoublyLinkedListInterface<Integer> timeList;
+    private DoublyLinkedListInterface<String> statusList;       //scheduled, rejected, hired
+    private DoublyLinkedListInterface<Integer> scoreList;
 
-    public Interview(String jobPostingID, String jobSeekerID, String employerID, String date, String time, String status, int score) {
+    public Interview(String jobPostingID, DoublyLinkedListInterface<JobSeeker> jobSeekerList, DoublyLinkedListInterface<String> dateList, DoublyLinkedListInterface<Integer> timeList, DoublyLinkedListInterface<String> statusList, DoublyLinkedListInterface<Integer> scoreList) {
         this.jobPostingID = jobPostingID;
-        this.jobSeekerID = jobSeekerID;
-        this.employerID = employerID;
-        this.date = date;
-        this.time = time;
-        this.status = status;
-        this.score = score;
+        this.jobSeekerList = jobSeekerList;
+        this.dateList = dateList;
+        this.timeList = timeList;
+        this.statusList = statusList;
+        this.scoreList = scoreList;
     }
 
     public String getJobPostingID() {
         return jobPostingID;
     }
 
-    public String getJobSeekerID() {
-        return jobSeekerID;
-    }
-
-    public String getEmployerID() {
-        return employerID;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
     public void setJobPostingID(String jobPostingID) {
         this.jobPostingID = jobPostingID;
     }
 
-    public void setJobSeekerID(String jobSeekerID) {
-        this.jobSeekerID = jobSeekerID;
+    public DoublyLinkedListInterface<JobSeeker> getJobSeekerList() {
+        return jobSeekerList;
     }
 
-    public void setEmployerID(String employerID) {
-        this.employerID = employerID;
+    public void setJobSeekerList(DoublyLinkedListInterface<JobSeeker> jobSeekerList) {
+        this.jobSeekerList = jobSeekerList;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public DoublyLinkedListInterface<String> getDateList() {
+        return dateList;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDateList(DoublyLinkedListInterface<String> dateList) {
+        this.dateList = dateList;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public DoublyLinkedListInterface<Integer> getTimeList() {
+        return timeList;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setTimeList(DoublyLinkedListInterface<Integer> timeList) {
+        this.timeList = timeList;
     }
+
+    public DoublyLinkedListInterface<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(DoublyLinkedListInterface<String> statusList) {
+        this.statusList = statusList;
+    }
+
+    public DoublyLinkedListInterface<Integer> getScoreList() {
+        return scoreList;
+    }
+
+    public void setScoreList(DoublyLinkedListInterface<Integer> scoreList) {
+        this.scoreList = scoreList;
+    }
+
+    
 }

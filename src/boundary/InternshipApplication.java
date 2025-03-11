@@ -13,10 +13,11 @@ import control.MatchingEngine;
 import control.InterviewArrangement;
 import control.EmployerManagement;
 import entity.Employer;
+import entity.JobSeeker;
 
 /**
  *
- * @author mings
+ * @author Chea Ming Shen
  */
 public class InternshipApplication {
 
@@ -54,7 +55,7 @@ public class InternshipApplication {
 
                 switch (num) {
                     case 1:
-                        studentNameMenu();
+                        applicantManagement.runApplicantManagement();
                         break;
                     case 2:
                         employerManagement.runEmployerManagement();
@@ -78,23 +79,23 @@ public class InternshipApplication {
         } while (num != 4);
     }
 
-    public static void studentNameMenu() {
+    public static void studentNameMenu(DoublyLinkedListInterface<JobSeeker> jobSeekerList) {
         int studentNameNum = 0;
 
         do {
             if (isNum) {
-                System.out.println("\n"
-                        + "+------------------------+\n"
-                        + "|  Student               |\n"
-                        + "+------------------------+\n"
-                        + "|  What is your name?    |\n"
-                        + "|  1. Name 1             |\n"
-                        + "|  2. Name 2             |\n"
-                        + "|  3. Name 3             |\n"
-                        + "|                        |\n"
-                        + "|  4. Register           |\n"
-                        + "|  5. Back to Main Menu  |\n"
-                        + "+------------------------+\n");
+                int i;
+                System.out.println("\n+------------------------+");
+                System.out.println("|  Student               |");
+                System.out.println("+------------------------+");
+                System.out.println("|  What is your name?    |");
+                for (i = 1; i <= jobSeekerList.getCount(); i++) {
+                    System.out.printf("|  %d. %-12s       |\n", i, jobSeekerList.getPosition(i).getName());
+                }
+                System.out.println("|                        |");
+                System.out.println("|  " + i++ + ". Register           |");
+                System.out.println("|  " + i++ + ". Back to Main Menu  |");
+                System.out.println("+------------------------+\n");
             }
             System.out.print("Enter a choice: ");
 
@@ -103,20 +104,17 @@ public class InternshipApplication {
                 isNum = true;
 
                 switch (studentNameNum) {
-                    case 1:
-                        //studentMenu();
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
                     default:
-                        isNum = false;
-                        MessageUI.displayInvalidChoiceMessage();
+                        if (studentNameNum >= 1 && studentNameNum <= jobSeekerList.getCount()) {
+                            studentMenu(jobSeekerList.getPosition(studentNameNum).getName());
+                        } else if (studentNameNum == jobSeekerList.getCount() + 1) {
+                            //applicant management create profile
+                        } else if (studentNameNum == jobSeekerList.getCount() + 2) {
+
+                        } else {
+                            isNum = false;
+                            MessageUI.displayInvalidChoiceMessage();
+                        }
                         break;
                 }
             } else {
@@ -124,7 +122,7 @@ public class InternshipApplication {
                 MessageUI.displayInvalidCharacterMessage();
                 sc.next();
             }
-        } while (studentNameNum != 5);
+        } while (studentNameNum != jobSeekerList.getCount() + 2);
     }
 
     public static void studentMenu(String name) {
@@ -132,18 +130,16 @@ public class InternshipApplication {
 
         do {
             if (isNum) {
-                System.out.println("\n"
-                        + "+------------------------+\n"
-                        + "|  Name                  |\n"
-                        + "+------------------------+\n"
-                        + "|  What do you want?     |\n"
-                        + "|  1. Apply Job          |\n"
-                        + "|  2. View Schedule      |\n"
-                        + "|  3. View Result        |\n"
-                        + "|                        |\n"
-                        + "|  4. Register           |\n"
-                        + "|  5. Previous Page      |\n"
-                        + "+------------------------+\n");
+                System.out.println("\n+------------------------+");
+                System.out.printf("|  %-15s       |\n", name);
+                System.out.println("+------------------------+");
+                System.out.println("|  What do you want?     |");
+                System.out.println("|  1. Apply Job          |");
+                System.out.println("|  2. View Schedule      |");
+                System.out.println("|  3. View Result        |");
+                System.out.println("|                        |");
+                System.out.println("|  4. Previous Page      |");
+                System.out.println("+------------------------+\n");
             }
             System.out.print("Enter a choice: ");
 
@@ -153,16 +149,15 @@ public class InternshipApplication {
 
                 switch (studentNum) {
                     case 1:
+                        //job management module
                         break;
                     case 2:
-                        //interviewArrangement.displayStudentSchedule();
+                        interviewArrangement.displayStudentSchedule(name);
                         break;
                     case 3:
-                        //interviewArrangement.displayResult();
+                        interviewArrangement.displayResult(name);
                         break;
                     case 4:
-                        break;
-                    case 5:
                         break;
                     default:
                         isNum = false;
@@ -174,7 +169,7 @@ public class InternshipApplication {
                 MessageUI.displayInvalidCharacterMessage();
                 sc.next();
             }
-        } while (studentNum != 5);
+        } while (studentNum != 4);
     }
 
     public static void companyNameMenu(DoublyLinkedListInterface<Employer> employerList) {
@@ -247,16 +242,19 @@ public class InternshipApplication {
 
                 switch (companyNum) {
                     case 1:
+                        //job management module
                         break;
                     case 2:
+                        //applicant management module
                         break;
                     case 3:
+                        //matching engine module
                         break;
                     case 4:
-                        interviewArrangement.displayCompanySchedule();
+                        interviewArrangement.displayCompanySchedule(name);
                         break;
                     case 5:
-                        interviewArrangement.displayInterviewResult();
+                        interviewArrangement.displayInterviewResult(name);
                         break;
                     case 6:
                         break;
@@ -301,16 +299,22 @@ public class InternshipApplication {
 
                 switch (adminNum) {
                     case 1:
+                        //job management module
                         break;
                     case 2:
+                        //applicant management module
                         break;
                     case 3:
+                        //job management module
                         break;
                     case 4:
+                        //applicant management module
                         break;
                     case 5:
+                        //matching engine module
                         break;
                     case 6:
+                        interviewArrangement.displayInterviewReport();
                         break;
                     case 7:
                         break;
