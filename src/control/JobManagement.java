@@ -4,6 +4,8 @@
  */
 package control;
 
+import adt.DoublyLinkedListInterface;
+import entity.Skill;
 import java.util.Scanner;
 
 
@@ -36,7 +38,7 @@ public class JobManagement {
         System.out.print("Enter Application Deadline: ");
         String deadline = scanner.nextLine();
 
-        JobPosting job = new JobPosting(title, company, location, description, type, salary, skills, benefits, deadline);
+        JobPosting job = new JobPosting(jobID, employerID, title, description, salaryRange, qualification, skills);
         jobManagement.createJobPosting(job);
         System.out.println("Job posting created successfully!");
     }
