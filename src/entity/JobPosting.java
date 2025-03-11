@@ -5,6 +5,7 @@
 package entity;
 
 import adt.DoublyLinkedList;
+import adt.DoublyLinkedListInterface;
 
 /**
  *
@@ -17,16 +18,16 @@ public class JobPosting {
     private String description;
     private String salaryRange;
     private String qualification;
-    private Skill skillScore;
+    private DoublyLinkedListInterface<Skill> skills;
 
-    public JobPosting(String jobID, String employerID, String title, String description, String salaryRange, String qualification, Skill skillScore) {
+    public JobPosting(String jobID, String employerID, String title, String description, String salaryRange, String qualification, DoublyLinkedListInterface<Skill> skills) {
         this.jobID = jobID;
         this.employerID = employerID;
         this.title = title;
         this.description = description;
         this.salaryRange = salaryRange;
         this.qualification = qualification;
-        this.skillScore = skillScore;
+        this.skills = skills;
     }
 
     public String getJobID() {
@@ -53,8 +54,8 @@ public class JobPosting {
         return qualification;
     }
 
-    public Skill getSkillScore() {
-        return skillScore;
+    public DoublyLinkedListInterface<Skill> getSkills() {
+        return skills;
     }
 
     public void setJobID(String jobID) {
@@ -81,9 +82,9 @@ public class JobPosting {
         this.qualification = qualification;
     }
 
-    public void setSkillScore(Skill skillScore) {
-        this.skillScore = skillScore;
+    public void setSkills(DoublyLinkedListInterface<Skill> skills) {
+        this.skills = skills;
     }
-    
+
     
 }

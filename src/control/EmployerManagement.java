@@ -5,8 +5,10 @@
 package control;
 
 import adt.DoublyLinkedList;
+import adt.DoublyLinkedListInterface;
 import boundary.InternshipApplication;
 import dao.EmployerInitializer;
+import entity.Employer;
 
 /**
  *
@@ -14,7 +16,7 @@ import dao.EmployerInitializer;
  */
 public class EmployerManagement {
     private EmployerInitializer employerInitializer;
-    private DoublyLinkedList<entity.Employer> employerList;
+    private DoublyLinkedListInterface<Employer> employerList;
     private InternshipApplication internshipApplication;
     
     public EmployerManagement(){
