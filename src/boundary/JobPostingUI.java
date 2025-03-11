@@ -6,7 +6,7 @@ package boundary;
 
 /**
  *
- * @author User
+ * @author Elaine
  */
 public class JobPostingUI {
     
