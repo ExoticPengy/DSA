@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 public class JobPostingUI {
     private JobManagement jobManagement;
-    private Scanner scanner;
+    private Scanner scanner =new Scanner(System.in);
     
     public void displayMenu() {
         while (true) {
