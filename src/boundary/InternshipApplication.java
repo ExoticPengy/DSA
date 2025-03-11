@@ -4,7 +4,7 @@
  */
 package boundary;
 
-import adt.DoublyLinkedList;
+import adt.DoublyLinkedListInterface;
 import java.util.Scanner;
 import utility.MessageUI;
 import control.JobManagement;
@@ -34,18 +34,17 @@ public class InternshipApplication {
 
         do {
             if (isNum) {
-                System.out.println("""
-                               \n+--------------------------+
-                               |  Internship Application  |
-                               +--------------------------+
-                               |  Who are you?            |
-                               |  1. Student              |
-                               |  2. Company              |
-                               |  3. Admin                |
-                               |                          |
-                               |  4. Exit                 |
-                               +--------------------------+
-                               """);
+                System.out.println("\n"
+                        + "+--------------------------+\n"
+                        + "|  Internship Application  |\n"
+                        + "+--------------------------+\n"
+                        + "|  Who are you?            |\n"
+                        + "|  1. Student              |\n"
+                        + "|  2. Company              |\n"
+                        + "|  3. Admin                |\n"
+                        + "|                          |\n"
+                        + "|  4. Exit                 |\n"
+                        + "+--------------------------+\n");
             }
             System.out.print("Enter a choice: ");
 
@@ -84,19 +83,18 @@ public class InternshipApplication {
 
         do {
             if (isNum) {
-                System.out.println("""
-                               \n+------------------------+
-                               |  Student               |
-                               +------------------------+
-                               |  What is your name?    |
-                               |  1. Name 1             |              
-                               |  2. Name 2             |
-                               |  3. Name 3             |
-                               |                        |
-                               |  4. Register           |
-                               |  5. Back to Main Menu  |
-                               +------------------------+
-                               """);
+                System.out.println("\n"
+                        + "+------------------------+\n"
+                        + "|  Student               |\n"
+                        + "+------------------------+\n"
+                        + "|  What is your name?    |\n"
+                        + "|  1. Name 1             |\n"
+                        + "|  2. Name 2             |\n"
+                        + "|  3. Name 3             |\n"
+                        + "|                        |\n"
+                        + "|  4. Register           |\n"
+                        + "|  5. Back to Main Menu  |\n"
+                        + "+------------------------+\n");
             }
             System.out.print("Enter a choice: ");
 
@@ -134,19 +132,18 @@ public class InternshipApplication {
 
         do {
             if (isNum) {
-                System.out.println("""
-                               \n+------------------------+
-                               |  Name                  |
-                               +------------------------+
-                               |  What do you want?     |
-                               |  1. Apply Job          |              
-                               |  2. View Schedule      |
-                               |  3. View Result        |
-                               |                        |
-                               |  4. Register           |
-                               |  5. Previous Page      |
-                               +------------------------+
-                               """);
+                System.out.println("\n"
+                        + "+------------------------+\n"
+                        + "|  Name                  |\n"
+                        + "+------------------------+\n"
+                        + "|  What do you want?     |\n"
+                        + "|  1. Apply Job          |\n"
+                        + "|  2. View Schedule      |\n"
+                        + "|  3. View Result        |\n"
+                        + "|                        |\n"
+                        + "|  4. Register           |\n"
+                        + "|  5. Previous Page      |\n"
+                        + "+------------------------+\n");
             }
             System.out.print("Enter a choice: ");
 
@@ -180,7 +177,7 @@ public class InternshipApplication {
         } while (studentNum != 5);
     }
 
-    public static void companyNameMenu(DoublyLinkedList<Employer> employerList) {
+    public static void companyNameMenu(DoublyLinkedListInterface<Employer> employerList) {
         int companyNameNum = 0;
 
         do {
@@ -230,19 +227,17 @@ public class InternshipApplication {
         do {
             if (isNum) {
                 System.out.println("\n+-------------------------------------+");
-                System.out.printf("|  %-10s                         |\n",name);
-                System.out.println("""
-                               +-------------------------------------+
-                               |  What do you want?                  |
-                               |  1. Create Job Posting              |
-                               |  2. View Job Applicant              |
-                               |  3. Select Candidate for Interview  |
-                               |  4. View Schedule                   |
-                               |  5. View Result                     |
-                               |                                     |
-                               |  6. Previous Page                   |
-                               +-------------------------------------+
-                               """);
+                System.out.printf("|  %-10s                         |\n", name);
+                System.out.println("+-------------------------------------+\n"
+                        + "|  What do you want?                  |\n"
+                        + "|  1. Create Job Posting              |\n"
+                        + "|  2. View Job Applicant              |\n"
+                        + "|  3. Select Candidate for Interview  |\n"
+                        + "|  4. View Schedule                   |\n"
+                        + "|  5. View Result                     |\n"
+                        + "|                                     |\n"
+                        + "|  6. Previous Page                   |\n"
+                        + "+-------------------------------------+\n");
             }
             System.out.print("Enter a choice: ");
 
@@ -283,21 +278,20 @@ public class InternshipApplication {
 
         do {
             if (isNum) {
-                System.out.println("""
-                               \n+-------------------------------------+
-                               |  Admin                              |
-                               +-------------------------------------+
-                               |  What do you want?                  |
-                               |  1. Update / Remove Job Posting     |
-                               |  2. Update / Remove Job Seeker      |
-                               |  3. Job Posting Report              |
-                               |  4. Applicant Report                |
-                               |  5. Match Report                    |
-                               |  6. Interview Report                |
-                               |                                     |
-                               |  7. Back to Main Menu               |
-                               +-------------------------------------+
-                               """);
+                System.out.println("\n"
+                        + "+-------------------------------------+\n"
+                        + "|  Admin                              |\n"
+                        + "+-------------------------------------+\n"
+                        + "|  What do you want?                  |\n"
+                        + "|  1. Update / Remove Job Posting     |\n"
+                        + "|  2. Update / Remove Job Seeker      |\n"
+                        + "|  3. Job Posting Report              |\n"
+                        + "|  4. Applicant Report                |\n"
+                        + "|  5. Match Report                    |\n"
+                        + "|  6. Interview Report                |\n"
+                        + "|                                     |\n"
+                        + "|  7. Back to Main Menu               |\n"
+                        + "+-------------------------------------+\n");
             }
             System.out.print("Enter a choice: ");
 

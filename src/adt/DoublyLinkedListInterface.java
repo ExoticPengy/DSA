@@ -23,4 +23,5 @@ public interface DoublyLinkedListInterface<T> {
     public int getCount();
     public boolean contains(T entry);
     public boolean isEmpty();
+    public boolean clear();
 }

@@ -5,6 +5,7 @@
 package dao;
 
 import adt.DoublyLinkedList;
+import adt.DoublyLinkedListInterface;
 import entity.JobPosting;
 import entity.Skill;
 
@@ -14,13 +15,19 @@ import entity.Skill;
  */
 public class JobPostingInitializer {
 
-    public DoublyLinkedList<JobPosting> getJobPosting() {
-        DoublyLinkedList<JobPosting> jobList = new DoublyLinkedList<>();
+    public DoublyLinkedListInterface<JobPosting> getJobPosting() {
+        DoublyLinkedListInterface<JobPosting> jobList = new DoublyLinkedList<>();
+        DoublyLinkedListInterface<Skill> skills = new DoublyLinkedList<>();
 
-        JobPosting job1 = new JobPosting("J001", "E001", "Software Engineer Internship", "Coding, Debugging, Development", "RM800-RM1000", "Diploma in Information Technology", new Skill(5,5,9,9));
+        skills.insertFront(new Skill("Programming", 9));
+        skills.insertBack(new Skill("Communication", 7));
+        jobList.insertFront(new JobPosting("J002", "E001", "Software Engineer Internship", "Coding, Debugging, Development", "RM800-RM1000", "Diploma in Information Technology", skills));
 
-        jobList.insertFront(job1);
-        
+        skills.clear();
+        skills.insertFront(new Skill("Programming", 9));
+        skills.insertBack(new Skill("Communication", 7));
+        jobList.insertFront(new JobPosting("J002", "E001", "Software Engineer Internship", "Coding, Debugging, Development", "RM800-RM1000", "Diploma in Information Technology", skills));
+
         return jobList;
     }
 }
