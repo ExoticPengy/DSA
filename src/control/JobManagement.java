@@ -6,6 +6,7 @@ package control;
 
 import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
+import dao.JobPostingInitializer;
 import entity.JobPosting;
 import entity.Skill;
 import java.util.InputMismatchException;
@@ -17,8 +18,18 @@ import java.util.Scanner;
  */
 public class JobManagement {
     private Scanner scanner = new Scanner(System.in);
-    private DoublyLinkedListInterface<JobPosting> jobPostings = new DoublyLinkedList<>(); // Store job postings
-
+    private JobPostingInitializer jobPostingInitializer;
+    private DoublyLinkedListInterface<JobPosting> jobPostings;
+    
+    public JobManagement(){
+        jobPostingInitializer = new JobPostingInitializer();
+        jobPostings = new DoublyLinkedList<>();
+    }
+    
+    public void runJobManagement() {
+        jobPostings = jobPostingInitializer.getJobPosting();
+    }
+    
     public void createJobPosting() {
         System.out.print("Enter Job ID: ");
         String jobID = scanner.nextLine();
