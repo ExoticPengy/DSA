@@ -31,6 +31,7 @@ public class JobManagement {
     }
     
     public void createJobPosting() {
+        
         System.out.print("Enter Job ID: ");
         String jobID = scanner.nextLine();
         System.out.print("Enter Employer Id: ");
@@ -110,7 +111,7 @@ public class JobManagement {
 
             skills.insertBack(new Skill(skillName, proficiency));
 
-            // Ask if user wants to add another skill
+            // add new skill
             validOption = false;
             while (!validOption) {
                 System.out.print("Add another skill?" + "\n1. Yes\n2. No\nEnter your choice: ");

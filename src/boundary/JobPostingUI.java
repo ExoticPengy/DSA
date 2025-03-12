@@ -26,21 +26,24 @@ public class JobPostingUI {
 
     public void displayMenu() {
         while (true) {
-            System.out.println("\nJob Posting Menu");
-            System.out.println("1. Create Job Posting");
-            System.out.println("2. Update Job Posting");
-            System.out.println("3. Remove Job Posting");
-            System.out.println("4. Search Jobs");
-            System.out.println("5. Filter Jobs by Location");
-            System.out.println("6. View All Jobs");
-            System.out.println("7. Exit");
+            System.out.println("+----------------------------+");
+            System.out.println("|      Job Posting Menu      |\n");
+            System.out.println("+----------------------------+\n");
+            System.out.println("| 1. Create Job Posting      |");
+            System.out.println("| 2. Update Job Posting      |");
+            System.out.println("| 3. Remove Job Posting      |");
+            System.out.println("| 4. Search Jobs             |");
+            System.out.println("| 5. Filter Jobs by Location |");
+            System.out.println("| 6. View All Jobs           |");
+            System.out.println("| 7. Exit                    |");
+            System.out.println("+----------------------------+");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
             switch (choice) {
                 case 1:
-                    jobManagement.createJobPosting(); // Call instance method
+                    jobManagement.createJobPosting(); 
                     break;
                 case 2:
                     //updateJobPosting();
@@ -65,15 +68,7 @@ public class JobPostingUI {
                     System.out.println("Invalid choice. Please try again.");
             }
         }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
+    }    
 }
     
     
