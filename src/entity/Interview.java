@@ -11,15 +11,15 @@ import adt.DoublyLinkedListInterface;
  * @author mings
  */
 public class Interview {
-    private String jobPostingID;
+    private JobPosting jobPosting;
     private DoublyLinkedListInterface<JobSeeker> jobSeekerList;
     private DoublyLinkedListInterface<String> dateList;
     private DoublyLinkedListInterface<Integer> timeList;
     private DoublyLinkedListInterface<String> statusList;       //scheduled, rejected, hired
     private DoublyLinkedListInterface<Integer> scoreList;
 
-    public Interview(String jobPostingID, DoublyLinkedListInterface<JobSeeker> jobSeekerList, DoublyLinkedListInterface<String> dateList, DoublyLinkedListInterface<Integer> timeList, DoublyLinkedListInterface<String> statusList, DoublyLinkedListInterface<Integer> scoreList) {
-        this.jobPostingID = jobPostingID;
+    public Interview(JobPosting jobPosting, DoublyLinkedListInterface<JobSeeker> jobSeekerList, DoublyLinkedListInterface<String> dateList, DoublyLinkedListInterface<Integer> timeList, DoublyLinkedListInterface<String> statusList, DoublyLinkedListInterface<Integer> scoreList) {
+        this.jobPosting = jobPosting;
         this.jobSeekerList = jobSeekerList;
         this.dateList = dateList;
         this.timeList = timeList;
@@ -27,12 +27,12 @@ public class Interview {
         this.scoreList = scoreList;
     }
 
-    public String getJobPostingID() {
-        return jobPostingID;
+    public JobPosting getJobPosting() {
+        return jobPosting;
     }
 
-    public void setJobPostingID(String jobPostingID) {
-        this.jobPostingID = jobPostingID;
+    public void setJobPosting(JobPosting jobPosting) {
+        this.jobPosting = jobPosting;
     }
 
     public DoublyLinkedListInterface<JobSeeker> getJobSeekerList() {
