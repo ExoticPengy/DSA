@@ -12,17 +12,19 @@ import adt.DoublyLinkedListInterface;
  * 
  */
 public class JobPosting {
-    private String jobID;
-    private String employerID;
+    private Employer employer;
     private String title;
     private String description;
     private String salaryRange;
     private String qualification;
     private DoublyLinkedListInterface<Skill> skills;
 
-    public JobPosting(String jobID, String employerID, String title, String description, String salaryRange, String qualification, DoublyLinkedListInterface<Skill> skills) {
-        this.jobID = jobID;
-        this.employerID = employerID;
+    public JobPosting(){
+        
+    }
+    
+    public JobPosting(Employer employer, String title, String description, String salaryRange, String qualification, DoublyLinkedListInterface<Skill> skills) {
+        this.employer = employer;
         this.title = title;
         this.description = description;
         this.salaryRange = salaryRange;
@@ -30,56 +32,48 @@ public class JobPosting {
         this.skills = skills;
     }
 
-    public String getJobID() {
-        return jobID;
+    public Employer getEmployer() {
+        return employer;
     }
 
-    public String getEmployerID() {
-        return employerID;
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getSalaryRange() {
-        return salaryRange;
-    }
-
-    public String getQualification() {
-        return qualification;
-    }
-
-    public DoublyLinkedListInterface<Skill> getSkills() {
-        return skills;
-    }
-
-    public void setJobID(String jobID) {
-        this.jobID = jobID;
-    }
-
-    public void setEmployerID(String employerID) {
-        this.employerID = employerID;
-    }
-
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public String getSalaryRange() {
+        return salaryRange;
+    }
+
     public void setSalaryRange(String salaryRange) {
         this.salaryRange = salaryRange;
     }
 
+    public String getQualification() {
+        return qualification;
+    }
+
     public void setQualification(String qualification) {
         this.qualification = qualification;
+    }
+
+    public DoublyLinkedListInterface<Skill> getSkills() {
+        return skills;
     }
 
     public void setSkills(DoublyLinkedListInterface<Skill> skills) {

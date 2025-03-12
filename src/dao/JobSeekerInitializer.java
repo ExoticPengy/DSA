@@ -21,17 +21,17 @@ public class JobSeekerInitializer {
         
         skills.insertFront(new Skill("Communication",7));
         skills.insertBack(new Skill("Programming",9));
-        applicants.insertFront(new JobSeeker("JS001", "John Doe", 22, "Male", "john@example.com", "Kuala Lumpur", "Diploma in Computer Science", skills));
+        applicants.insertFront(new JobSeeker("John Doe", 22, "Male", "john@example.com", "Kuala Lumpur", "Diploma in Computer Science", skills));
         
         skills.clear();
         skills.insertFront(new Skill("Leadership",8));
         skills.insertBack(new Skill("Analysis",3));
-        applicants.insertBack(new JobSeeker("JS002", "Sarah Lee", 19, "Female", "sarah@example.com", "Penang", "Bachelor in Business", skills));
+        applicants.insertBack(new JobSeeker("Sarah Lee", 19, "Female", "sarah@example.com", "Penang", "Bachelor in Business", skills));
         
         skills.clear();
         skills.insertFront(new Skill("Leadership",6));
         skills.insertBack(new Skill("Analysis",0));
-        applicants.insertBack(new JobSeeker("JS003", "Michael Smith", 20, "Male", "michael@example.com", "Johor Bahru", "Bachelor in Information Security", skills));
+        applicants.insertBack(new JobSeeker("Michael Smith", 20, "Male", "michael@example.com", "Johor Bahru", "Bachelor in Information Security", skills));
 //        applicants.insertBack(new JobSeeker("JS004", "Emma Brown", 29, "Female", "emma@example.com", "Kuala Lumpur", "Q004"));
 //        applicants.insertBack(new JobSeeker("JS005", "Kevin Johnson", 32, "Male", "kevin@example.com", "Subang Jaya", "Q005"));
 //        applicants.insertBack(new JobSeeker("JS006", "Lily Williams", 26, "Female", "lily@example.com", "Petaling Jaya", "Q006"));
