@@ -30,6 +30,9 @@ public class InternshipApplication {
     private static boolean isNum = true;
 
     public static void main(String[] args) {
+        jobManagement.createJobPosting();
+        jobManagement.viewAllJobs();
+        
         int num = 0;
 
         do {

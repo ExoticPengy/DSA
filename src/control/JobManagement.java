@@ -8,20 +8,16 @@ import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
 import entity.JobPosting;
 import entity.Skill;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
  *
- * @author 
+ * @author Elaine
  */
 public class JobManagement {
     private Scanner scanner = new Scanner(System.in);
-    private DoublyLinkedListInterface<JobPosting> jobPostings; // Store job postings
-
-    // Constructor to initialize jobPostings
-    public JobManagement(DoublyLinkedListInterface<JobPosting> jobPostings) {
-        this.jobPostings = jobPostings;
-    }
+    private DoublyLinkedListInterface<JobPosting> jobPostings = new DoublyLinkedList<>(); // Store job postings
 
     public void createJobPosting() {
         System.out.print("Enter Job ID: ");
@@ -37,36 +33,97 @@ public class JobManagement {
         System.out.print("Enter Qualification: ");
         String qualification = scanner.nextLine();
 
-        // Prompt for required skills
-        System.out.print("What is the skill required?\n"
-                + "1. Communication \n2. Leadership \n3. Programming \n4. Analysis\n"
-                + "Enter your choice: ");
-        int skillChoice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        boolean repeat = true;
+        boolean validOption = false;
+        int choice;
+        DoublyLinkedListInterface<Skill> skills = new DoublyLinkedList<>();
+        
+        while (repeat) {
+            String skillName = "";
+            int proficiency = 0;
+            validOption = false;
+            
+            // Prompt for required skills
+            while (!validOption) {
+                System.out.print("What is the skill required?\n"
+                        + "1. Communication \n2. Leadership \n3. Programming \n4. Analysis\n"
+                        + "Enter your choice: ");
 
-        String skillName;
-        switch (skillChoice) {
-            case 1:
-                skillName = "Communication";
-                break;
-            case 2:
-                skillName = "Leadership";
-                break;
-            case 3:
-                skillName = "Programming";
-                break;
-            case 4:
-                skillName = "Analysis";
-                break;
-            default:
-                System.out.println("Invalid choice. Please try again.");
+                try {
+                    choice = scanner.nextInt();
+                    scanner.nextLine();
+                    switch (choice) {
+                        case 1:
+                            skillName = "Communication";
+                            validOption = true;
+                            break;
+                        case 2:
+                            skillName = "Leadership";
+                            validOption = true;
+                            break;
+                        case 3:
+                            skillName = "Programming";
+                            validOption = true;
+                            break;
+                        case 4:
+                            skillName = "Analysis";
+                            validOption = true;
+                            break;
+                        default:
+                            System.out.println("Invalid choice. Please try again.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input! Please enter a number between 1-4.");
+                    scanner.nextLine();
+                }
+            }
+
+            // Get proficiency level
+            validOption = false;
+            while (!validOption) {
+                System.out.print("Enter proficiency of chosen skill (1-10): ");
+
+                try {
+                    proficiency = scanner.nextInt();
+                    scanner.nextLine();
+                    if (proficiency >= 1 && proficiency <= 10) {
+                        validOption = true;
+                    } else {
+                        System.out.println("Invalid input, please enter a number between 1-10.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input! Please enter a valid number.");
+                    scanner.nextLine(); 
+                }
+            }
+
+            skills.insertBack(new Skill(skillName, proficiency));
+
+            // Ask if user wants to add another skill
+            validOption = false;
+            while (!validOption) {
+                System.out.print("Add another skill?" + "\n1. Yes\n2. No\nEnter your choice: ");
+                try {
+                    choice = scanner.nextInt();
+                    scanner.nextLine();
+                    switch (choice) {
+                        case 1:
+                            validOption = true;
+                            break;
+                        case 2:
+                            repeat = false;
+                            validOption = true;
+                            break;
+                        default:
+                            System.out.println("Invalid option, try again.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input! Please enter 1 or 2.");
+                    scanner.nextLine(); 
+                }
+            }
         }
         
-
-        // Create a list of required skills
-        DoublyLinkedListInterface<Skill> skills = new DoublyLinkedList<>();
-        skills.insertBack(new Skill(skillName, proficiency)); // Add the selected skill
-
         // Create a new JobPosting object
         JobPosting job = new JobPosting(jobID, employerID, title, description, salaryRange, qualification, skills);
 
@@ -88,14 +145,15 @@ public class JobManagement {
                 System.out.println("Description: " + job.getDescription());
                 System.out.println("Salary Range: " + job.getSalaryRange());
                 System.out.println("Qualification: " + job.getQualification());
-                System.out.println("Skills Required: " + job.getSkills());
+                System.out.println("Skills Required: ");
+                for (int j = 1; j <= job.getSkills().getCount(); j++) {
+                    System.out.println(j + ". " + job.getSkills().getPosition(j).getName() 
+                            + ": " + job.getSkills().getPosition(j).getProficiency());
+                }
                 System.out.println("-----------------------------");
             }
         }
     }
 
-    // Method to close the scanner
-    public void closeScanner() {
-        scanner.close();
-    }
+   
 }
