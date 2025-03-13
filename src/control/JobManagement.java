@@ -149,9 +149,11 @@ public class JobManagement {
         if (jobPostings.isEmpty()) {
             System.out.println("No job postings available.");
         } else {
-            System.out.println("\nAll Job Postings:");
-            for (int i = 1; i <= jobPostings.getCount(); i++) { // Use getCount for size
-                JobPosting job = jobPostings.getPosition(i); // Use getPosition to retrieve job postings
+            System.out.println("\n+-------------------------------------------------+");
+            System.out.println("|                All Job Postings                 |");
+            System.out.println("+-------------------------------------------------+");
+            for (int i = 1; i <= jobPostings.getCount(); i++) { 
+                JobPosting job = jobPostings.getPosition(i); 
                 System.out.println("Job ID: " + job.getJobID());
                 System.out.println("Title: " + job.getTitle());
                 System.out.println("Description: " + job.getDescription());
@@ -162,7 +164,7 @@ public class JobManagement {
                     System.out.println(j + ". " + job.getSkills().getPosition(j).getName() 
                             + ": " + job.getSkills().getPosition(j).getProficiency());
                 }
-                System.out.println("-----------------------------");
+                System.out.println("--------------------------------------------------");
             }
         }
     }
