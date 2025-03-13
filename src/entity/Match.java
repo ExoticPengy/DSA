@@ -21,7 +21,7 @@ public class Match {
         this.jobPosting = jobPosting;
     }
     
-    public boolean insertMatchScore(double score, int position) {
+    public void insertMatchScore(double score, int position) {
         matchedScoreList.insertPosition(score, position);
     }
 
