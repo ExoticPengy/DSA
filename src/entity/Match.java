@@ -1,5 +1,8 @@
 package entity;
 
+import adt.DoublyLinkedList;
+import adt.DoublyLinkedListInterface;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -10,39 +13,44 @@ package entity;
  * @author USER
  */
 public class Match {
-    private JobPosting jobPosting;
     private JobSeeker jobSeeker;
-    private int matchScore;
+    private DoublyLinkedListInterface<JobPosting> jobPostingList;
+    private DoublyLinkedListInterface<Double> matchedScoreList;
 
-    public Match(JobPosting jobPosting, JobSeeker jobSeeker, int matchScore) {
-        this.jobPosting = jobPosting;
+    public Match(JobSeeker jobSeeker, DoublyLinkedListInterface<JobPosting> jobPostingList, DoublyLinkedListInterface<Double> matchedScoreList) {
         this.jobSeeker = jobSeeker;
-        this.matchScore = matchScore;
-    }
-
-    public JobPosting getJobPosting() {
-        return jobPosting;
+        this.jobPostingList = jobPostingList;
+        this.matchedScoreList = matchedScoreList;
     }
 
     public JobSeeker getJobSeeker() {
         return jobSeeker;
     }
 
-    public int getMatchScore() {
-        return matchScore;
+    public DoublyLinkedListInterface<JobPosting> getJobPostingList() {
+        return jobPostingList;
     }
 
-    public void setJobPosting(JobPosting jobPosting) {
-        this.jobPosting = jobPosting;
+    public DoublyLinkedListInterface<Double> getMatchedScoreList() {
+        return matchedScoreList;
     }
 
     public void setJobSeeker(JobSeeker jobSeeker) {
         this.jobSeeker = jobSeeker;
     }
 
-    public void setMatchScore(int matchScore) {
-        this.matchScore = matchScore;
+    public void setJobPostingList(DoublyLinkedListInterface<JobPosting> jobPostingList) {
+        this.jobPostingList = jobPostingList;
     }
-    
+
+    public void setMatchedScoreList(DoublyLinkedListInterface<Double> matchedScoreList) {
+        this.matchedScoreList = matchedScoreList;
+    }
+
+    @Override
+    public String toString() {
+        return "Match{" + "jobSeeker=" + jobSeeker + ", jobPostingList=" + jobPostingList + ", matchedScoreList=" + matchedScoreList + '}';
+    }
+
     
 }
