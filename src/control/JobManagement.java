@@ -168,6 +168,40 @@ public class JobManagement {
             }
         }
     }
+    
+    public void updatedJobPosting(){
+        if (jobPostings.isEmpty()) {
+            System.out.println("No job postings available to update.");
+        }
 
-   
+        viewAllJobs(); //print all jobs 1st
+        
+        System.out.println("Enter Job ID to update the job");
+        String jobID = scanner.nextLine();
+        
+        
+      
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+
 }
