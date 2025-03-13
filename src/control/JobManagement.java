@@ -138,6 +138,7 @@ public class JobManagement {
 
         // Add the job posting to the list
         jobPostings.insertUniqueBack(job);
+        
         System.out.println("Job posting created successfully!");
     }
 
@@ -166,39 +167,88 @@ public class JobManagement {
         }
     }
     
-    public void updatedJobPosting(){
-        if (jobPostings.isEmpty()) {
-            System.out.println("No job postings available to update.");
-        }
-
-        viewAllJobs(); //print all jobs 1st
-        
-        System.out.println("Enter Job ID to update the job");
-        String jobID = scanner.nextLine();
-        
-        
-      
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+    public void updatedJobPosting() {
+    if (jobPostings.isEmpty()) {
+        System.out.println("No job postings available to update.");
+        return;
     }
+
+    // Display a numbered list of job titles
+    System.out.println("\nList of Job Postings:");
+    for (int i = 1; i <= jobPostings.getCount(); i++) {
+        JobPosting job = jobPostings.getPosition(i);
+        System.out.println(i + ". " + job.getTitle());
+    }
+
+    // Prompt the user to select a job posting by number
+    System.out.print("Enter the number of the job posting you want to update: ");
+    int choice = scanner.nextInt();
+    scanner.nextLine(); // Clear the buffer
+
+    if (choice < 1 || choice > jobPostings.getCount()) {
+        System.out.println("Invalid choice. No changes made.");
+        return;
+    }
+
+    // Get the job posting to update
+    JobPosting jobToUpdate = jobPostings.getPosition(choice);
+
+    // Display the selected job posting
+    System.out.println("\nSelected Job Posting:");
+    System.out.println("Employer Name: " + jobToUpdate.getEmployer().getName());
+    System.out.println("Title: " + jobToUpdate.getTitle());
+    System.out.println("Description: " + jobToUpdate.getDescription());
+    System.out.println("Salary Range: " + jobToUpdate.getSalaryRange());
+    System.out.println("Qualification: " + jobToUpdate.getQualification());
+    System.out.println("Skills Required: ");
+    for (int j = 1; j <= jobToUpdate.getSkills().getCount(); j++) {
+        System.out.println(j + ". " + jobToUpdate.getSkills().getPosition(j).getName()
+                + ": " + jobToUpdate.getSkills().getPosition(j).getProficiency());
+    }
+
+    // Prompt the user to update attributes
+    System.out.println("\nWhat would you like to update?");
+    System.out.println("1. Title");
+    System.out.println("2. Description");
+    System.out.println("3. Salary Range");
+    System.out.println("4. Qualification");
+    System.out.println("5. Skills");
+    System.out.print("Enter your choice: ");
+    int updateChoice = scanner.nextInt();
+    scanner.nextLine(); // Clear the buffer
+
+    switch (updateChoice) {
+        case 1:
+            System.out.print("Enter new Title: ");
+            String newTitle = scanner.nextLine();
+            jobToUpdate.setTitle(newTitle);
+            break;
+        case 2:
+            System.out.print("Enter new Description: ");
+            String newDescription = scanner.nextLine();
+            jobToUpdate.setDescription(newDescription);
+            break;
+        case 3:
+            System.out.print("Enter new Salary Range: ");
+            String newSalaryRange = scanner.nextLine();
+            jobToUpdate.setSalaryRange(newSalaryRange);
+            break;
+        case 4:
+            System.out.print("Enter new Qualification: ");
+            String newQualification = scanner.nextLine();
+            jobToUpdate.setQualification(newQualification);
+            break;
+        case 5:
+            //updateSkills(jobToUpdate); 
+            break;
+        default:
+            System.out.println("Invalid choice. No changes made.");
+            return;
+    }
+
+    // Replace the old job posting with the updated one
+    jobPostings.replacePosition(jobToUpdate, choice);
+    System.out.println("Job posting updated successfully!");
+}
 
 }

@@ -32,7 +32,7 @@ public class InternshipApplication {
 
     public static void main(String[] args) {
         jobManagement.runJobManagement();
-        jobManagement.viewAllJobs();
+        jobManagement.updatedJobPosting();
         
         int num = 0;
 
