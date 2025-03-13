@@ -34,6 +34,10 @@ public class MatchingEngine {
         jobPostingList = new DoublyLinkedList<>();
     }
     
+//    public startMatchingEngine() {
+//        
+//    }
+    
     private DoublyLinkedListInterface<Double> calculateMatches(JobSeeker jobSeeker) {
         if (jobSeeker == null) {
             return null;
@@ -59,8 +63,8 @@ public class MatchingEngine {
                 case "Analysis":
                     analysisSkill = skill.getProficiency();
                     break;
-            }
-        }
+            } //switch
+        } //forloop
         
         for (int i = 0; i < jobPostingList.getCount(); i++) {
             JobPosting jobPosting = jobPostingList.getPosition(i);
