@@ -13,96 +13,44 @@ import adt.DoublyLinkedListInterface;
  * @author USER
  */
 public class Match {
-    private JobPosting jobPosting;
-    private DoublyLinkedListInterface<JobSeeker> jobSeekerList = new DoublyLinkedList<>();
-    private DoublyLinkedListInterface<Double> matchedScoreList = new DoublyLinkedList<>();
+    private JobSeeker jobSeeker;
+    private DoublyLinkedListInterface<JobPosting> jobPostingList;
+    private DoublyLinkedListInterface<Double> matchedScoreList;
 
-    public Match(JobPosting jobPosting) {
-        this.jobPosting = jobPosting;
+    public Match(JobSeeker jobSeeker, DoublyLinkedListInterface<JobPosting> jobPostingList, DoublyLinkedListInterface<Double> matchedScoreList) {
+        this.jobSeeker = jobSeeker;
+        this.jobPostingList = jobPostingList;
+        this.matchedScoreList = matchedScoreList;
     }
+
+    public JobSeeker getJobSeeker() {
+        return jobSeeker;
+    }
+
+    public DoublyLinkedListInterface<JobPosting> getJobPostingList() {
+        return jobPostingList;
+    }
+
+    public DoublyLinkedListInterface<Double> getMatchedScoreList() {
+        return matchedScoreList;
+    }
+
+    public void setJobSeeker(JobSeeker jobSeeker) {
+        this.jobSeeker = jobSeeker;
+    }
+
+    public void setJobPostingList(DoublyLinkedListInterface<JobPosting> jobPostingList) {
+        this.jobPostingList = jobPostingList;
+    }
+
+    public void setMatchedScoreList(DoublyLinkedListInterface<Double> matchedScoreList) {
+        this.matchedScoreList = matchedScoreList;
+    }
+
+    @Override
+    public String toString() {
+        return "Match{" + "jobSeeker=" + jobSeeker + ", jobPostingList=" + jobPostingList + ", matchedScoreList=" + matchedScoreList + '}';
+    }
+
     
-    public void insertMatchScore(double score, int position) {
-        matchedScoreList.insertPosition(score, position);
-    }
-
-    private boolean calculateMatch() {
-        if (jobSeekerList.isEmpty()) {
-            return false;
-        }
-        
-        int communicationRequirement = 0;
-        int leadershipRequirement = 0;
-        int programmingRequirement = 0;
-        int analysisRequirement = 0;
-        
-        for (int i = 0; i < jobPosting.getSkills().getCount(); i++) {
-            Skill skill = jobPosting.getSkills().getPosition(i);
-            switch(skill.getName()) {
-                case "Communication":
-                    communicationRequirement = skill.getProficiency();
-                    break;
-                case "Leadership":
-                    leadershipRequirement = skill.getProficiency();
-                    break;
-                case "Programming":
-                    programmingRequirement = skill.getProficiency();
-                    break;
-                case "Analysis":
-                    analysisRequirement = skill.getProficiency();
-                    break;
-            }
-        }
-        
-        for (int i = 0; i < jobSeekerList.getCount(); i++) {
-            JobSeeker jobSeeker = jobSeekerList.getPosition(i);
-            double matchScore = 0.0;
-            
-            for (int j = 0; j < jobSeeker.getSkills().getCount(); j++) {
-                Skill skill = jobSeeker.getSkills().getPosition(j);
-                switch(skill.getName()) {
-                    case "Communication":
-                        if (skill.getProficiency() >= communicationRequirement) {
-                            matchScore += (skill.getProficiency() * 2);
-                        }
-                        else {
-                            matchScore += skill.getProficiency();
-                        }
-                        break;
-                    case "Leadership":
-                        if (skill.getProficiency() >= leadershipRequirement) {
-                            matchScore += (skill.getProficiency() * 2);
-                        }
-                        else {
-                            matchScore += skill.getProficiency();
-                        }
-                        break;
-                    case "Programming":
-                        if (skill.getProficiency() >= programmingRequirement) {
-                            matchScore += (skill.getProficiency() * 2);
-                        }
-                        else {
-                            matchScore += skill.getProficiency();
-                        }
-                        break;
-                    case "Analysis":
-                        if (skill.getProficiency() >= analysisRequirement) {
-                            matchScore += (skill.getProficiency() * 2);
-                        }
-                        else {
-                            matchScore += skill.getProficiency();
-                        }
-                        break;
-                    default:
-                        break;
-                } //switch
-            } //inner forloop
-            
-//            if(jobPosting.getLocation().get.equals(jobSeeker.getLocation())) {
-//                matchScore += 10;
-//            }
-            
-            insertMatchScore(matchScore, i + 1);
-        } //outer forloop
-        return true;
-    } //calculateMatch
 }
