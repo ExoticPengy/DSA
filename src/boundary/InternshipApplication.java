@@ -109,7 +109,7 @@ public class InternshipApplication {
                 switch (studentNameNum) {
                     default:
                         if (studentNameNum >= 1 && studentNameNum <= jobSeekerList.getCount()) {
-                            studentMenu(jobSeekerList.getPosition(studentNameNum).getName());
+                            studentMenu(jobSeekerList.getPosition(studentNameNum));
                         } else if (studentNameNum == jobSeekerList.getCount() + 1) {
                             //applicant management create profile
                         } else if (studentNameNum == jobSeekerList.getCount() + 2) {
@@ -128,13 +128,13 @@ public class InternshipApplication {
         } while (studentNameNum != jobSeekerList.getCount() + 2);
     }
 
-    public static void studentMenu(String name) {
+    public static void studentMenu(JobSeeker jobSeeker) {
         int studentNum = 0;
 
         do {
             if (isNum) {
                 System.out.println("\n+------------------------+");
-                System.out.printf("|  %-15s       |\n", name);
+                System.out.printf("|  %-15s       |\n", jobSeeker.getName());
                 System.out.println("+------------------------+");
                 System.out.println("|  What do you want?     |");
                 System.out.println("|  1. Apply Job          |");
@@ -155,10 +155,10 @@ public class InternshipApplication {
                         //job management module
                         break;
                     case 2:
-                        interviewArrangement.displayStudentSchedule(name);
+                        interviewArrangement.displayStudentSchedule(jobSeeker.getName());
                         break;
                     case 3:
-                        interviewArrangement.displayResult(name);
+                        interviewArrangement.displayResult(jobSeeker.getName());
                         break;
                     case 4:
                         break;
@@ -202,7 +202,7 @@ public class InternshipApplication {
                 switch (companyNameNum) {
                     default:
                         if (companyNameNum >= 1 && companyNameNum <= employerList.getCount()) {
-                            companyMenu(employerList.getPosition(companyNameNum).getName());
+                            companyMenu(employerList.getPosition(companyNameNum));
                         } else if (companyNameNum == employerList.getCount() + 1) {
 
                         } else {
@@ -219,13 +219,13 @@ public class InternshipApplication {
         } while (companyNameNum != employerList.getCount() + 1);
     }
 
-    public static void companyMenu(String name) {
+    public static void companyMenu(Employer employer) {
         int companyNum = 0;
 
         do {
             if (isNum) {
                 System.out.println("\n+-------------------------------------+");
-                System.out.printf("|  %-10s                         |\n", name);
+                System.out.printf("|  %-10s                         |\n", employer.getName());
                 System.out.println("+-------------------------------------+\n"
                         + "|  What do you want?                  |\n"
                         + "|  1. Job Posting                     |\n"
@@ -245,7 +245,7 @@ public class InternshipApplication {
 
                 switch (companyNum) {
                     case 1:
-                        jobManagement.createJobPosting();
+                        jobManagement.createJobPosting(employer);
                         break;
                     case 2:
                         //applicant management module
@@ -254,10 +254,10 @@ public class InternshipApplication {
                         //matching engine module
                         break;
                     case 4:
-                        interviewArrangement.displayCompanySchedule(name);
+                        interviewArrangement.displayCompanySchedule(employer.getName());
                         break;
                     case 5:
-                        interviewArrangement.displayInterviewResult(name);
+                        interviewArrangement.displayInterviewResult(employer.getName());
                         break;
                     case 6:
                         break;

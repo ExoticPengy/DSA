@@ -7,6 +7,7 @@ package control;
 import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
 import dao.JobPostingInitializer;
+import entity.Employer;
 import entity.JobPosting;
 import entity.Skill;
 import java.util.InputMismatchException;
@@ -30,12 +31,8 @@ public class JobManagement {
         jobPostings = jobPostingInitializer.getJobPosting();
     }
     
-    public void createJobPosting() {
+    public void createJobPosting(Employer employer) {
         
-        System.out.print("Enter Job ID: ");
-        String jobID = scanner.nextLine();
-        System.out.print("Enter Employer Id: ");
-        String employerID = scanner.nextLine();
         System.out.print("Enter Job Title: ");
         String title = scanner.nextLine();
         System.out.print("Enter Job Description: ");
@@ -137,7 +134,7 @@ public class JobManagement {
         }
         
         // Create a new JobPosting object
-        JobPosting job = new JobPosting(jobID, employerID, title, description, salaryRange, qualification, skills);
+        JobPosting job = new JobPosting(employer, title, description, salaryRange, qualification, skills);
 
         // Add the job posting to the list
         jobPostings.insertUniqueBack(job);
@@ -154,7 +151,7 @@ public class JobManagement {
             System.out.println("+-------------------------------------------------+");
             for (int i = 1; i <= jobPostings.getCount(); i++) { 
                 JobPosting job = jobPostings.getPosition(i); 
-                System.out.println("Job ID: " + job.getJobID());
+                System.out.println("Employer name: " + job.getEmployer().getName());
                 System.out.println("Title: " + job.getTitle());
                 System.out.println("Description: " + job.getDescription());
                 System.out.println("Salary Range: " + job.getSalaryRange());

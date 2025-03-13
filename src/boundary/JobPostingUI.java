@@ -43,7 +43,7 @@ public class JobPostingUI {
 
             switch (choice) {
                 case 1:
-                    jobManagement.createJobPosting(); 
+                    //jobManagement.createJobPosting(); 
                     break;
                 case 2:
                     //updateJobPosting();
