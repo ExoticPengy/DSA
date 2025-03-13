@@ -31,6 +31,9 @@ public class InternshipApplication {
     private static boolean isNum = true;
 
     public static void main(String[] args) {
+        jobManagement.runJobManagement();
+        jobManagement.viewAllJobs();
+        
         int num = 0;
 
         do {
@@ -225,7 +228,7 @@ public class InternshipApplication {
                 System.out.printf("|  %-10s                         |\n", name);
                 System.out.println("+-------------------------------------+\n"
                         + "|  What do you want?                  |\n"
-                        + "|  1. Create Job Posting              |\n"
+                        + "|  1. Job Posting                     |\n"
                         + "|  2. View Job Applicant              |\n"
                         + "|  3. Select Candidate for Interview  |\n"
                         + "|  4. View Schedule                   |\n"
@@ -242,7 +245,7 @@ public class InternshipApplication {
 
                 switch (companyNum) {
                     case 1:
-                        //job management module
+                        jobManagement.createJobPosting();
                         break;
                     case 2:
                         //applicant management module
