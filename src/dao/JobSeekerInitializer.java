@@ -23,12 +23,12 @@ public class JobSeekerInitializer {
         skills.insertBack(new Skill("Programming",9));
         applicants.insertFront(new JobSeeker("John Doe", 22, "Male", "john@example.com", "Kuala Lumpur", "Diploma in Computer Science", skills));
         
-        skills.clear();
+        skills = new DoublyLinkedList<>();
         skills.insertFront(new Skill("Leadership",8));
         skills.insertBack(new Skill("Analysis",3));
         applicants.insertBack(new JobSeeker("Sarah Lee", 19, "Female", "sarah@example.com", "Penang", "Bachelor in Business", skills));
         
-        skills.clear();
+        skills = new DoublyLinkedList<>();
         skills.insertFront(new Skill("Leadership",6));
         skills.insertBack(new Skill("Analysis",0));
         applicants.insertBack(new JobSeeker("Michael Smith", 20, "Male", "michael@example.com", "Johor Bahru", "Bachelor in Information Security", skills));

@@ -20,4 +20,8 @@ public class MessageUI {
     public static void displayExitMessage(){
         System.out.println("Exiting the system...");
     }
+    
+    public static void pressAnyKeyContinue(){
+        System.out.print("Press any key to continue...");
+    }
 }

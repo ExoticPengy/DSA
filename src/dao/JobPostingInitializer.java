@@ -16,7 +16,11 @@ import entity.Skill;
  */
 public class JobPostingInitializer {
     private EmployerInitializer employerInitializer;
-
+    
+    public JobPostingInitializer(){
+        employerInitializer = new EmployerInitializer();
+    }
+   
     public DoublyLinkedListInterface<JobPosting> getJobPosting() {
         DoublyLinkedListInterface<JobPosting> jobList = new DoublyLinkedList<>();
         DoublyLinkedListInterface<Skill> skills = new DoublyLinkedList<>();
@@ -32,7 +36,7 @@ public class JobPostingInitializer {
         skills.clear();
         skills.insertFront(new Skill("Leadership", 8));
         skills.insertBack(new Skill("Communication", 8));
-        jobList.insertFront(new JobPosting(employer, "Business Development Internship", "Management, Partnership", "RM600-RM800", "Bachelor in Business", skills));
+        jobList.insertBack(new JobPosting(employer, "Business Development Internship", "Management, Partnership", "RM600-RM800", "Bachelor in Business", skills));
 
         return jobList;
     }

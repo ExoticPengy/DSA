@@ -31,8 +31,8 @@ public class InternshipApplication {
     private static boolean isNum = true;
 
     public static void main(String[] args) {
-        jobManagement.runJobManagement();
-        jobManagement.updatedJobPosting();
+        //jobManagement.runJobManagement();
+        //jobManagement.updatedJobPosting();
         
         int num = 0;
 
@@ -93,7 +93,7 @@ public class InternshipApplication {
                 System.out.println("+------------------------+");
                 System.out.println("|  What is your name?    |");
                 for (i = 1; i <= jobSeekerList.getCount(); i++) {
-                    System.out.printf("|  %d. %-12s       |\n", i, jobSeekerList.getPosition(i).getName());
+                    System.out.printf("|  %d. %-15s    |\n", i, jobSeekerList.getPosition(i).getName());
                 }
                 System.out.println("|                        |");
                 System.out.println("|  " + i++ + ". Register           |");
@@ -155,10 +155,10 @@ public class InternshipApplication {
                         //job management module
                         break;
                     case 2:
-                        interviewArrangement.displayStudentSchedule(jobSeeker.getName());
+                        interviewArrangement.displayStudentSchedule(jobSeeker);
                         break;
                     case 3:
-                        interviewArrangement.displayResult(jobSeeker.getName());
+                        interviewArrangement.displayStudentResult(jobSeeker);
                         break;
                     case 4:
                         break;
@@ -254,10 +254,10 @@ public class InternshipApplication {
                         //matching engine module
                         break;
                     case 4:
-                        interviewArrangement.displayCompanySchedule(employer.getName());
+                        interviewArrangement.displayCompanySchedule(employer);
                         break;
                     case 5:
-                        interviewArrangement.displayInterviewResult(employer.getName());
+                        interviewArrangement.displayCompanyResult(employer);
                         break;
                     case 6:
                         break;

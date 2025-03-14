@@ -14,11 +14,11 @@ public class Interview {
     private JobPosting jobPosting;
     private DoublyLinkedListInterface<JobSeeker> jobSeekerList;
     private DoublyLinkedListInterface<String> dateList;
-    private DoublyLinkedListInterface<Integer> timeList;
+    private DoublyLinkedListInterface<String> timeList;
     private DoublyLinkedListInterface<String> statusList;       //scheduled, rejected, hired
     private DoublyLinkedListInterface<Integer> scoreList;
 
-    public Interview(JobPosting jobPosting, DoublyLinkedListInterface<JobSeeker> jobSeekerList, DoublyLinkedListInterface<String> dateList, DoublyLinkedListInterface<Integer> timeList, DoublyLinkedListInterface<String> statusList, DoublyLinkedListInterface<Integer> scoreList) {
+    public Interview(JobPosting jobPosting, DoublyLinkedListInterface<JobSeeker> jobSeekerList, DoublyLinkedListInterface<String> dateList, DoublyLinkedListInterface<String> timeList, DoublyLinkedListInterface<String> statusList, DoublyLinkedListInterface<Integer> scoreList) {
         this.jobPosting = jobPosting;
         this.jobSeekerList = jobSeekerList;
         this.dateList = dateList;
@@ -51,11 +51,11 @@ public class Interview {
         this.dateList = dateList;
     }
 
-    public DoublyLinkedListInterface<Integer> getTimeList() {
+    public DoublyLinkedListInterface<String> getTimeList() {
         return timeList;
     }
 
-    public void setTimeList(DoublyLinkedListInterface<Integer> timeList) {
+    public void setTimeList(DoublyLinkedListInterface<String> timeList) {
         this.timeList = timeList;
     }
 
