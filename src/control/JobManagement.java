@@ -40,7 +40,7 @@ public class JobManagement {
         boolean keepCreating = true;
     
         while (keepCreating)  {
-            System.out.print("Enter Job Title: ");
+            System.out.print("\nEnter Job Title: ");
             String title = scanner.nextLine();
             System.out.print("Enter Job Description: ");
             String description = scanner.nextLine();
@@ -61,7 +61,7 @@ public class JobManagement {
             
                 // Prompt for required skills
                 while (!validOption) {
-                    System.out.print("What is the skill required?\n"
+                    System.out.print("\nWhat is the skill required?\n"
                             + "1. Communication \n2. Leadership \n3. Programming \n4. Analysis\n"
                             + "Enter your choice: ");
 
@@ -118,7 +118,7 @@ public class JobManagement {
                 // add new skill
                 validOption = false;
                 while (!validOption) {
-                    System.out.print("Add another skill?" + "\n1. Yes\n2. No\nEnter your choice: ");
+                    System.out.print("\nAdd another skill?" + "\n1. Yes\n2. No\nEnter your choice: ");
                     try {
                         choice = scanner.nextInt();
                         scanner.nextLine();
@@ -146,21 +146,22 @@ public class JobManagement {
             // Add the job posting to the list
             jobPostings.insertUniqueBack(job);
 
+            viewAllJobs();
             System.out.println("Job posting created successfully!");
         
-            boolean validChoice = false;
-            while (!validChoice) {
-                System.out.print("Create another job listing?" + "\n1. Yes\n2. No\nEnter your choice: ");
+            boolean validCreateChoice = false;
+            while (!validCreateChoice) {
+                System.out.print("\nDo you want to create another job listing?" + "\n1. Yes\n2. No\nEnter your choice: ");
                 try {
                     choice = scanner.nextInt();
                     scanner.nextLine();
                     switch (choice) {
                         case 1:
-                            validChoice = true;
+                            validCreateChoice = true;
                             break;
                         case 2:
                             keepCreating = false;
-                            validChoice = true;
+                            validCreateChoice = true;
                             break;
                         default:
                             System.out.println("Invalid option, please try again.");
