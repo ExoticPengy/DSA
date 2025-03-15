@@ -36,7 +36,7 @@ public class JobPostingInitializer {
         DoublyLinkedListInterface<Skill> skills2 = new DoublyLinkedList<>();
         skills2.insertFront(new Skill("Leadership", 8));
         skills2.insertBack(new Skill("Communication", 8));
-        jobList.insertBack(new JobPosting(employer, "Business Development Internship", "Management, Partnership", "RM600-RM800", "Bachelor in Business", skills));
+        jobList.insertBack(new JobPosting(employer, "Business Development Internship", "Management, Partnership", "RM600-RM800", "Bachelor in Business", skills2));
 
         return jobList;
     }
