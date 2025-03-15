@@ -16,6 +16,14 @@ public class Skill {
         this.name = name;
         this.proficiency = proficiency;
     }
+    
+    // MingLi
+    public Skill(Skill copy) {
+        this(
+        copy.name,
+            copy.proficiency
+        );
+    }
 
     public String getName() {
         return name;

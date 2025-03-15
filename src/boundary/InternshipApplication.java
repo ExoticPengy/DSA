@@ -31,8 +31,6 @@ public class InternshipApplication {
     private static boolean isNum = true;
 
     public static void main(String[] args) {
-        //jobManagement.runJobManagement();
-        //jobManagement.updatedJobPosting();
         
         int num = 0;
 
@@ -152,7 +150,11 @@ public class InternshipApplication {
 
                 switch (studentNum) {
                     case 1:
-                        //matchingEngine
+                        matchingEngine.startMatchingEngine(
+                                applicantManagement.getJobSeekerList(), 
+                                jobManagement.getJobPostingList(),
+                                jobSeeker
+                        );
                         break;
                     case 2:
                         interviewArrangement.displayStudentSchedule(jobSeeker);

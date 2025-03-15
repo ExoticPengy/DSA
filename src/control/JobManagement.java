@@ -31,6 +31,10 @@ public class JobManagement {
         jobPostings = jobPostingInitializer.getJobPosting();
     }
     
+    public DoublyLinkedListInterface<JobPosting> getJobPostingList() {
+        return jobPostings;
+    }
+    
     public void createJobPosting(Employer employer) {
         
         System.out.print("Enter Job Title: ");

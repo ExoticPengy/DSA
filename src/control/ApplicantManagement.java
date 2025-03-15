@@ -29,4 +29,8 @@ public class ApplicantManagement {
         
         internshipApplication.studentNameMenu(jobSeekerList);
     }
+    
+    public DoublyLinkedListInterface<JobSeeker> getJobSeekerList() {
+        return jobSeekerList;
+    }
 }
