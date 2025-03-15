@@ -152,7 +152,7 @@ public class InternshipApplication {
 
                 switch (studentNum) {
                     case 1:
-                        //job management module
+                        //matchingEngine
                         break;
                     case 2:
                         interviewArrangement.displayStudentSchedule(jobSeeker);
