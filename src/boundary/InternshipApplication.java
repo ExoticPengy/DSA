@@ -32,6 +32,13 @@ public class InternshipApplication {
 
     public static void main(String[] args) {
         
+        matchingEngine.initializeMatchingEngine(
+                applicantManagement.getJobSeekerList(), 
+                jobManagement.getJobPostingList()
+        );
+        
+        jobManagement.runJobManagement();
+        
         int num = 0;
 
         do {
@@ -150,11 +157,7 @@ public class InternshipApplication {
 
                 switch (studentNum) {
                     case 1:
-                        matchingEngine.startMatchingEngine(
-                                applicantManagement.getJobSeekerList(), 
-                                jobManagement.getJobPostingList(),
-                                jobSeeker
-                        );
+                        matchingEngine.startMatchingEngine(jobSeeker);
                         break;
                     case 2:
                         interviewArrangement.displayStudentSchedule(jobSeeker);
