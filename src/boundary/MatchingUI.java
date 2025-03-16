@@ -80,7 +80,7 @@ public class MatchingUI {
                 int choice = scanner.nextInt();
                 scanner.nextLine();
                 if (choice >= 1 || choice <= range) {
-                    
+                    return choice;
                 } else {
                     System.out.println("Invalid option, please try again.");
                 }
