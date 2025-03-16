@@ -32,12 +32,12 @@ public class InternshipApplication {
 
     public static void main(String[] args) {
         
+        jobManagement.runJobManagement();
+        
         matchingEngine.initializeMatchingEngine(
                 applicantManagement.getJobSeekerList(), 
                 jobManagement.getJobPostingList()
         );
-        
-        jobManagement.runJobManagement();
         
         int num = 0;
 

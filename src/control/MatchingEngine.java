@@ -38,24 +38,18 @@ public class MatchingEngine {
     }
     
     public void startMatchingEngine(JobSeeker jobSeeker) {
-        System.out.println("entered");
         matchJobs(jobSeeker);
         sortMatch(jobSeeker);
         displayMatches(jobSeeker);
     }
     
     public void displayMatches(JobSeeker jobSeeker) {
-        System.out.println("checking");
         if (hasMatched(jobSeeker)) {
-            System.out.println("checked");
+            matchingUI.displayMatchHead();
             Match match = matchList.getPosition(getCurrentMatchIndex(jobSeeker));
             for (int i = 1; i <= match.getJobPostingList().getCount(); i++) {
-                System.out.println("in forloop");
                 matchingUI.displayJobMatches(match, i);
             }
-        }
-        else {
-            System.out.println("takde");
         }
     }
     
@@ -75,11 +69,9 @@ public class MatchingEngine {
     }
     
     private void sortMatch(JobSeeker jobSeeker) {
-        System.out.println("sorting");
         Match match = matchList.getPosition(getCurrentMatchIndex(jobSeeker));
         
         quickSort(match, 1, match.getMatchedScoreList().getCount());
-        System.out.println("done sorting");
     }
     
     private Boolean hasMatched(JobSeeker jobSeeker) {
@@ -106,15 +98,15 @@ public class MatchingEngine {
         if (jobSeeker == null) {
             return null;
         }
-        
+
         DoublyLinkedListInterface<JobPosting> newJobPostingList = copyJobPostingList();
         DoublyLinkedListInterface<Double> scoreList = new DoublyLinkedList<>();
-        
+
         int communicationSkill = 0;
         int leadershipSkill = 0;
         int programmingSkill = 0;
         int analysisSkill = 0;
-        
+
         for (int i = 1; i <= jobSeeker.getSkills().getCount(); i++) {
             Skill skill = jobSeeker.getSkills().getPosition(i);
             switch(skill.getName()) {
@@ -132,58 +124,68 @@ public class MatchingEngine {
                     break;
             } //switch
         } //forloop
-        
+
         for (int i = 1; i <= newJobPostingList.getCount(); i++) {
             JobPosting jobPosting = newJobPostingList.getPosition(i);
             double matchScore = 0.0;
-            
+
+            boolean communicationRequired = false;
+            boolean leadershipRequired = false;
+            boolean programmingRequired = false;
+            boolean analysisRequired = false;
+
             for (int j = 1; j <= jobPosting.getSkills().getCount(); j++) {
-                Skill skill = jobPosting.getSkills().getPosition(j);
-                switch(skill.getName()) {
+                Skill requiredSkill = jobPosting.getSkills().getPosition(j);
+                int jobSeekerSkillProficiency = 0;
+
+                switch(requiredSkill.getName()) {
                     case "Communication":
-                        if (skill.getProficiency() >= communicationSkill) {
-                            matchScore += (skill.getProficiency() * 2);
-                        }
-                        else {
-                            matchScore += skill.getProficiency();
-                        }
+                        jobSeekerSkillProficiency = communicationSkill;
+                        communicationRequired = true;
                         break;
                     case "Leadership":
-                        if (skill.getProficiency() >= leadershipSkill) {
-                            matchScore += (skill.getProficiency() * 2);
-                        }
-                        else {
-                            matchScore += skill.getProficiency();
-                        }
+                        jobSeekerSkillProficiency = leadershipSkill;
+                        leadershipRequired = true;
                         break;
                     case "Programming":
-                        if (skill.getProficiency() >= programmingSkill) {
-                            matchScore += (skill.getProficiency() * 2);
-                        }
-                        else {
-                            matchScore += skill.getProficiency();
-                        }
+                        jobSeekerSkillProficiency = programmingSkill;
+                        programmingRequired = true;
                         break;
                     case "Analysis":
-                        if (skill.getProficiency() >= analysisSkill) {
-                            matchScore += (skill.getProficiency() * 2);
-                        }
-                        else {
-                            matchScore += skill.getProficiency();
-                        }
+                        jobSeekerSkillProficiency = analysisSkill;
+                        analysisRequired = true;
                         break;
-                    default:
-                        break;
-                } //switch
+                }
+
+                if (jobSeekerSkillProficiency >= requiredSkill.getProficiency()) {
+                    matchScore += (jobSeekerSkillProficiency * 2);
+                } else {
+                    matchScore += jobSeekerSkillProficiency;
+                }
             } //inner forloop
-            
-            if(jobPosting.getEmployer().getLocation().equals(jobSeeker.getLocation())) {
+
+            if (!communicationRequired) {
+                matchScore += communicationSkill;
+            }
+            if (!leadershipRequired) {
+                matchScore += leadershipSkill;
+            }
+            if (!programmingRequired) {
+                matchScore += programmingSkill;
+            }
+            if (!analysisRequired) {
+                matchScore += analysisSkill;
+            }
+
+            // Add 10 points if location matches
+            if (jobPosting.getEmployer().getLocation().equals(jobSeeker.getLocation())) {
                 matchScore += 10;
             }
-            
+
+            // Insert the match score into the score list
             scoreList.insertPosition(matchScore, i);
         } //outer forloop
-        
+
         return scoreList;
     } //calculateMatch
     
