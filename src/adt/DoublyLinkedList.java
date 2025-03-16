@@ -195,6 +195,9 @@ public class DoublyLinkedList<T> implements DoublyLinkedListInterface<T> {
             result = navigator.data;
             navigator.previous.next = navigator.next;
             navigator.next.previous = navigator.previous;
+            
+            navigator.next = null;
+            navigator.previous = null;
             nodeCount--;
         }
 

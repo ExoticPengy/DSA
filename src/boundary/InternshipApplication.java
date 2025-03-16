@@ -245,8 +245,9 @@ public class InternshipApplication {
 
                 switch (companyNum) {
                     case 1:
-                        jobManagement.createJobPosting(employer);
+                        //jobManagement.createJobPosting(employer);
                         //jobManagement.updatedJobPosting();
+                        jobManagement.RemoveJobPosting();
                         break;
                     case 2:
                         //applicant management module

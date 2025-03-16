@@ -220,7 +220,7 @@ public class JobManagement {
         int choice = 0;
         boolean chooseJob = false;
         while (!chooseJob) {
-            System.out.print("\nEnter the number of the job posting you want to update: ");
+            System.out.print("\nEnter the job posting number you want to update: ");
             choice = scanner.nextInt();
             scanner.nextLine(); 
 
@@ -371,16 +371,110 @@ public class JobManagement {
 }
 
     public void RemoveJobPosting() {
+        if (jobPostings.isEmpty()) {
+        System.out.println("No job postings available to remove.");
+        return;
+        }
+        
+      boolean keepRemoving = true;
+      while (keepRemoving)  {
+        // Display a list of job titles
+        System.out.println("\n+-------------------------------------------+");
+        System.out.println("|            List of Job Postings           |");
+        System.out.println("+-------------------------------------------+");
+        for (int i = 1; i <= jobPostings.getCount(); i++) {
+            JobPosting job = jobPostings.getPosition(i);
+            System.out.println(i + ". " + job.getTitle());
+        }
+
+        int choice = 0;
+        boolean chooseRemoveJob = false;
+        while (!chooseRemoveJob) {
+            System.out.print("\nEnter the job posting number you want to remove: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); 
+
+            if (choice >= 1 && choice <= jobPostings.getCount()) {
+                chooseRemoveJob = true;
+            } else {
+                System.out.println("Invalid input! Please enter a valid number.");
+            }  
+        }
+
+        // Get the job posting to remove
+        JobPosting jobToRemove = jobPostings.getPosition(choice);
+
+        // Display the selected job posting
+        System.out.println("\n+-----------------------------------------------+");
+        System.out.println("|             Selected Job Posting              |");
+        System.out.println("+-----------------------------------------------+");
+        System.out.println("Employer Name: " + jobToRemove.getEmployer().getName());
+        System.out.println("Title: " + jobToRemove.getTitle());
+        System.out.println("Description: " + jobToRemove.getDescription());
+        System.out.println("Salary Range: " + jobToRemove.getSalaryRange());
+        System.out.println("Qualification: " + jobToRemove.getQualification());
+        System.out.println("Skills Required: ");
+        for (int j = 1; j <= jobToRemove.getSkills().getCount(); j++) {
+            System.out.println(j + ". " + jobToRemove.getSkills().getPosition(j).getName()
+                    + ": " + jobToRemove.getSkills().getPosition(j).getProficiency());
+        }
+        System.out.println("+-----------------------------------------------+");
+        
+        int removeChoice = 0;
+        boolean confirmation = false;
+        while (!confirmation) {
+            System.out.print("\nConfirm remove this job posting?" + "\n1. Yes\n2. No\nEnter your choice: ");
+            try {
+            removeChoice = scanner.nextInt();
+            scanner.nextLine();
+            
+            switch(removeChoice) {
+                case 1:
+                    jobPostings.deletePosition(choice); 
+                    System.out.println("Job posting remove successfully!");
+                    System.out.println("\nUpdated Job Postings:");
+                    viewAllJobs();
+                    confirmation = true;
+                    break;
+                case 2:
+                    System.out.println("Removal cancelled.");
+                    confirmation = true;
+                    break;
+                default: 
+                    System.out.print("Invalid input. Please enter a valid number.\n");
+            }
+            
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter 1 or 2");
+                scanner.nextLine();
+            }
+        }
     
+        // Ask repeat
+        boolean removeOption = false;
+        while (!removeOption) {
+            System.out.print("\nRemove another job listing?" + "\n1. Yes\n2. No\nEnter your choice: ");
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+                switch (choice) {
+                    case 1:
+                        removeOption = true;
+                        break;
+                    case 2:
+                        keepRemoving = false;
+                        removeOption = true;
+                        break;
+                    default:
+                        System.out.println("Invalid option, please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter 1 or 2.");
+                scanner.nextLine(); 
+            }
+        }
         
-        
-        
-        
-        
-        
-        
-        
-        
+      }
     }
         
     
