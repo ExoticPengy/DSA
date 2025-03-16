@@ -6,8 +6,7 @@ package control;
 
 import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
-import dao.JobPostingInitializer;
-import dao.JobSeekerInitializer;
+import boundary.MatchingUI;
 import entity.JobPosting;
 import entity.JobSeeker;
 import entity.Match;
@@ -18,35 +17,73 @@ import entity.Skill;
  * @author MingLi
  */
 public class MatchingEngine {
-    private JobPostingInitializer jobPostingInitializer;
-    private JobSeekerInitializer jobSeekerInitializer;
+    private MatchingUI matchingUI;
     private DoublyLinkedListInterface<Match> matchList;
     private DoublyLinkedListInterface<JobSeeker> jobSeekerList;
     private DoublyLinkedListInterface<JobPosting> jobPostingList;
     
     public MatchingEngine(){
-        jobPostingInitializer = new JobPostingInitializer();
-        jobSeekerInitializer = new JobSeekerInitializer();
+        matchingUI = new MatchingUI();
         matchList = new DoublyLinkedList<>();
         jobSeekerList = new DoublyLinkedList<>();
         jobPostingList = new DoublyLinkedList<>();
     }
     
+    public void initializeMatchingEngine(
+            DoublyLinkedListInterface<JobSeeker> jobSeekerList,
+            DoublyLinkedListInterface<JobPosting> jobPostingList
+    ) {
+        this.jobSeekerList = jobSeekerList;
+        this.jobPostingList = jobPostingList;
+    }
     
-    public void matchJobs(JobSeeker jobSeeker) {
-        if (!hasMatched(jobSeeker)) {
-            matchList.insertBack(new Match(jobSeeker, jobPostingList, calculateMatches(jobSeeker)));
+    public void startMatchingEngine(JobSeeker jobSeeker) {
+        System.out.println("entered");
+        matchJobs(jobSeeker);
+        sortMatch(jobSeeker);
+        displayMatches(jobSeeker);
+    }
+    
+    public void displayMatches(JobSeeker jobSeeker) {
+        System.out.println("checking");
+        if (hasMatched(jobSeeker)) {
+            System.out.println("checked");
+            Match match = matchList.getPosition(getCurrentMatchIndex(jobSeeker));
+            for (int i = 1; i <= match.getJobPostingList().getCount(); i++) {
+                System.out.println("in forloop");
+                matchingUI.displayJobMatches(match, i);
+            }
+        }
+        else {
+            System.out.println("takde");
         }
     }
     
+    // To get all students matches
+    public void matchJobs() {
+        matchList.clear();
+        for (int i = 1; i <= jobSeekerList.getCount(); i++) {
+            JobSeeker jobSeeker = jobSeekerList.getPosition(i);
+            matchList.insertUniqueBack(new Match(jobSeeker, copyJobPostingList(), calculateMatches(jobSeeker)));
+        }
+    }
+    
+    // To get only one student match
+    public void matchJobs(JobSeeker jobSeeker) {
+        matchList.clear();
+        matchList.insertUniqueBack(new Match(jobSeeker, copyJobPostingList(), calculateMatches(jobSeeker)));
+    }
+    
     private void sortMatch(JobSeeker jobSeeker) {
+        System.out.println("sorting");
         Match match = matchList.getPosition(getCurrentMatchIndex(jobSeeker));
         
         quickSort(match, 1, match.getMatchedScoreList().getCount());
+        System.out.println("done sorting");
     }
     
     private Boolean hasMatched(JobSeeker jobSeeker) {
-        for (int i = 1; i < matchList.getCount(); i++) {
+        for (int i = 1; i <= matchList.getCount(); i++) {
             if (matchList.getPosition(i).getJobSeeker().equals(jobSeeker)) {
                 return true;
             }
@@ -69,7 +106,10 @@ public class MatchingEngine {
         if (jobSeeker == null) {
             return null;
         }
+        
+        DoublyLinkedListInterface<JobPosting> newJobPostingList = copyJobPostingList();
         DoublyLinkedListInterface<Double> scoreList = new DoublyLinkedList<>();
+        
         int communicationSkill = 0;
         int leadershipSkill = 0;
         int programmingSkill = 0;
@@ -93,8 +133,8 @@ public class MatchingEngine {
             } //switch
         } //forloop
         
-        for (int i = 1; i <= jobPostingList.getCount(); i++) {
-            JobPosting jobPosting = jobPostingList.getPosition(i);
+        for (int i = 1; i <= newJobPostingList.getCount(); i++) {
+            JobPosting jobPosting = newJobPostingList.getPosition(i);
             double matchScore = 0.0;
             
             for (int j = 1; j <= jobPosting.getSkills().getCount(); j++) {
@@ -146,6 +186,16 @@ public class MatchingEngine {
         
         return scoreList;
     } //calculateMatch
+    
+    private DoublyLinkedListInterface<JobPosting> copyJobPostingList() {
+        DoublyLinkedListInterface<JobPosting> copiedList = new DoublyLinkedList<>();
+        for (int i = 1; i <= jobPostingList.getCount(); i++) {
+            JobPosting originalJobPosting = jobPostingList.getPosition(i);
+            JobPosting copiedJobPosting = new JobPosting(originalJobPosting);
+            copiedList.insertBack(copiedJobPosting);
+        }
+        return copiedList;
+    }
     
     private void quickSort(Match match, int low, int high) {
         if (low < high) {

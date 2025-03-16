@@ -31,6 +31,29 @@ public class JobPosting {
         this.qualification = qualification;
         this.skills = skills;
     }
+    
+    // MingLi
+    public JobPosting(JobPosting copy) {
+        this(
+            copy.employer,
+            copy.title,
+            copy.description,
+            copy.salaryRange,
+            copy.qualification,
+            copySkillList(copy.skills)
+        );
+    }
+    
+    //MingLi
+    private static DoublyLinkedListInterface<Skill> copySkillList(DoublyLinkedListInterface<Skill> originalSkills) {
+        DoublyLinkedListInterface<Skill> copiedSkills = new DoublyLinkedList<>();
+        for (int i = 1; i <= originalSkills.getCount(); i++) {
+            Skill originalSkill = originalSkills.getPosition(i);
+            Skill copiedSkill = new Skill(originalSkill); 
+            copiedSkills.insertBack(copiedSkill);
+        }
+        return copiedSkills;
+    }
 
     public Employer getEmployer() {
         return employer;
