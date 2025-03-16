@@ -41,6 +41,17 @@ public class MatchingEngine {
         matchJobs(jobSeeker);
         sortMatch(jobSeeker);
         displayMatches(jobSeeker);
+        switch(matchingUI.askApplyJob()) {
+            case 1:
+                applyJob(jobSeeker);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    public void applyJob(JobSeeker jobSeeker) {
+        matchingUI.selectJob(matchList.getPosition(getCurrentMatchIndex(jobSeeker)).getJobPostingList().getCount());
     }
     
     public void displayMatches(JobSeeker jobSeeker) {
