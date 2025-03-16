@@ -221,7 +221,7 @@ public class InternshipApplication {
 
     public static void companyMenu(Employer employer) {
         int companyNum = 0;
-
+        jobManagement.runJobManagement();
         do {
             if (isNum) {
                 System.out.println("\n+-------------------------------------+");
@@ -245,7 +245,9 @@ public class InternshipApplication {
 
                 switch (companyNum) {
                     case 1:
-                        jobManagement.createJobPosting(employer);
+                        //jobManagement.createJobPosting(employer);
+                        //jobManagement.updatedJobPosting();
+                        jobManagement.RemoveJobPosting();
                         break;
                     case 2:
                         //applicant management module

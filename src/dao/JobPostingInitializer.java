@@ -23,20 +23,20 @@ public class JobPostingInitializer {
    
     public DoublyLinkedListInterface<JobPosting> getJobPosting() {
         DoublyLinkedListInterface<JobPosting> jobList = new DoublyLinkedList<>();
-        DoublyLinkedListInterface<Skill> skills = new DoublyLinkedList<>();
         DoublyLinkedListInterface<Employer> employerList = employerInitializer.getEmployer();
         Employer employer;
         
         employer = employerList.getPosition(1);
+        DoublyLinkedListInterface<Skill> skills = new DoublyLinkedList<>();
         skills.insertFront(new Skill("Programming", 9));
         skills.insertBack(new Skill("Communication", 7));
         jobList.insertFront(new JobPosting(employer, "Software Engineer Internship", "Coding, Debugging, Development", "RM800-RM1000", "Diploma in Computer Science", skills));
 
         employer = employerList.getPosition(3);
-        skills.clear();
-        skills.insertFront(new Skill("Leadership", 8));
-        skills.insertBack(new Skill("Communication", 8));
-        jobList.insertBack(new JobPosting(employer, "Business Development Internship", "Management, Partnership", "RM600-RM800", "Bachelor in Business", skills));
+        DoublyLinkedListInterface<Skill> skills2 = new DoublyLinkedList<>();
+        skills2.insertFront(new Skill("Leadership", 8));
+        skills2.insertBack(new Skill("Communication", 8));
+        jobList.insertBack(new JobPosting(employer, "Business Development Internship", "Management, Partnership", "RM600-RM800", "Bachelor in Business", skills2));
 
         return jobList;
     }

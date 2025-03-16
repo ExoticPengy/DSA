@@ -195,6 +195,9 @@ public class DoublyLinkedList<T> implements DoublyLinkedListInterface<T> {
             result = navigator.data;
             navigator.previous.next = navigator.next;
             navigator.next.previous = navigator.previous;
+            
+            navigator.next = null;
+            navigator.previous = null;
             nodeCount--;
         }
 
@@ -202,22 +205,19 @@ public class DoublyLinkedList<T> implements DoublyLinkedListInterface<T> {
     }
 
     public boolean replacePosition(T newEntry, int position) {
-        if (isEmpty() || newEntry == null || position < 1 || position > nodeCount) {
-            return false;
-        }
-
-        Node navigator = firstNode;
-        for (int i = 1; i < position; i++) {
-            navigator = navigator.next;
-        }
-
-        Node newNode = new Node(newEntry, navigator.next, navigator.previous);
-
-        navigator.previous.next = newNode;
-        navigator.next.previous = newNode;
-
-        return true;
+    if (isEmpty() || newEntry == null || position < 1 || position > nodeCount) {
+        return false;
     }
+
+    Node navigator = firstNode;
+    for (int i = 1; i < position; i++) {
+        navigator = navigator.next;
+    }
+
+    navigator.data = newEntry;
+
+    return true;
+}
 
     public T getFront() {
         return firstNode.data;
