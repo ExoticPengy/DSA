@@ -38,6 +38,7 @@ public class InternshipApplication {
         );
         
         jobManagement.runJobManagement();
+        interviewArrangement.runInterviewArrangement();
         
         int num = 0;
 

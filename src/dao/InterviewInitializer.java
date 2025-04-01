@@ -9,6 +9,8 @@ import adt.DoublyLinkedListInterface;
 import entity.Interview;
 import entity.JobPosting;
 import entity.JobSeeker;
+import entity.Status;
+import entity.Time;
 
 /**
  *
@@ -26,46 +28,94 @@ public class InterviewInitializer {
 
     public DoublyLinkedListInterface<Interview> getInterview() {
         DoublyLinkedListInterface<Interview> interviewList = new DoublyLinkedList<>();
+        
         DoublyLinkedListInterface<JobPosting> jobList = jobInitializer.getJobPosting();
-        JobPosting job;
-        DoublyLinkedListInterface<JobSeeker> jobSeekerList = jobSeekerInitializer.getJobSeeker();
-        DoublyLinkedListInterface<JobSeeker> interviewJobSeekerList = new DoublyLinkedList<>();
-        DoublyLinkedListInterface<String> dateList = new DoublyLinkedList<>();
-        DoublyLinkedListInterface<String> timeList = new DoublyLinkedList<>();
-        DoublyLinkedListInterface<String> statusList = new DoublyLinkedList<>();
-        DoublyLinkedListInterface<Integer> scoreList = new DoublyLinkedList<>();
+        DoublyLinkedListInterface<JobPosting> interviewJobList = new DoublyLinkedList<>();
+        
+        DoublyLinkedListInterface<JobSeeker> jobSeeker = jobSeekerInitializer.getJobSeeker();
+        DoublyLinkedListInterface<JobSeeker> jobSeekerList = new DoublyLinkedList<>();
+        DoublyLinkedListInterface<DoublyLinkedListInterface<JobSeeker>> interviewJobSeekerList = new DoublyLinkedList<>();
+        
+        Time time = new Time();
+        DoublyLinkedListInterface<Time> timeList = new DoublyLinkedList<>();
+        DoublyLinkedListInterface<DoublyLinkedListInterface<Time>> interviewTimeList = new DoublyLinkedList<>();
+        
+        Status status = new Status();
+        DoublyLinkedListInterface<Status> statusList = new DoublyLinkedList<>();
+        DoublyLinkedListInterface<DoublyLinkedListInterface<Status>> interviewStatusList = new DoublyLinkedList<>();
 
-        job = jobList.getPosition(1);
-        interviewJobSeekerList.insertFront(jobSeekerList.getPosition(1));
-        interviewJobSeekerList.insertBack(jobSeekerList.getPosition(2));
-        dateList.insertFront("29-04-2025");
-        dateList.insertBack("10-03-2025");
-        timeList.insertFront("0900-1000");
-        timeList.insertBack("1100-1200");
-        statusList.insertFront("Scheduled");
-        statusList.insertBack("Rejected");
-        scoreList.insertFront(0);
-        scoreList.insertBack(20);
-        interviewList.insertFront(new Interview(job, interviewJobSeekerList, dateList, timeList, statusList, scoreList));
-
+        //1
+        interviewJobList.insertFront(jobList.getPosition(1));
+        
+        jobSeekerList.insertFront(jobSeeker.getPosition(1));
+        jobSeekerList.insertBack(jobSeeker.getPosition(2));
+        interviewJobSeekerList.insertFront(jobSeekerList);
+        
+        time.setDate("29-04-2025");
+        time.setStartTime("0900");
+        time.setEndTime("1000");
+        timeList.insertFront(time);
+        
+        time = new Time();
+        time.setDate("10-03-2025");
+        time.setStartTime("1100");
+        time.setEndTime("1200");
+        timeList.insertBack(time);
+        interviewTimeList.insertFront(timeList);
+        
+        status.setStatus("Scheduled");
+        status.setScore("0");
+        statusList.insertFront(status);
+        
+        status = new Status();
+        status.setStatus("Rejected");
+        status.setScore("20");
+        statusList.insertBack(status);
+        interviewStatusList.insertFront(statusList);
+        
+        interviewList.insertFront(new Interview(interviewJobList,interviewJobSeekerList,interviewTimeList,interviewStatusList));
+       
+        //2
+        interviewJobList = new DoublyLinkedList<>();
+        jobSeekerList = new DoublyLinkedList<>();
         interviewJobSeekerList = new DoublyLinkedList<>();
-        dateList = new DoublyLinkedList<>();
+        time = new Time();
         timeList = new DoublyLinkedList<>();
+        interviewTimeList = new DoublyLinkedList<>();
+        status = new Status();
         statusList = new DoublyLinkedList<>();
-        scoreList = new DoublyLinkedList<>();
-        job = jobList.getPosition(2);
-        interviewJobSeekerList.insertFront(jobSeekerList.getPosition(2));
-        interviewJobSeekerList.insertBack(jobSeekerList.getPosition(3));
-        dateList.insertFront("05-03-2025");
-        dateList.insertBack("27-04-2025");
-        timeList.insertFront("1500-1600");
-        timeList.insertBack("1000-1100");
-        statusList.insertFront("Hired");
-        statusList.insertBack("Scheduled");
-        scoreList.insertFront(90);
-        scoreList.insertBack(0);
-        interviewList.insertBack(new Interview(job, interviewJobSeekerList, dateList, timeList, statusList, scoreList));
-
+        interviewStatusList = new DoublyLinkedList<>();
+        
+        interviewJobList.insertBack(jobList.getPosition(2));
+                
+        jobSeekerList.insertFront(jobSeeker.getPosition(2));
+        jobSeekerList.insertBack(jobSeeker.getPosition(3));
+        interviewJobSeekerList.insertFront(jobSeekerList);
+                
+        time.setDate("05-03-2025");
+        time.setStartTime("1500");
+        time.setEndTime("1600");
+        timeList.insertFront(time);
+        
+        time = new Time();
+        time.setDate("27-04-2025");
+        time.setStartTime("1000");
+        time.setEndTime("1100");
+        timeList.insertBack(time);
+        interviewTimeList.insertFront(timeList);
+        
+        status.setStatus("Hired");
+        status.setScore("90");
+        statusList.insertFront(status);
+        
+        status = new Status();
+        status.setStatus("Scheduled");
+        status.setScore("0");
+        statusList.insertBack(status);
+        interviewStatusList.insertFront(statusList);
+        
+        interviewList.insertBack(new Interview(interviewJobList,interviewJobSeekerList,interviewTimeList,interviewStatusList));
+              
         return interviewList;
     }
 }
