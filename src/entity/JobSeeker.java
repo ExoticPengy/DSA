@@ -47,6 +47,30 @@ public class JobSeeker {
         this.qualification = qualification;
         this.skills = skills;
     }
+    
+    // MingLi
+    public JobSeeker(JobSeeker copy) {
+        this(
+            copy.name,
+            copy.age,
+            copy.gender,
+            copy.email,
+            copy.location,
+            copy.qualification,
+            copySkillList(copy.skills)
+        );
+    }
+    
+    //MingLi
+    private static DoublyLinkedListInterface<Skill> copySkillList(DoublyLinkedListInterface<Skill> originalSkills) {
+        DoublyLinkedListInterface<Skill> copiedSkills = new DoublyLinkedList<>();
+        for (int i = 1; i <= originalSkills.getCount(); i++) {
+            Skill originalSkill = originalSkills.getPosition(i);
+            Skill copiedSkill = new Skill(originalSkill); 
+            copiedSkills.insertBack(copiedSkill);
+        }
+        return copiedSkills;
+    }
 
     public String getName() {
         return name;

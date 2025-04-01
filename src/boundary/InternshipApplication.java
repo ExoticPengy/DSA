@@ -32,6 +32,9 @@ public class InternshipApplication {
 
     public static void main(String[] args) {
         
+        applicantManagement.initializeApplicantManagement();
+        jobManagement.runJobManagement();
+        
         matchingEngine.initializeMatchingEngine(
                 applicantManagement.getJobSeekerList(), 
                 jobManagement.getJobPostingList()
