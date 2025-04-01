@@ -24,9 +24,11 @@ public class ApplicantManagement {
         jobSeekerList = new DoublyLinkedList<>();
     }
     
-    public void runApplicantManagement(){
+    public void initializeApplicantManagement() {
         jobSeekerList = jobSeekerInitializer.getJobSeeker();
-        
+    }
+    
+    public void runApplicantManagement(){
         internshipApplication.studentNameMenu(jobSeekerList);
     }
     

@@ -3,6 +3,7 @@ package boundary;
 
 import entity.JobPosting;
 import entity.Match;
+import entity.Score;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -31,8 +32,8 @@ public class MatchingUI {
         System.out.println("+-------------------------------------------------+");
     }
     
-    public void displayJobMatches(Match match, int index) {
-        JobPosting job = match.getJobPostingList().getPosition(index); 
+    public void displayJobMatches(Score score, int index) {
+        JobPosting job = score.getJobPosting(); 
         System.out.println("Option Number: " + index);
         System.out.println("Employer name: " + job.getEmployer().getName());
         System.out.println("Title: " + job.getTitle());
@@ -44,7 +45,7 @@ public class MatchingUI {
             System.out.println(j + ". " + job.getSkills().getPosition(j).getName() 
                     + ": " + job.getSkills().getPosition(j).getProficiency());
         }
-        System.out.println("Matched Score: " + match.getMatchedScoreList().getPosition(index));
+        System.out.println("Matched Score: " + score.getScore());
         System.out.println("--------------------------------------------------");
     }
     

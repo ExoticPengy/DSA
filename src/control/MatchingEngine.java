@@ -52,15 +52,15 @@ public class MatchingEngine {
     }
     
     public void applyJob(JobSeeker jobSeeker) {
-        matchingUI.selectJob(matchList.getPosition(getCurrentSeekerIndex(jobSeeker)).getJobPostingList().getCount());
+        matchingUI.selectJob(matchList.getBack().getMatchedScoreList().getPosition(getCurrentSeekerIndex(jobSeeker)).getCount());
     }
     
     public void displayMatches(JobSeeker jobSeeker) {
         if (jobSeeker != null) {
             matchingUI.displayMatchHead();
-            Match match = matchList.getPosition(getCurrentSeekerIndex(jobSeeker));
-            for (int i = 1; i <= match.getJobPostingList().getCount(); i++) {
-                matchingUI.displayJobMatches(match, i);
+            DoublyLinkedListInterface<Score> scoreList = matchList.getBack().getMatchedScoreList().getPosition(getCurrentSeekerIndex(jobSeeker));
+            for (int i = 1; i <= scoreList.getCount(); i++) {
+                matchingUI.displayJobMatches(scoreList.getPosition(i), i);
             }
         }
     }
@@ -180,16 +180,14 @@ public class MatchingEngine {
                 } //outer forloop j
                 matchedScoreList.insertBack(scoreList);
             } //forloop i
-            matchList.insertBack(new Match(newJobSeekerList, matchedScoreList));
+            matchList.insertBack(new Match(jobSeekerList, matchedScoreList));
         } //if null check
     } //calculateMatch
         
     private DoublyLinkedListInterface<JobSeeker> copyJobSeekerList() {
         DoublyLinkedListInterface<JobSeeker> copiedList = new DoublyLinkedList<>();
         for (int i = 1; i <= jobSeekerList.getCount(); i++) {
-            JobSeeker originalJobSeeker = jobSeekerList.getPosition(i);
-            JobSeeker copiedJobSeeker = new JobSeeker(originalJobSeeker);
-            copiedList.insertBack(copiedJobSeeker);
+            copiedList.insertBack(jobSeekerList.getPosition(i));
         }
         return copiedList;
     }
@@ -197,9 +195,7 @@ public class MatchingEngine {
     private DoublyLinkedListInterface<JobPosting> copyJobPostingList() {
         DoublyLinkedListInterface<JobPosting> copiedList = new DoublyLinkedList<>();
         for (int i = 1; i <= jobPostingList.getCount(); i++) {
-            JobPosting originalJobPosting = jobPostingList.getPosition(i);
-            JobPosting copiedJobPosting = new JobPosting(originalJobPosting);
-            copiedList.insertBack(copiedJobPosting);
+            copiedList.insertBack(jobPostingList.getPosition(i));
         }
         return copiedList;
     }
@@ -208,7 +204,7 @@ public class MatchingEngine {
         Match match = matchList.getBack();
         
         for (int i = 1; i <= match.getJobSeekerList().getCount(); i++) {
-            quickSort(match, i, 1, match.getMatchedScoreList().getCount());
+            quickSort(match, i, 1, match.getMatchedScoreList().getPosition(i).getCount());
         }
     }
     
