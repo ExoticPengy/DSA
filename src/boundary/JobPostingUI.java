@@ -33,8 +33,8 @@ public class JobPostingUI {
             System.out.println("| 2. Update Job Posting      |");
             System.out.println("| 3. Remove Job Posting      |");
             System.out.println("| 4. Search Jobs             |");
-            System.out.println("| 5. Filter Jobs by Location |");
-            System.out.println("| 6. View All Jobs           |");
+            System.out.println("| 5. View All Jobs           |");
+            System.out.println("| 6. Report                  |");
             System.out.println("| 7. Exit                    |");
             System.out.println("+----------------------------+");
             System.out.print("Choose an option: ");

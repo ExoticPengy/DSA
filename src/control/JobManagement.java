@@ -146,8 +146,22 @@ public class JobManagement {
             // Add the job posting to the list
             jobPostings.insertUniqueBack(job);
 
-            viewAllJobs();
-            System.out.println("Job posting created successfully!");
+        // Display created job
+        System.out.println("\n+-----------------------------------------------+");
+        System.out.println("|             Newly Created Job Posting         |");
+        System.out.println("+-----------------------------------------------+");
+        System.out.println("Employer: " + job.getEmployer().getName());
+        System.out.println("Title: " + job.getTitle());
+        System.out.println("Description: " + job.getDescription());
+        System.out.println("Salary Range: " + job.getSalaryRange());
+        System.out.println("Qualification: " + job.getQualification());
+        System.out.println("Skills Required:");
+        for (int j = 1; j <= job.getSkills().getCount(); j++) {
+            Skill skill = job.getSkills().getPosition(j);
+            System.out.println("  " + j + ". " + skill.getName() + ": " + skill.getProficiency());
+        }
+        System.out.println("--------------------------------------------------");
+        System.out.println("Job posting created successfully!");
         
             boolean validCreateChoice = false;
             while (!validCreateChoice) {
@@ -174,11 +188,57 @@ public class JobManagement {
         }
     }
 
+    //sort Jobs
+    public void sortJobsByCompany() {
+        if (jobPostings.isEmpty()) {
+            System.out.println("No job postings available to sort.");
+            return;
+        }
+
+        // Step 1: Extract all unique companies
+        DoublyLinkedListInterface<Employer> companies = new DoublyLinkedList<>();
+        for (int i = 1; i <= jobPostings.getCount(); i++) {
+            Employer company = jobPostings.getPosition(i).getEmployer();
+            if (!companies.contains(company)) {
+                companies.insertBack(company);
+            }
+        }
+
+        // Step 2: Sort companies alphabetically (simple bubble sort)
+        for (int i = 1; i <= companies.getCount(); i++) {
+            for (int j = i + 1; j <= companies.getCount(); j++) {
+                Employer company1 = companies.getPosition(i);
+                Employer company2 = companies.getPosition(j);
+                if (company1.getName().compareToIgnoreCase(company2.getName()) > 0) {
+                    companies.replacePosition(company2, i);
+                    companies.replacePosition(company1, j);
+                }
+            }
+        }
+
+        // Step 3: Rebuild the list grouped by sorted companies
+        DoublyLinkedListInterface<JobPosting> sortedJobs = new DoublyLinkedList<>();
+        for (int i = 1; i <= companies.getCount(); i++) {
+            Employer company = companies.getPosition(i);
+            for (int j = 1; j <= jobPostings.getCount(); j++) {
+                JobPosting job = jobPostings.getPosition(j);
+                if (job.getEmployer().equals(company)) {
+                    sortedJobs.insertBack(job);
+                }
+            }
+        }
+
+        jobPostings = sortedJobs;
+    }
+    
     //display all job postings
-    public void viewAllJobs() { //NEED SORT AND CHK EMPLOYER
+    public void viewAllJobs() { 
         if (jobPostings.isEmpty()) {
             System.out.println("No job postings available.");
         } else {
+            
+            sortJobsByCompany();
+            
             System.out.println("\n+-------------------------------------------------+");
             System.out.println("|                All Job Postings                 |");
             System.out.println("+-------------------------------------------------+");
@@ -477,5 +537,18 @@ public class JobManagement {
       }
     }
         
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }

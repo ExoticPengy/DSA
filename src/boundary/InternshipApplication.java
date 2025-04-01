@@ -247,7 +247,7 @@ public class InternshipApplication {
                     case 1:
                         //jobManagement.createJobPosting(employer);
                         //jobManagement.updatedJobPosting();
-                        jobManagement.RemoveJobPosting();
+                        jobManagement.createJobPosting(employer);
                         break;
                     case 2:
                         //applicant management module
