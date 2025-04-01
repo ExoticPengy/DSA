@@ -10,6 +10,7 @@ import boundary.MatchingUI;
 import entity.JobPosting;
 import entity.JobSeeker;
 import entity.Match;
+import entity.Score;
 import entity.Skill;
 
 /**
@@ -38,8 +39,8 @@ public class MatchingEngine {
     }
     
     public void startMatchingEngine(JobSeeker jobSeeker) {
-        matchJobs(jobSeeker);
-        sortMatch(jobSeeker);
+        calculateMatches();
+        sortMatch();
         displayMatches(jobSeeker);
         switch(matchingUI.askApplyJob()) {
             case 1:
@@ -51,53 +52,30 @@ public class MatchingEngine {
     }
     
     public void applyJob(JobSeeker jobSeeker) {
-        matchingUI.selectJob(matchList.getPosition(getCurrentMatchIndex(jobSeeker)).getJobPostingList().getCount());
+        matchingUI.selectJob(matchList.getPosition(getCurrentSeekerIndex(jobSeeker)).getJobPostingList().getCount());
     }
     
     public void displayMatches(JobSeeker jobSeeker) {
-        if (hasMatched(jobSeeker)) {
+        if (jobSeeker != null) {
             matchingUI.displayMatchHead();
-            Match match = matchList.getPosition(getCurrentMatchIndex(jobSeeker));
+            Match match = matchList.getPosition(getCurrentSeekerIndex(jobSeeker));
             for (int i = 1; i <= match.getJobPostingList().getCount(); i++) {
                 matchingUI.displayJobMatches(match, i);
             }
         }
     }
     
-    // To get all students matches
-    public void matchJobs() {
-        matchList.clear();
-        for (int i = 1; i <= jobSeekerList.getCount(); i++) {
-            JobSeeker jobSeeker = jobSeekerList.getPosition(i);
-            matchList.insertUniqueBack(new Match(jobSeeker, copyJobPostingList(), calculateMatches(jobSeeker)));
+    private int getCurrentSeekerIndex(JobSeeker jobSeeker) {
+        if (jobSeeker == null) {
+            return 0;
         }
-    }
-    
-    // To get only one student match
-    public void matchJobs(JobSeeker jobSeeker) {
-        matchList.clear();
-        matchList.insertUniqueBack(new Match(jobSeeker, copyJobPostingList(), calculateMatches(jobSeeker)));
-    }
-    
-    private void sortMatch(JobSeeker jobSeeker) {
-        Match match = matchList.getPosition(getCurrentMatchIndex(jobSeeker));
         
-        quickSort(match, 1, match.getMatchedScoreList().getCount());
-    }
-    
-    private Boolean hasMatched(JobSeeker jobSeeker) {
-        for (int i = 1; i <= matchList.getCount(); i++) {
-            if (matchList.getPosition(i).getJobSeeker().equals(jobSeeker)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    private int getCurrentMatchIndex(JobSeeker jobSeeker) {
-        for (int i = 1; i <= matchList.getCount(); i++) {
-            Match match = matchList.getPosition(i);
-            if (match.getJobSeeker().equals(jobSeeker)) {
+        Match latestMatch = matchList.getBack();
+        DoublyLinkedListInterface<JobSeeker> latestJobSeekerList = latestMatch.getJobSeekerList();
+        
+        for (int i = 1; i <= latestJobSeekerList.getCount(); i++) {
+            JobSeeker currentJobSeeker = latestJobSeekerList.getPosition(i);
+            if (currentJobSeeker.equals(jobSeeker)) {
                 return i;
             }
         }
@@ -105,100 +83,116 @@ public class MatchingEngine {
         return 0;
     }
     
-    private DoublyLinkedListInterface<Double> calculateMatches(JobSeeker jobSeeker) {
-        if (jobSeeker == null) {
-            return null;
-        }
+    private void calculateMatches() {
+        DoublyLinkedListInterface<JobSeeker> newJobSeekerList = copyJobSeekerList();
+        DoublyLinkedListInterface<DoublyLinkedListInterface<Score>> matchedScoreList = new DoublyLinkedList<>();
+        
+        if (newJobSeekerList != null) {
+            for (int i = 1; i <= jobSeekerList.getCount(); i++) {
+                
+                JobSeeker jobSeeker = jobSeekerList.getPosition(i);
+                
+                DoublyLinkedListInterface<JobPosting> newJobPostingList = copyJobPostingList();
+                DoublyLinkedListInterface<Score> scoreList = new DoublyLinkedList<>();
 
-        DoublyLinkedListInterface<JobPosting> newJobPostingList = copyJobPostingList();
-        DoublyLinkedListInterface<Double> scoreList = new DoublyLinkedList<>();
+                int communicationSkill = 0;
+                int leadershipSkill = 0;
+                int programmingSkill = 0;
+                int analysisSkill = 0;
 
-        int communicationSkill = 0;
-        int leadershipSkill = 0;
-        int programmingSkill = 0;
-        int analysisSkill = 0;
+                for (int j = 1; j <= jobSeeker.getSkills().getCount(); j++) {
+                    Skill skill = jobSeeker.getSkills().getPosition(j);
+                    switch(skill.getName()) {
+                        case "Communication":
+                            communicationSkill = skill.getProficiency();
+                            break;
+                        case "Leadership":
+                            leadershipSkill = skill.getProficiency();
+                            break;
+                        case "Programming":
+                            programmingSkill = skill.getProficiency();
+                            break;
+                        case "Analysis":
+                            analysisSkill = skill.getProficiency();
+                            break;
+                    } //switch
+                } //forloop j
 
-        for (int i = 1; i <= jobSeeker.getSkills().getCount(); i++) {
-            Skill skill = jobSeeker.getSkills().getPosition(i);
-            switch(skill.getName()) {
-                case "Communication":
-                    communicationSkill = skill.getProficiency();
-                    break;
-                case "Leadership":
-                    leadershipSkill = skill.getProficiency();
-                    break;
-                case "Programming":
-                    programmingSkill = skill.getProficiency();
-                    break;
-                case "Analysis":
-                    analysisSkill = skill.getProficiency();
-                    break;
-            } //switch
-        } //forloop
+                for (int j = 1; j <= newJobPostingList.getCount(); j++) {
+                    JobPosting jobPosting = newJobPostingList.getPosition(j);
+                    int matchScore = 0;
 
-        for (int i = 1; i <= newJobPostingList.getCount(); i++) {
-            JobPosting jobPosting = newJobPostingList.getPosition(i);
-            double matchScore = 0.0;
+                    boolean communicationRequired = false;
+                    boolean leadershipRequired = false;
+                    boolean programmingRequired = false;
+                    boolean analysisRequired = false;
 
-            boolean communicationRequired = false;
-            boolean leadershipRequired = false;
-            boolean programmingRequired = false;
-            boolean analysisRequired = false;
+                    for (int k = 1; k <= jobPosting.getSkills().getCount(); k++) {
+                        Skill requiredSkill = jobPosting.getSkills().getPosition(k);
+                        int jobSeekerSkillProficiency = 0;
 
-            for (int j = 1; j <= jobPosting.getSkills().getCount(); j++) {
-                Skill requiredSkill = jobPosting.getSkills().getPosition(j);
-                int jobSeekerSkillProficiency = 0;
+                        switch(requiredSkill.getName()) {
+                            case "Communication":
+                                jobSeekerSkillProficiency = communicationSkill;
+                                communicationRequired = true;
+                                break;
+                            case "Leadership":
+                                jobSeekerSkillProficiency = leadershipSkill;
+                                leadershipRequired = true;
+                                break;
+                            case "Programming":
+                                jobSeekerSkillProficiency = programmingSkill;
+                                programmingRequired = true;
+                                break;
+                            case "Analysis":
+                                jobSeekerSkillProficiency = analysisSkill;
+                                analysisRequired = true;
+                                break;
+                        }
 
-                switch(requiredSkill.getName()) {
-                    case "Communication":
-                        jobSeekerSkillProficiency = communicationSkill;
-                        communicationRequired = true;
-                        break;
-                    case "Leadership":
-                        jobSeekerSkillProficiency = leadershipSkill;
-                        leadershipRequired = true;
-                        break;
-                    case "Programming":
-                        jobSeekerSkillProficiency = programmingSkill;
-                        programmingRequired = true;
-                        break;
-                    case "Analysis":
-                        jobSeekerSkillProficiency = analysisSkill;
-                        analysisRequired = true;
-                        break;
-                }
+                        if (jobSeekerSkillProficiency >= requiredSkill.getProficiency()) {
+                            matchScore += (jobSeekerSkillProficiency * 2);
+                        } else {
+                            matchScore += jobSeekerSkillProficiency;
+                        }
+                    } //inner forloopk
 
-                if (jobSeekerSkillProficiency >= requiredSkill.getProficiency()) {
-                    matchScore += (jobSeekerSkillProficiency * 2);
-                } else {
-                    matchScore += jobSeekerSkillProficiency;
-                }
-            } //inner forloop
+                    if (!communicationRequired) {
+                        matchScore += communicationSkill;
+                    }
+                    if (!leadershipRequired) {
+                        matchScore += leadershipSkill;
+                    }
+                    if (!programmingRequired) {
+                        matchScore += programmingSkill;
+                    }
+                    if (!analysisRequired) {
+                        matchScore += analysisSkill;
+                    }
 
-            if (!communicationRequired) {
-                matchScore += communicationSkill;
-            }
-            if (!leadershipRequired) {
-                matchScore += leadershipSkill;
-            }
-            if (!programmingRequired) {
-                matchScore += programmingSkill;
-            }
-            if (!analysisRequired) {
-                matchScore += analysisSkill;
-            }
+                    // Add 10 points if location matches
+                    if (jobPosting.getEmployer().getLocation().equals(jobSeeker.getLocation())) {
+                        matchScore += 10;
+                    }
 
-            // Add 10 points if location matches
-            if (jobPosting.getEmployer().getLocation().equals(jobSeeker.getLocation())) {
-                matchScore += 10;
-            }
-
-            // Insert the match score into the score list
-            scoreList.insertPosition(matchScore, i);
-        } //outer forloop
-
-        return scoreList;
+                    // Insert the match score into the score list
+                    scoreList.insertBack(new Score(jobPosting, matchScore));
+                } //outer forloop j
+                matchedScoreList.insertBack(scoreList);
+            } //forloop i
+            matchList.insertBack(new Match(newJobSeekerList, matchedScoreList));
+        } //if null check
     } //calculateMatch
+        
+    private DoublyLinkedListInterface<JobSeeker> copyJobSeekerList() {
+        DoublyLinkedListInterface<JobSeeker> copiedList = new DoublyLinkedList<>();
+        for (int i = 1; i <= jobSeekerList.getCount(); i++) {
+            JobSeeker originalJobSeeker = jobSeekerList.getPosition(i);
+            JobSeeker copiedJobSeeker = new JobSeeker(originalJobSeeker);
+            copiedList.insertBack(copiedJobSeeker);
+        }
+        return copiedList;
+    }
     
     private DoublyLinkedListInterface<JobPosting> copyJobPostingList() {
         DoublyLinkedListInterface<JobPosting> copiedList = new DoublyLinkedList<>();
@@ -210,37 +204,42 @@ public class MatchingEngine {
         return copiedList;
     }
     
-    private void quickSort(Match match, int low, int high) {
+    private void sortMatch() {
+        Match match = matchList.getBack();
+        
+        for (int i = 1; i <= match.getJobSeekerList().getCount(); i++) {
+            quickSort(match, i, 1, match.getMatchedScoreList().getCount());
+        }
+    }
+    
+    private void quickSort(Match match, int index, int low, int high) {
         if (low < high) {
-            int partitionIndex = partition(match, low, high);
+            int partitionIndex = partition(match, index, low, high);
 
-            quickSort(match, low, partitionIndex - 1);
-            quickSort(match, partitionIndex + 1, high);
+            quickSort(match, index, low, partitionIndex - 1);
+            quickSort(match, index, partitionIndex + 1, high);
         }
     }
 
-    private int partition(Match match, int low, int high) {
-        double pivot = match.getMatchedScoreList().getPosition(high);
+    private int partition(Match match, int index, int low, int high) {
+        double pivot = match.getMatchedScoreList().getPosition(index).getPosition(high).getScore();
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
-            if (match.getMatchedScoreList().getPosition(j) >= pivot) {
+            if (match.getMatchedScoreList().getPosition(index).getPosition(j).getScore() >= pivot) {
                 i++;
-                swap(match, i, j);
+                swap(match, index, i, j);
             }
         }
 
-        swap(match, i + 1, high);
+        swap(match, index, i + 1, high);
         return i + 1;
     }
 
-    private void swap(Match match, int i, int j) {
-        JobPosting tempJob = match.getJobPostingList().getPosition(i);
-        double tempScore = match.getMatchedScoreList().getPosition(i);
+    private void swap(Match match, int index, int i, int j) {
+        Score tempScore = match.getMatchedScoreList().getPosition(index).getPosition(i);
         
-        match.getJobPostingList().replacePosition(match.getJobPostingList().getPosition(j), i);
-        match.getJobPostingList().replacePosition(tempJob, j);
-        match.getMatchedScoreList().replacePosition(match.getMatchedScoreList().getPosition(j), i);
-        match.getMatchedScoreList().replacePosition(tempScore, j);
+        match.getMatchedScoreList().getPosition(index).replacePosition(match.getMatchedScoreList().getPosition(index).getPosition(j), i);
+        match.getMatchedScoreList().getPosition(index).replacePosition(tempScore, j);
     }
 }

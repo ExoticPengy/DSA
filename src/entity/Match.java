@@ -13,44 +13,37 @@ import adt.DoublyLinkedListInterface;
  * @author USER
  */
 public class Match {
-    private JobSeeker jobSeeker;
-    private DoublyLinkedListInterface<JobPosting> jobPostingList;
-    private DoublyLinkedListInterface<Double> matchedScoreList;
+    private DoublyLinkedListInterface<JobSeeker> jobSeekerList;
+    private DoublyLinkedListInterface<DoublyLinkedListInterface<Score>> matchedScoreList;
 
-    public Match(JobSeeker jobSeeker, DoublyLinkedListInterface<JobPosting> jobPostingList, DoublyLinkedListInterface<Double> matchedScoreList) {
-        this.jobSeeker = jobSeeker;
-        this.jobPostingList = jobPostingList;
+    public Match(DoublyLinkedListInterface<JobSeeker> jobSeekerList, DoublyLinkedListInterface<DoublyLinkedListInterface<Score>> matchedScoreList) {
+        this.jobSeekerList = jobSeekerList;
         this.matchedScoreList = matchedScoreList;
     }
 
-    public JobSeeker getJobSeeker() {
-        return jobSeeker;
+    public DoublyLinkedListInterface<JobSeeker> getJobSeekerList() {
+        return jobSeekerList;
     }
 
-    public DoublyLinkedListInterface<JobPosting> getJobPostingList() {
-        return jobPostingList;
-    }
-
-    public DoublyLinkedListInterface<Double> getMatchedScoreList() {
+    public DoublyLinkedListInterface<DoublyLinkedListInterface<Score>> getMatchedScoreList() {
         return matchedScoreList;
     }
 
-    public void setJobSeeker(JobSeeker jobSeeker) {
-        this.jobSeeker = jobSeeker;
+    public void setJobSeekerList(DoublyLinkedListInterface<JobSeeker> jobSeekerList) {
+        this.jobSeekerList = jobSeekerList;
     }
 
-    public void setJobPostingList(DoublyLinkedListInterface<JobPosting> jobPostingList) {
-        this.jobPostingList = jobPostingList;
-    }
-
-    public void setMatchedScoreList(DoublyLinkedListInterface<Double> matchedScoreList) {
+    public void setMatchedScoreList(DoublyLinkedListInterface<DoublyLinkedListInterface<Score>> matchedScoreList) {
         this.matchedScoreList = matchedScoreList;
     }
 
     @Override
     public String toString() {
-        return "Match{" + "jobSeeker=" + jobSeeker + ", jobPostingList=" + jobPostingList + ", matchedScoreList=" + matchedScoreList + '}';
+        return "Match{" + "jobSeekerList=" + jobSeekerList + ", matchedScoreList=" + matchedScoreList + '}';
     }
+
+    
+    
 
     
 }
