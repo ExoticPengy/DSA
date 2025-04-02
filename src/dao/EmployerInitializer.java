@@ -17,9 +17,9 @@ public class EmployerInitializer {
     public DoublyLinkedListInterface<Employer> getEmployer() {
         DoublyLinkedListInterface<Employer> employerList = new DoublyLinkedList<>();
 
-        employerList.insertBack(new Employer("Macrosoft", "No.288, Jalan Damansara, 47800, Petaling Jaya, Selangor", "macrobecausenotmicrosoft@gmail.com"));
-        employerList.insertBack(new Employer("Amazoff", "No.42, Jalan KL 3, 53000, Kuala Lumpur", "amazoffbecausenoton@gmail.com"));
-        employerList.insertBack(new Employer("Mayblank", "No.1, Jalan Puchong, 47100, Puchong, Selangor", "mayblankbecausenomoney@gmail.com"));
+        employerList.insertBack(new Employer("Macrosoft", "Petaling Jaya", "macrobecausenotmicrosoft@gmail.com"));
+        employerList.insertBack(new Employer("Amazoff", "Kuala Lumpur", "amazoffbecausenoton@gmail.com"));
+        employerList.insertBack(new Employer("Mayblank", "Puchong", "mayblankbecausenomoney@gmail.com"));
 
         return employerList;
     }

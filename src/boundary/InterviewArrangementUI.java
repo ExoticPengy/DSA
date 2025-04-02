@@ -35,6 +35,7 @@ public class InterviewArrangementUI {
         } else {
             System.out.println("\nNo interviews scheduled");
         }
+        sc.nextLine();
         MessageUI.pressAnyKeyContinue();
         sc.nextLine();
     }
@@ -65,24 +66,24 @@ public class InterviewArrangementUI {
             System.out.println("| No | Date       | Time      | Job Title                                | Company    | Status     | Score |");
             System.out.println("+----------------------------------------------------------------------------------------------------------+");
             for (int i = 1; i <= studentTimeList.getCount(); i++) {
-                System.out.printf("| %02d | %-10s | %4s-%4s | %-40s | %-10s | %-10s | %5d |\n", i, studentTimeList.getPosition(i).getDate(), studentTimeList.getPosition(i).getStartTime(), studentTimeList.getPosition(i).getEndTime(),studentJobList.getPosition(i).getTitle(), studentJobList.getPosition(i).getEmployer().getName(), studentStatusList.getPosition(i).getStatus(), studentStatusList.getPosition(i).getScore());
+                System.out.printf("| %02d | %-10s | %4s-%4s | %-40s | %-10s | %-10s | %5d |\n", i, studentTimeList.getPosition(i).getDate(), studentTimeList.getPosition(i).getStartTime(), studentTimeList.getPosition(i).getEndTime(), studentJobList.getPosition(i).getTitle(), studentJobList.getPosition(i).getEmployer().getName(), studentStatusList.getPosition(i).getStatus(), studentStatusList.getPosition(i).getScore());
             }
             System.out.println("+----------------------------------------------------------------------------------------------------------+");
 
         } else {
-            System.out.println("\nNo interviews scheduled");
+            System.out.println("\nNo interviews result available");
         }
         MessageUI.pressAnyKeyContinue();
         sc.nextLine();
     }
 
-    public void companyResultUI(DoublyLinkedListInterface<String> companyDateList, DoublyLinkedListInterface<String> companyTimeList, DoublyLinkedListInterface<String> companyJobList, DoublyLinkedListInterface<String> companyJobSeekerList, DoublyLinkedListInterface<String> companyQualificationList, DoublyLinkedListInterface<DoublyLinkedListInterface<Skill>> companySkillList, DoublyLinkedListInterface<String> companyStatusList, DoublyLinkedListInterface<Integer> companyScoreList) {
-        if (companyDateList.getCount() != 0) {
+    public void companyResultUI(DoublyLinkedListInterface<Time> companyTimeList, DoublyLinkedListInterface<JobPosting> companyJobList, DoublyLinkedListInterface<JobSeeker> companyJobSeekerList, DoublyLinkedListInterface<DoublyLinkedListInterface<Skill>> companySkillList, DoublyLinkedListInterface<Status> companyStatusList) {
+        if (companyTimeList.getCount() != 0) {
             System.out.println("\n+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
             System.out.println("| No | Date       | Time      | Job Title                                | Applicant       | Qualification                       | Skills           | Status     | Score |");
             System.out.println("+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-            for (int i = 1; i <= companyDateList.getCount(); i++) {
-                System.out.printf("| %02d | %-10s | %9s | %-40s | %-15s | %-35s | %-13s %2d | %-10s | %5d |\n", i, companyDateList.getPosition(i), companyTimeList.getPosition(i), companyJobList.getPosition(i), companyJobSeekerList.getPosition(i), companyQualificationList.getPosition(i), companySkillList.getPosition(i).getPosition(1).getName(), companySkillList.getPosition(i).getPosition(1).getProficiency(), companyStatusList.getPosition(i), companyScoreList.getPosition(i));
+            for (int i = 1; i <= companyTimeList.getCount(); i++) {
+                System.out.printf("| %02d | %-10s | %4s-%4s | %-40s | %-15s | %-35s | %-13s %2d | %-10s | %5d |\n", i, companyTimeList.getPosition(i).getDate(), companyTimeList.getPosition(i).getStartTime(), companyTimeList.getPosition(i).getEndTime(), companyJobList.getPosition(i).getTitle(), companyJobSeekerList.getPosition(i).getName(), companyJobSeekerList.getPosition(i).getQualification(), companySkillList.getPosition(i).getPosition(1).getName(), companySkillList.getPosition(i).getPosition(1).getProficiency(), companyStatusList.getPosition(i).getStatus(), companyStatusList.getPosition(i).getScore());
 
                 for (int j = 2; j <= companySkillList.getPosition(i).getCount(); j++) {
                     System.out.printf("|    |            |           |                                          |                 |                                     | %-13s %2d |            |       |\n", companySkillList.getPosition(i).getPosition(j).getName(), companySkillList.getPosition(i).getPosition(j).getProficiency());
@@ -90,9 +91,33 @@ public class InterviewArrangementUI {
                 System.out.println("+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
             }
         } else {
-            System.out.println("\nNo interviews scheduled");
+            System.out.println("\nNo interviews result available");
         }
         MessageUI.pressAnyKeyContinue();
         sc.nextLine();
+    }
+
+    public int sortStudentScheduleUI(boolean isNum) {
+        if (isNum) {
+            System.out.println("\n+--------------------+");
+            System.out.println("|  Sort By           |");
+            System.out.println("+--------------------+");
+            System.out.println("|  1. Date and Time  |");
+            System.out.println("|  2. Job Title      |");
+            System.out.println("|  3. Company        |");
+            System.out.println("|  4. Status         |");
+            System.out.println("+--------------------+");
+        }
+        System.out.print("Enter a choice: ");
+
+        if (sc.hasNextInt()) {
+            //isNum = true;
+            return sc.nextInt();
+        } else {
+            //isNum = false;
+            MessageUI.displayInvalidCharacterMessage();
+            sc.next();
+            return -1;
+        }
     }
 }
