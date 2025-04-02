@@ -64,12 +64,12 @@ public class InterviewInitializer {
         interviewTimeList.insertFront(timeList);
         
         status.setStatus("Scheduled");
-        status.setScore("0");
+        status.setScore(0);
         statusList.insertFront(status);
         
         status = new Status();
         status.setStatus("Rejected");
-        status.setScore("20");
+        status.setScore(20);
         statusList.insertBack(status);
         interviewStatusList.insertFront(statusList);
         
@@ -105,12 +105,12 @@ public class InterviewInitializer {
         interviewTimeList.insertFront(timeList);
         
         status.setStatus("Hired");
-        status.setScore("90");
+        status.setScore(90);
         statusList.insertFront(status);
         
         status = new Status();
         status.setStatus("Scheduled");
-        status.setScore("0");
+        status.setScore(0);
         statusList.insertBack(status);
         interviewStatusList.insertFront(statusList);
         
