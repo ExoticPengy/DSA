@@ -10,7 +10,7 @@ package entity;
  */
 public class Status {
     private String status;
-    private String score;
+    private int score;
 
     public String getStatus() {
         return status;
@@ -20,15 +20,15 @@ public class Status {
         this.status = status;
     }
 
-    public String getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
-    public Status(String status, String score) {
+    public Status(String status, int score) {
         this.status = status;
         this.score = score;
     }

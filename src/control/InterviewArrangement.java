@@ -33,12 +33,12 @@ public class InterviewArrangement {
     private DoublyLinkedListInterface<JobPosting> studentJobList;
     private DoublyLinkedListInterface<Status> studentStatusList;
 
-    private DoublyLinkedListInterface<DoublyLinkedListInterface<Time>> companyTimeList;
+    private DoublyLinkedListInterface<Time> companyTimeList;
     private DoublyLinkedListInterface<JobPosting> companyJobList;
     private DoublyLinkedListInterface<JobSeeker> companyJobSeekerList;
     private DoublyLinkedListInterface<DoublyLinkedListInterface<Skill>> companySkillList;
     private DoublyLinkedListInterface<Status> companyStatusList;
-    
+
     private LocalDate currentDate;
     private DateTimeFormatter formatter;
 
@@ -47,22 +47,22 @@ public class InterviewArrangement {
     public InterviewArrangement() {
         interviewList = new DoublyLinkedList<>();
         interviewInitializer = new InterviewInitializer();
-        
+
         currentDate = LocalDate.now();
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         interviewUI = new InterviewArrangementUI();
     }
 
-    public void runInterviewArrangement(){
+    public void runInterviewArrangement() {
         interviewList = interviewInitializer.getInterview();
     }
-    
+
     public void displayStudentSchedule(JobSeeker jobSeeker) {
         studentTimeList = new DoublyLinkedList<>();
         studentJobList = new DoublyLinkedList<>();
         studentStatusList = new DoublyLinkedList<>();
-        
+
         for (int i = 1; i <= interviewList.getCount(); i++) {
             for (int j = 1; j <= interviewList.getPosition(i).getJobSeekerList().getCount(); j++) {
                 for (int k = 1; k <= interviewList.getPosition(i).getJobSeekerList().getPosition(j).getCount(); k++) {
@@ -84,26 +84,28 @@ public class InterviewArrangement {
         companyJobSeekerList = new DoublyLinkedList<>();
         companySkillList = new DoublyLinkedList<>();
         companyStatusList = new DoublyLinkedList<>();
-//        
-//        for (int i = 1; i <= interviewList.getCount(); i++) {
-//            for (int j = 1; j <= interviewList.getCount(); j++) {
-//                if (interviewList.getPosition(i).getJobPosting().getEmployer().getName() == employer.getName()) {
-//                    companyTimeList.insertBack(interviewList.getPosition(i).getTimeList().getPosition(j));
-//                    companyJobList.insertBack(interviewList.getPosition(i).getJobPosting().getTitle());
-//                    companyJobSeekerList.insertBack(interviewList.getPosition(i).getJobSeekerList().getPosition(j).getName());
-//                    companySkillList.insertBack(interviewList.getPosition(i).getJobSeekerList().getPosition(j).getSkills());
-//                    companyStatusList.insertBack(interviewList.getPosition(i).getStatusList().getPosition(j));
-//                }
-//            }
-//        }
-//        interviewUI.companyScheduleUI(companyTimeList, companyJobList, companyJobSeekerList, companySkillList, companyStatusList);
+
+        for (int i = 1; i <= interviewList.getCount(); i++) {
+            for (int j = 1; j <= interviewList.getPosition(i).getJobSeekerList().getCount(); j++) {
+                for (int k = 1; k <= interviewList.getPosition(i).getJobSeekerList().getPosition(j).getCount(); k++) {
+                    if (interviewList.getPosition(i).getJobPostingList().getPosition(j).getEmployer().getName().equals(employer.getName())) {
+                        companyTimeList.insertBack(interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k));
+                        companyJobList.insertBack(interviewList.getPosition(i).getJobPostingList().getPosition(j));
+                        companyJobSeekerList.insertBack(interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k));
+                        companySkillList.insertBack(interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills());
+                        companyStatusList.insertBack(interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k));
+                    }
+                }
+            }
+        }
+        interviewUI.companyScheduleUI(companyTimeList, companyJobList, companyJobSeekerList, companySkillList, companyStatusList);
     }
 
     public void displayStudentResult(JobSeeker jobSeeker) {
         studentTimeList = new DoublyLinkedList<>();
         studentJobList = new DoublyLinkedList<>();
         studentStatusList = new DoublyLinkedList<>();
-        
+
 //        for (int i = 1; i <= studentInterviewList.getCount(); i++) {
 //            for (int j = 1; j <= studentInterviewList.getPosition(i).getJobSeekerList().getCount(); j++) {
 //                if (studentInterviewList.getPosition(i).getJobSeekerList().getPosition(j).getName() == jobSeeker.getName()) {
@@ -117,7 +119,7 @@ public class InterviewArrangement {
 //                }
 //            }
 //        }
-//        interviewUI.studentResultUI(studentTimeList, studentJobList, studentCompanyList, studentStatusList, studentScoreList);
+        interviewUI.studentResultUI(studentTimeList, studentJobList,  studentStatusList);
     }
 
     public void displayCompanyResult(Employer employer) {
