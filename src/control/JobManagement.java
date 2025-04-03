@@ -63,7 +63,7 @@ public class JobManagement {
                 while (!validOption) {
                     System.out.print("\nWhat is the skill required?\n"
                             + "1. Communication \n2. Leadership \n3. Programming \n4. Analysis\n"
-                            + "Enter your choice: ");
+                            + "\nEnter your choice: ");
 
                     try {
                         choice = scanner.nextInt();
@@ -97,7 +97,7 @@ public class JobManagement {
                 // Get proficiency level
                 validOption = false;
                 while (!validOption) {
-                    System.out.print("Enter proficiency of chosen skill (1-10): ");
+                    System.out.print(" *Enter proficiency of chosen skill (1-10): ");
 
                     try {
                         proficiency = scanner.nextInt();
@@ -501,15 +501,15 @@ public class JobManagement {
             return;
         }
 
-        System.out.println("\n+-----------------------------------+");
+        System.out.println("\n+--------------------------------+");
         System.out.println("|         Search Job Posting        |");
-        System.out.println("+-----------------------------------+");
+        System.out.println("+--------------------------------+");
         System.out.println("| Search by:                     |");
         System.out.println("| 1. Job Title                   |");
         System.out.println("| 2. Skill Required              |");
         System.out.println("| 3. Salary Range                |");
         System.out.println("| 4. Back to Menu                |");
-        System.out.println("+-----------------------------------+");
+        System.out.println("+--------------------------------+");
         System.out.print("Enter your choice: ");
 
         int searchChoice = scanner.nextInt();
@@ -608,8 +608,8 @@ public class JobManagement {
         System.out.println("Description: " + job.getDescription());
         System.out.println("Skills Required:");
         for (int j = 1; j <= job.getSkills().getCount(); j++) {
-            Skill skill = job.getSkills().getPosition(j);
-            System.out.println("  • " + skill.getName() + " (Proficiency: " + skill.getProficiency() + ")");
+            System.out.println(j + ". " + job.getSkills().getPosition(j).getName() 
+            + ": " + job.getSkills().getPosition(j).getProficiency());
         }
         System.out.println("--------------------------------------------------");
     }
