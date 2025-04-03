@@ -24,9 +24,15 @@ public class EmployerManagement {
         employerList = new DoublyLinkedList<>();
     }
     
-    public void runEmployerManagement(){
+    public void initializeEmployer() {
         employerList = employerInitializer.getEmployer();
-        
+    }
+    
+    public DoublyLinkedListInterface<Employer> getEmployerList() {
+        return employerList;
+    }
+    
+    public void runEmployerManagement(){
         internshipApplication.companyNameMenu(employerList);
     }
 }

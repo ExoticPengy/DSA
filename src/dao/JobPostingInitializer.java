@@ -15,15 +15,9 @@ import entity.Skill;
  * @author mings
  */
 public class JobPostingInitializer {
-    private EmployerInitializer employerInitializer;
     
-    public JobPostingInitializer(){
-        employerInitializer = new EmployerInitializer();
-    }
-   
-    public DoublyLinkedListInterface<JobPosting> getJobPosting() {
+    public DoublyLinkedListInterface<JobPosting> getJobPosting(DoublyLinkedListInterface<Employer> employerList) {
         DoublyLinkedListInterface<JobPosting> jobList = new DoublyLinkedList<>();
-        DoublyLinkedListInterface<Employer> employerList = employerInitializer.getEmployer();
         Employer employer;
         
         employer = employerList.getPosition(1);

@@ -31,8 +31,7 @@ public class InternshipApplication {
     private static boolean isNum = true;
 
     public static void main(String[] args) {
-        //jobManagement.runJobManagement();
-        //jobManagement.updatedJobPosting();
+        employerManagement.initializeEmployer();
         
         int num = 0;
 
@@ -221,7 +220,7 @@ public class InternshipApplication {
 
     public static void companyMenu(Employer employer) {
         int companyNum = 0;
-        jobManagement.runJobManagement();
+        jobManagement.runJobManagement(employerManagement.getEmployerList());
         do {
             if (isNum) {
                 System.out.println("\n+-------------------------------------+");
@@ -245,10 +244,11 @@ public class InternshipApplication {
 
                 switch (companyNum) {
                     case 1:
-                        jobManagement.createJobPosting(employer);
+                        //jobManagement.createJobPosting(employer);
+                        jobManagement.viewEmployerJobPosting(employer);
                         break;
                     case 2:
-                        jobManagement.searchJobs(employer);
+                        //jobManagement.searchJobs(employer);
                         //applicant management module
                         break;
                     case 3:

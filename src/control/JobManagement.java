@@ -27,8 +27,8 @@ public class JobManagement {
         jobPostings = new DoublyLinkedList<>();
     }
     
-    public void runJobManagement() {
-        jobPostings = jobPostingInitializer.getJobPosting();
+    public void runJobManagement(DoublyLinkedListInterface<Employer> employerList) {
+        jobPostings = jobPostingInitializer.getJobPosting(employerList);
     }
     
     public DoublyLinkedListInterface<JobPosting> getJobPostingList() {
@@ -151,14 +151,14 @@ public class JobManagement {
         System.out.println("|             Newly Created Job Posting         |");
         System.out.println("+-----------------------------------------------+");
         System.out.println("Employer: " + job.getEmployer().getName());
-        System.out.println("Title: " + job.getTitle());
+        System.out.println("Job Title: " + job.getTitle());
         System.out.println("Description: " + job.getDescription());
         System.out.println("Salary Range: " + job.getSalaryRange());
         System.out.println("Qualification: " + job.getQualification());
         System.out.println("Skills Required:");
         for (int j = 1; j <= job.getSkills().getCount(); j++) {
-            Skill skill = job.getSkills().getPosition(j);
-            System.out.println("  " + j + ". " + skill.getName() + ": " + skill.getProficiency());
+            System.out.println(" " + j + ". " + job.getSkills().getPosition(j).getName() 
+            + ": " + job.getSkills().getPosition(j).getProficiency());
         }
         System.out.println("--------------------------------------------------");
         System.out.println("Job posting created successfully!");
@@ -187,9 +187,34 @@ public class JobManagement {
             }
         }
     }
-
-    
-    
+    public void viewEmployerJobPosting(Employer currentEmployer) { 
+        if (jobPostings.isEmpty()) {
+            System.out.println("No job postings available.");
+        } else {
+                  
+            System.out.println("\n+-------------------------------------------------+");
+            System.out.println("|                All Job Postings                 |");
+            System.out.println("+-------------------------------------------------+");
+            for (int i = 1; i <= jobPostings.getCount(); i++) { 
+                JobPosting job = jobPostings.getPosition(i);
+                if (!job.getEmployer().equals(currentEmployer)) {
+                    continue;
+                }
+                System.out.println("Employer: " + job.getEmployer().getName());
+                System.out.println("Job Title: " + job.getTitle());
+                System.out.println("Description: " + job.getDescription());
+                System.out.println("Salary Range: " + job.getSalaryRange());
+                System.out.println("Qualification: " + job.getQualification());
+                System.out.println("Skills Required: ");
+                for (int j = 1; j <= job.getSkills().getCount(); j++) {
+                    System.out.println(" " + j + ". " + job.getSkills().getPosition(j).getName() 
+                            + ": " + job.getSkills().getPosition(j).getProficiency());
+                }
+                System.out.println("--------------------------------------------------");
+            }
+        }
+    }
+ 
     //display all job postings
     public void viewAllJobs() { 
         if (jobPostings.isEmpty()) {
@@ -202,13 +227,13 @@ public class JobManagement {
             for (int i = 1; i <= jobPostings.getCount(); i++) { 
                 JobPosting job = jobPostings.getPosition(i); 
                 System.out.println("Employer: " + job.getEmployer().getName());
-                System.out.println("Title: " + job.getTitle());
+                System.out.println("Job Title: " + job.getTitle());
                 System.out.println("Description: " + job.getDescription());
                 System.out.println("Salary Range: " + job.getSalaryRange());
                 System.out.println("Qualification: " + job.getQualification());
                 System.out.println("Skills Required: ");
                 for (int j = 1; j <= job.getSkills().getCount(); j++) {
-                    System.out.println(j + ". " + job.getSkills().getPosition(j).getName() 
+                    System.out.println(" " + j + ". " + job.getSkills().getPosition(j).getName() 
                             + ": " + job.getSkills().getPosition(j).getProficiency());
                 }
                 System.out.println("--------------------------------------------------");
@@ -256,7 +281,7 @@ public class JobManagement {
         System.out.println("|             Selected Job Posting              |");
         System.out.println("+-----------------------------------------------+");
         System.out.println("Employer: " + jobToUpdate.getEmployer().getName());
-        System.out.println("Title: " + jobToUpdate.getTitle());
+        System.out.println("Job Title: " + jobToUpdate.getTitle());
         System.out.println("Description: " + jobToUpdate.getDescription());
         System.out.println("Salary Range: " + jobToUpdate.getSalaryRange());
         System.out.println("Qualification: " + jobToUpdate.getQualification());
@@ -426,7 +451,7 @@ public class JobManagement {
         System.out.println("|             Selected Job Posting              |");
         System.out.println("+-----------------------------------------------+");
         System.out.println("Employer: " + jobToRemove.getEmployer().getName());
-        System.out.println("Title: " + jobToRemove.getTitle());
+        System.out.println("Job Title: " + jobToRemove.getTitle());
         System.out.println("Description: " + jobToRemove.getDescription());
         System.out.println("Salary Range: " + jobToRemove.getSalaryRange());
         System.out.println("Qualification: " + jobToRemove.getQualification());
@@ -602,10 +627,10 @@ public class JobManagement {
         System.out.println("\n+-----------------------------------------------+");
         System.out.println("|               Job Posting Found              |");
         System.out.println("+-----------------------------------------------+");
-        System.out.println("Company: " + job.getEmployer().getName());
-        System.out.println("Title: " + job.getTitle());
-        System.out.println("Salary: " + job.getSalaryRange());
+        System.out.println("Employer: " + job.getEmployer().getName());
+        System.out.println("Job Title: " + job.getTitle());
         System.out.println("Description: " + job.getDescription());
+        System.out.println("Salary: " + job.getSalaryRange());
         System.out.println("Skills Required:");
         for (int j = 1; j <= job.getSkills().getCount(); j++) {
             System.out.println(j + ". " + job.getSkills().getPosition(j).getName() 
@@ -614,7 +639,7 @@ public class JobManagement {
         System.out.println("--------------------------------------------------");
     }
     
-    
+    //end of search job function-----------------------------------------------------------------------
     
     
 }
