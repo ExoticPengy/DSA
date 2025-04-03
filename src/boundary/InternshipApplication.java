@@ -164,10 +164,10 @@ public class InternshipApplication {
                         matchingEngine.startMatchingEngine(jobSeeker);
                         break;
                     case 2:
-                        interviewArrangement.displayStudentSchedule(jobSeeker);
+                        interviewArrangement.displayStudent(1, jobSeeker);
                         break;
                     case 3:
-                        interviewArrangement.displayStudentResult(jobSeeker);
+                        interviewArrangement.displayStudent(2, jobSeeker);
                         break;
                     case 4:
                         break;
@@ -265,10 +265,10 @@ public class InternshipApplication {
                         //matching engine module
                         break;
                     case 4:
-                        interviewArrangement.displayCompanySchedule(employer);
+                        interviewArrangement.displayCompany(1, employer);
                         break;
                     case 5:
-                        interviewArrangement.displayCompanyResult(employer);
+                        interviewArrangement.displayCompany(2, employer);
                         break;
                     case 6:
                         break;
