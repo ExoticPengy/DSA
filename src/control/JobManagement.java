@@ -187,6 +187,8 @@ public class JobManagement {
             }
         }
     }
+    
+    //view the specific employer's job posting
     public void viewEmployerJobPosting(Employer currentEmployer) { 
         if (jobPostings.isEmpty()) {
             System.out.println("No job postings available.");
@@ -242,175 +244,175 @@ public class JobManagement {
     }
     
     public void updatedJobPosting() {
-    if (jobPostings.isEmpty()) {
-        System.out.println("No job postings available to update.");
-        return;
-    }
-    
-    boolean keepUpdating = true;
-    
-    while (keepUpdating)  {
-        // Display a list of job titles
-        System.out.println("\n+-------------------------------------------+");
-        System.out.println("|            List of Job Postings           |");
-        System.out.println("+-------------------------------------------+");
-        for (int i = 1; i <= jobPostings.getCount(); i++) {
-            JobPosting job = jobPostings.getPosition(i);
-            System.out.println(i + ". " + job.getTitle());
+        if (jobPostings.isEmpty()) {
+            System.out.println("No job postings available to update.");
+            return;
         }
 
-        int choice = 0;
-        boolean chooseJob = false;
-        while (!chooseJob) {
-            System.out.print("\nEnter the job posting number you want to update: ");
-            choice = scanner.nextInt();
+        boolean keepUpdating = true;
+
+        while (keepUpdating)  {
+            // Display a list of job titles
+            System.out.println("\n+-------------------------------------------+");
+            System.out.println("|            List of Job Postings           |");
+            System.out.println("+-------------------------------------------+");
+            for (int i = 1; i <= jobPostings.getCount(); i++) {
+                JobPosting job = jobPostings.getPosition(i);
+                System.out.println(i + ". " + job.getTitle());
+            }
+
+            int choice = 0;
+            boolean chooseJob = false;
+            while (!chooseJob) {
+                System.out.print("\nEnter the job posting number you want to update: ");
+                choice = scanner.nextInt();
+                scanner.nextLine(); 
+
+                if (choice >= 1 && choice <= jobPostings.getCount()) {
+                    chooseJob = true;
+                } else {
+                    System.out.println("Invalid input! Please enter a valid number.");
+                }  
+            }
+
+            // Get the job posting to update
+            JobPosting jobToUpdate = jobPostings.getPosition(choice);
+
+            // Display the selected job posting
+            System.out.println("\n+-----------------------------------------------+");
+            System.out.println("|             Selected Job Posting              |");
+            System.out.println("+-----------------------------------------------+");
+            System.out.println("Employer: " + jobToUpdate.getEmployer().getName());
+            System.out.println("Job Title: " + jobToUpdate.getTitle());
+            System.out.println("Description: " + jobToUpdate.getDescription());
+            System.out.println("Salary Range: " + jobToUpdate.getSalaryRange());
+            System.out.println("Qualification: " + jobToUpdate.getQualification());
+            System.out.println("Skills Required: ");
+            for (int j = 1; j <= jobToUpdate.getSkills().getCount(); j++) {
+                System.out.println(j + ". " + jobToUpdate.getSkills().getPosition(j).getName()
+                        + ": " + jobToUpdate.getSkills().getPosition(j).getProficiency());
+            }
+            System.out.println("+-----------------------------------------------+");
+
+            int updateChoice = 0;
+            boolean validUpdateChoice = false;
+            while (!validUpdateChoice) {
+            System.out.println("\nWhat would you like to update?");
+            System.out.println("1. Title");
+            System.out.println("2. Description");
+            System.out.println("3. Salary Range");
+            System.out.println("4. Qualification");
+            System.out.println("5. Skills");
+            System.out.print("\nEnter your choice: ");
+            updateChoice = scanner.nextInt();
             scanner.nextLine(); 
 
-            if (choice >= 1 && choice <= jobPostings.getCount()) {
-                chooseJob = true;
-            } else {
-                System.out.println("Invalid input! Please enter a valid number.");
-            }  
-        }
-
-        // Get the job posting to update
-        JobPosting jobToUpdate = jobPostings.getPosition(choice);
-
-        // Display the selected job posting
-        System.out.println("\n+-----------------------------------------------+");
-        System.out.println("|             Selected Job Posting              |");
-        System.out.println("+-----------------------------------------------+");
-        System.out.println("Employer: " + jobToUpdate.getEmployer().getName());
-        System.out.println("Job Title: " + jobToUpdate.getTitle());
-        System.out.println("Description: " + jobToUpdate.getDescription());
-        System.out.println("Salary Range: " + jobToUpdate.getSalaryRange());
-        System.out.println("Qualification: " + jobToUpdate.getQualification());
-        System.out.println("Skills Required: ");
-        for (int j = 1; j <= jobToUpdate.getSkills().getCount(); j++) {
-            System.out.println(j + ". " + jobToUpdate.getSkills().getPosition(j).getName()
-                    + ": " + jobToUpdate.getSkills().getPosition(j).getProficiency());
-        }
-        System.out.println("+-----------------------------------------------+");
-
-        int updateChoice = 0;
-        boolean validUpdateChoice = false;
-        while (!validUpdateChoice) {
-        System.out.println("\nWhat would you like to update?");
-        System.out.println("1. Title");
-        System.out.println("2. Description");
-        System.out.println("3. Salary Range");
-        System.out.println("4. Qualification");
-        System.out.println("5. Skills");
-        System.out.print("\nEnter your choice: ");
-        updateChoice = scanner.nextInt();
-        scanner.nextLine(); 
-
-            if(updateChoice >= 1&& updateChoice <= 5) {
-                validUpdateChoice = true;
-            } else {
-                System.out.print("Invalid input! Please enter number 1-5.\n");
+                if(updateChoice >= 1&& updateChoice <= 5) {
+                    validUpdateChoice = true;
+                } else {
+                    System.out.print("Invalid input! Please enter number 1-5.\n");
+                }
             }
-        }
 
-        switch (updateChoice) {
-            case 1:
-                System.out.print("Enter new Title: ");
-                String newTitle = scanner.nextLine();
-                jobToUpdate.setTitle(newTitle);
-                break;
-            case 2:
-                System.out.print("Enter new Description: ");
-                String newDescription = scanner.nextLine();
-                jobToUpdate.setDescription(newDescription);
-                break;
-            case 3:
-                System.out.print("Enter new Salary Range: ");
-                String newSalaryRange = scanner.nextLine();
-                jobToUpdate.setSalaryRange(newSalaryRange);
-                break;
-            case 4:
-                System.out.print("Enter new Qualification: ");
-                String newQualification = scanner.nextLine();
-                jobToUpdate.setQualification(newQualification);
-                break;
-            case 5:
-                System.out.print("\nChoose skill to update: \n");
-                for (int j = 1; j <= jobToUpdate.getSkills().getCount(); j++) {
-                    System.out.println(j + ". " + jobToUpdate.getSkills().getPosition(j).getName()
-                            + ": " + jobToUpdate.getSkills().getPosition(j).getProficiency());
-                }
-            
-                int selectSkill = 0;
-                boolean chooseUpdateSkill = false;
-                while (!chooseUpdateSkill) {
-                System.out.print("\nEnter the skill number you want to update: ");
-                selectSkill = scanner.nextInt();
-                scanner.nextLine();
-
-                    if(selectSkill >= 1 && selectSkill <= jobToUpdate.getSkills().getCount()) {
-                        chooseUpdateSkill = true;
-                    } else {
-                        System.out.print("Invalid input! Please enter a valid number.\n");
+            switch (updateChoice) {
+                case 1:
+                    System.out.print("Enter new Title: ");
+                    String newTitle = scanner.nextLine();
+                    jobToUpdate.setTitle(newTitle);
+                    break;
+                case 2:
+                    System.out.print("Enter new Description: ");
+                    String newDescription = scanner.nextLine();
+                    jobToUpdate.setDescription(newDescription);
+                    break;
+                case 3:
+                    System.out.print("Enter new Salary Range: ");
+                    String newSalaryRange = scanner.nextLine();
+                    jobToUpdate.setSalaryRange(newSalaryRange);
+                    break;
+                case 4:
+                    System.out.print("Enter new Qualification: ");
+                    String newQualification = scanner.nextLine();
+                    jobToUpdate.setQualification(newQualification);
+                    break;
+                case 5:
+                    System.out.print("\nChoose skill to update: \n");
+                    for (int j = 1; j <= jobToUpdate.getSkills().getCount(); j++) {
+                        System.out.println(j + ". " + jobToUpdate.getSkills().getPosition(j).getName()
+                                + ": " + jobToUpdate.getSkills().getPosition(j).getProficiency());
                     }
-                }
 
-                // Get the selected skill
-                Skill selectedSkill = jobToUpdate.getSkills().getPosition(selectSkill);
+                    int selectSkill = 0;
+                    boolean chooseUpdateSkill = false;
+                    while (!chooseUpdateSkill) {
+                    System.out.print("\nEnter the skill number you want to update: ");
+                    selectSkill = scanner.nextInt();
+                    scanner.nextLine();
 
-                int newProficiency = 0;
-                boolean updateProficiency = false;
-                while (!updateProficiency) {
-                System.out.print("Enter new proficiency(1-10): ");
-                newProficiency = scanner.nextInt();
-                scanner.nextLine();
-
-                    if(newProficiency >= 1 && newProficiency <= 10) {
-                          updateProficiency = true;
-                    } else {
-                        System.out.print("Invalid input. Please enter a valid number.\n");
+                        if(selectSkill >= 1 && selectSkill <= jobToUpdate.getSkills().getCount()) {
+                            chooseUpdateSkill = true;
+                        } else {
+                            System.out.print("Invalid input! Please enter a valid number.\n");
+                        }
                     }
-                }
-                selectedSkill.setProficiency(newProficiency);  
-                break;
-            
-            default:
-                System.out.println("Invalid input! Please enter a valid number.");
-                return;
-        }
-    
-        // Replace the old job posting with the updated one
-        jobPostings.replacePosition(jobToUpdate, choice);
-        System.out.println("Job posting updated successfully!");
 
-        // Display all job postings after updating
-        System.out.println("\nUpdated Job Postings:");
-        viewAllJobs();
-    
-        // Ask repeat
-        boolean validOption = false;
-        while (!validOption) {
-            System.out.print("\nUpdate another job listing?" + "\n1. Yes\n2. No\nEnter your choice: ");
-            try {
-                choice = scanner.nextInt();
-                scanner.nextLine();
-                switch (choice) {
-                    case 1:
-                        validOption = true;
-                        break;
-                    case 2:
-                        keepUpdating = false;
-                        validOption = true;
-                        break;
-                    default:
-                        System.out.println("Invalid option, please try again.");
+                    // Get the selected skill
+                    Skill selectedSkill = jobToUpdate.getSkills().getPosition(selectSkill);
+
+                    int newProficiency = 0;
+                    boolean updateProficiency = false;
+                    while (!updateProficiency) {
+                    System.out.print("Enter new proficiency(1-10): ");
+                    newProficiency = scanner.nextInt();
+                    scanner.nextLine();
+
+                        if(newProficiency >= 1 && newProficiency <= 10) {
+                              updateProficiency = true;
+                        } else {
+                            System.out.print("Invalid input. Please enter a valid number.\n");
+                        }
+                    }
+                    selectedSkill.setProficiency(newProficiency);  
+                    break;
+
+                default:
+                    System.out.println("Invalid input! Please enter a valid number.");
+                    return;
+            }
+
+            // Replace the old job posting with the updated one
+            jobPostings.replacePosition(jobToUpdate, choice);
+            System.out.println("Job posting updated successfully!");
+
+            // Display all job postings after updating
+            System.out.println("\nUpdated Job Postings:");
+            viewAllJobs();
+
+            // Ask repeat
+            boolean validOption = false;
+            while (!validOption) {
+                System.out.print("\nUpdate another job listing?" + "\n1. Yes\n2. No\nEnter your choice: ");
+                try {
+                    choice = scanner.nextInt();
+                    scanner.nextLine();
+                    switch (choice) {
+                        case 1:
+                            validOption = true;
+                            break;
+                        case 2:
+                            keepUpdating = false;
+                            validOption = true;
+                            break;
+                        default:
+                            System.out.println("Invalid option, please try again.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input! Please enter 1 or 2.");
+                    scanner.nextLine(); 
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input! Please enter 1 or 2.");
-                scanner.nextLine(); 
             }
         }
     }
-}
 
     public void RemoveJobPosting() {
         if (jobPostings.isEmpty()) {
@@ -527,7 +529,7 @@ public class JobManagement {
         }
 
         System.out.println("\n+--------------------------------+");
-        System.out.println("|         Search Job Posting        |");
+        System.out.println("|         Search Job Posting     |");
         System.out.println("+--------------------------------+");
         System.out.println("| Search by:                     |");
         System.out.println("| 1. Job Title                   |");
@@ -566,7 +568,7 @@ public class JobManagement {
             JobPosting job = jobPostings.getPosition(i);
             if (job.getEmployer().equals(currentEmployer) && 
                 job.getTitle().toLowerCase().contains(searchTerm)) {
-                displayJobDetails(job);
+                displaySearchJob(job);
                 found = true;
             }
         }
@@ -574,7 +576,11 @@ public class JobManagement {
     }
 
     private void searchBySkill(Employer currentEmployer) {
-        System.out.print("Enter skill to search: ");
+        System.out.print("\nWhich skill you want to search: \n"
+                            + "1. Communication \n2. Leadership \n3. Programming \n4. Analysis\n"
+                            + "\nEnter your choice: ");
+        
+   
         String searchTerm = scanner.nextLine().toLowerCase();
 
         boolean found = false;
@@ -587,7 +593,7 @@ public class JobManagement {
             for (int j = 1; j <= job.getSkills().getCount(); j++) {
                 Skill skill = job.getSkills().getPosition(j);
                 if (skill.getName().toLowerCase().contains(searchTerm)) {
-                    displayJobDetails(job);
+                    displaySearchJob(job);
                     found = true;
                     break;
                 }
@@ -616,16 +622,16 @@ public class JobManagement {
             double jobMax = range.length > 1 ? Double.parseDouble(range[1]) : jobMin;
 
             if (jobMax >= minSalary && jobMin <= maxSalary) {
-                displayJobDetails(job);
+                displaySearchJob(job);
                 found = true;
             }
         }
         if (!found) System.out.println("No jobs in that salary range in your company.");
     }
 
-    private void displayJobDetails(JobPosting job) {
+    private void displaySearchJob(JobPosting job) {
         System.out.println("\n+-----------------------------------------------+");
-        System.out.println("|               Job Posting Found              |");
+        System.out.println("|               Job Posting Found               |");
         System.out.println("+-----------------------------------------------+");
         System.out.println("Employer: " + job.getEmployer().getName());
         System.out.println("Job Title: " + job.getTitle());
@@ -637,8 +643,35 @@ public class JobManagement {
             + ": " + job.getSkills().getPosition(j).getProficiency());
         }
         System.out.println("--------------------------------------------------");
+               
+        // Ask repeat
+            boolean validOption = false;
+            int searchChoice;
+            while (!validOption) {
+                System.out.print("\nDo you want to search another job posting?" + "\n1. Yes\n2. No\nEnter your choice: ");
+                try {
+                    searchChoice = scanner.nextInt();
+                    scanner.nextLine();
+                    switch (searchChoice) {
+                        case 1:
+                            validOption = true;
+                            searchJobs(job.getEmployer());
+                            break;
+                        case 2:
+                            validOption = true;
+                            break;
+                        default:
+                            System.out.println("Invalid option, please try again.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input! Please enter 1 or 2.");
+                    scanner.nextLine(); 
+                }
+            }
+        
+        
+        
     }
-    
     //end of search job function-----------------------------------------------------------------------
     
     
