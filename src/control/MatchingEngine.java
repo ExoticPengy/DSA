@@ -200,42 +200,60 @@ public class MatchingEngine {
         return copiedList;
     }
     
+    // Sort score for every jobseeker (Descending)
     private void sortMatch() {
         Match match = matchList.getBack();
         
         for (int i = 1; i <= match.getJobSeekerList().getCount(); i++) {
-            quickSort(match, i, 1, match.getMatchedScoreList().getPosition(i).getCount());
-        }
-    }
-    
-    private void quickSort(Match match, int index, int low, int high) {
-        if (low < high) {
-            int partitionIndex = partition(match, index, low, high);
-
-            quickSort(match, index, low, partitionIndex - 1);
-            quickSort(match, index, partitionIndex + 1, high);
-        }
+            DoublyLinkedListInterface<Score> scoreList = match.getMatchedScoreList().getPosition(i);
+            mergeSort(scoreList, 1, scoreList.getCount());
+        } //for
     }
 
-    private int partition(Match match, int index, int low, int high) {
-        double pivot = match.getMatchedScoreList().getPosition(index).getPosition(high).getScore();
-        int i = low - 1;
+    private void mergeSort(DoublyLinkedListInterface<Score> list, int left, int right) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            mergeSort(list, left, mid);
+            mergeSort(list, mid + 1, right);
+            merge(list, left, mid, right);
+        }
+    }
 
-        for (int j = low; j < high; j++) {
-            if (match.getMatchedScoreList().getPosition(index).getPosition(j).getScore() >= pivot) {
-                i++;
-                swap(match, index, i, j);
+    private void merge(DoublyLinkedListInterface<Score> list, int left, int mid, int right) {
+        DoublyLinkedListInterface<Score> leftList = new DoublyLinkedList<>();
+        DoublyLinkedListInterface<Score> rightList = new DoublyLinkedList<>();
+
+        for (int i = left; i <= mid; i++) {
+            leftList.insertBack(list.getPosition(i));
+        }
+
+        for (int i = mid + 1; i <= right; i++) {
+            rightList.insertBack(list.getPosition(i));
+        }
+
+        int i = left; 
+        int leftIdx = 1, rightIdx = 1;
+
+        while (leftIdx <= leftList.getCount() && rightIdx <= rightList.getCount()) {
+            Score leftScore = leftList.getPosition(leftIdx);
+            Score rightScore = rightList.getPosition(rightIdx);
+
+            // Sort in descending order (highest score first)
+            if (leftScore.getScore() >= rightScore.getScore()) {
+                list.replacePosition(leftScore, i++);
+                leftIdx++;
+            } else {
+                list.replacePosition(rightScore, i++);
+                rightIdx++;
             }
         }
 
-        swap(match, index, i + 1, high);
-        return i + 1;
-    }
+        while (leftIdx <= leftList.getCount()) {
+            list.replacePosition(leftList.getPosition(leftIdx++), i++);
+        }
 
-    private void swap(Match match, int index, int i, int j) {
-        Score tempScore = match.getMatchedScoreList().getPosition(index).getPosition(i);
-        
-        match.getMatchedScoreList().getPosition(index).replacePosition(match.getMatchedScoreList().getPosition(index).getPosition(j), i);
-        match.getMatchedScoreList().getPosition(index).replacePosition(tempScore, j);
+        while (rightIdx <= rightList.getCount()) {
+            list.replacePosition(rightList.getPosition(rightIdx++), i++);
+        }
     }
 }
