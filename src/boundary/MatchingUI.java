@@ -1,6 +1,7 @@
 package boundary;
 
 
+import entity.JobApplication;
 import entity.JobPosting;
 import entity.Match;
 import entity.Score;
@@ -22,20 +23,26 @@ public class MatchingUI {
     
     public void displayMatchHead() {
         System.out.println("\n+-------------------------------------------------+");
-        System.out.println("|              Matched Job Postings                |");
+        System.out.println("|              Matched Job Postings               |");
         System.out.println("+-------------------------------------------------+");
     }
     
     public void displayApplicationHead() {
         System.out.println("\n+-------------------------------------------------+");
-        System.out.println("|                 Apply for Job                    |");
+        System.out.println("|                 Apply for Job                   |");
+        System.out.println("+-------------------------------------------------+");
+    }
+    
+    public void displayAppliedHead() {
+        System.out.println("\n+-------------------------------------------------+");
+        System.out.println("|             Newly Added Application             |");
         System.out.println("+-------------------------------------------------+");
     }
     
     public void displayJobMatches(Score score, int index) {
         JobPosting job = score.getJobPosting(); 
         System.out.println("Option Number: " + index);
-        System.out.println("Employer name: " + job.getEmployer().getName());
+        System.out.println("Company: " + job.getEmployer().getName());
         System.out.println("Title: " + job.getTitle());
         System.out.println("Description: " + job.getDescription());
         System.out.println("Salary Range: " + job.getSalaryRange());
@@ -49,9 +56,9 @@ public class MatchingUI {
         System.out.println("--------------------------------------------------");
     }
     
-    public int askApplyJob() {
+    public int askChoice(String question) {
         while (true) {
-            System.out.print("\nApply for a job?"
+            System.out.print(question
                     + "\n1. Yes"
                     + "\n2. No"
                     + "\nEnter your choice: ");
@@ -80,7 +87,7 @@ public class MatchingUI {
             try {
                 int choice = scanner.nextInt();
                 scanner.nextLine();
-                if (choice >= 1 || choice <= range) {
+                if (choice >= 1 && choice <= range) {
                     return choice;
                 } else {
                     System.out.println("Invalid option, please try again.");
@@ -90,5 +97,22 @@ public class MatchingUI {
                 scanner.nextLine(); 
             }
         }
+    }
+    
+    public void displayNewApplication(JobApplication jobApplication) {
+        JobPosting job = jobApplication.getScore().getJobPosting();
+        System.out.println("Applicant name: " + jobApplication.getJobSeeker().getName());
+        System.out.println("Company: " + job.getEmployer().getName());
+        System.out.println("Title: " + job.getTitle());
+        System.out.println("Description: " + job.getDescription());
+        System.out.println("Salary Range: " + job.getSalaryRange());
+        System.out.println("Qualification: " + job.getQualification());
+        System.out.println("Skills Required: ");
+        for (int j = 1; j <= job.getSkills().getCount(); j++) {
+            System.out.println(j + ". " + job.getSkills().getPosition(j).getName() 
+                    + ": " + job.getSkills().getPosition(j).getProficiency());
+        }
+        System.out.println("Matched Score: " + jobApplication.getScore().getScore());
+        System.out.println("--------------------------------------------------");
     }
 }
