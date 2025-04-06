@@ -12,6 +12,7 @@ import entity.JobPosting;
 import entity.Skill;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import utility.MessageUI;
 
 /**
  *
@@ -188,7 +189,7 @@ public class JobManagement {
         }
     }
     
-    //view the specific employer's job posting
+    //view the *specific employer's job posting
     public void viewEmployerJobPosting(Employer currentEmployer) { 
         if (jobPostings.isEmpty()) {
             System.out.println("No job postings available.");
@@ -217,7 +218,7 @@ public class JobManagement {
         }
     }
  
-    //display all job postings
+    //display all job postings for admin use
     public void viewAllJobs() { 
         if (jobPostings.isEmpty()) {
             System.out.println("No job postings available.");
@@ -243,7 +244,7 @@ public class JobManagement {
         }
     }
     
-    public void updatedJobPosting() {
+    public void updateJobPosting(Employer currentEmployer) {
         if (jobPostings.isEmpty()) {
             System.out.println("No job postings available to update.");
             return;
@@ -256,9 +257,13 @@ public class JobManagement {
             System.out.println("\n+-------------------------------------------+");
             System.out.println("|            List of Job Postings           |");
             System.out.println("+-------------------------------------------+");
+            int jobNumber = 0;
             for (int i = 1; i <= jobPostings.getCount(); i++) {
                 JobPosting job = jobPostings.getPosition(i);
-                System.out.println(i + ". " + job.getTitle());
+                if (job.getEmployer().equals(currentEmployer)) {
+                    jobNumber++;
+                    System.out.println(jobNumber + ". " + job.getTitle());
+                }
             }
 
             int choice = 0;
@@ -268,15 +273,28 @@ public class JobManagement {
                 choice = scanner.nextInt();
                 scanner.nextLine(); 
 
-                if (choice >= 1 && choice <= jobPostings.getCount()) {
+                if (choice >= 1 && choice <= jobNumber) {
                     chooseJob = true;
                 } else {
                     System.out.println("Invalid input! Please enter a valid number.");
                 }  
             }
 
+            int count = 0;
+            int jobIndex = 0;
+            // Get the job posting index to remove
+            for(int i = 1; i <= jobPostings.getCount(); i++) {
+                JobPosting job = jobPostings.getPosition(i);
+                if (job.getEmployer().equals(currentEmployer)) {
+                    count++;
+                    if (count == choice) {
+                        jobIndex = i;
+                    }
+                }
+            }
+            
             // Get the job posting to update
-            JobPosting jobToUpdate = jobPostings.getPosition(choice);
+            JobPosting jobToUpdate = jobPostings.getPosition(jobIndex);
 
             // Display the selected job posting
             System.out.println("\n+-----------------------------------------------+");
@@ -381,12 +399,12 @@ public class JobManagement {
             }
 
             // Replace the old job posting with the updated one
-            jobPostings.replacePosition(jobToUpdate, choice);
+            jobPostings.replacePosition(jobToUpdate, jobIndex);
             System.out.println("Job posting updated successfully!");
 
             // Display all job postings after updating
             System.out.println("\nUpdated Job Postings:");
-            viewAllJobs();
+            viewEmployerJobPosting(currentEmployer);
 
             // Ask repeat
             boolean validOption = false;
@@ -414,7 +432,7 @@ public class JobManagement {
         }
     }
 
-    public void RemoveJobPosting() {
+    public void removeJobPosting(Employer currentEmployer) {
         if (jobPostings.isEmpty()) {
         System.out.println("No job postings available to remove.");
         return;
@@ -426,9 +444,14 @@ public class JobManagement {
         System.out.println("\n+-------------------------------------------+");
         System.out.println("|            List of Job Postings           |");
         System.out.println("+-------------------------------------------+");
+        
+        int jobNumber = 0;
         for (int i = 1; i <= jobPostings.getCount(); i++) {
             JobPosting job = jobPostings.getPosition(i);
-            System.out.println(i + ". " + job.getTitle());
+            if (job.getEmployer().equals(currentEmployer)) {
+                jobNumber++;
+                System.out.println(jobNumber + ". " + job.getTitle());
+            }
         }
 
         int choice = 0;
@@ -438,16 +461,27 @@ public class JobManagement {
             choice = scanner.nextInt();
             scanner.nextLine(); 
 
-            if (choice >= 1 && choice <= jobPostings.getCount()) {
+            if (choice >= 1 && choice <= jobNumber) {
                 chooseRemoveJob = true;
             } else {
                 System.out.println("Invalid input! Please enter a valid number.");
             }  
         }
 
-        // Get the job posting to remove
-        JobPosting jobToRemove = jobPostings.getPosition(choice);
-
+        int count = 0;
+        int jobIndex = 0;
+        // Get the job posting index to remove
+        for(int i = 1; i <= jobPostings.getCount(); i++) {
+            JobPosting job = jobPostings.getPosition(i);
+            if (job.getEmployer().equals(currentEmployer)) {
+                count++;
+                if (count == choice) {
+                    jobIndex = i;
+                }
+            }
+        }
+        
+        JobPosting jobToRemove = jobPostings.getPosition(jobIndex);
         // Display the selected job posting
         System.out.println("\n+-----------------------------------------------+");
         System.out.println("|             Selected Job Posting              |");
@@ -474,10 +508,10 @@ public class JobManagement {
             
             switch(removeChoice) {
                 case 1:
-                    jobPostings.deletePosition(choice); 
+                    jobPostings.deletePosition(jobIndex); 
                     System.out.println("Job posting remove successfully!");
                     System.out.println("\nUpdated Job Postings:");
-                    viewAllJobs();
+                    viewEmployerJobPosting(currentEmployer);
                     confirmation = true;
                     break;
                 case 2:
@@ -603,9 +637,9 @@ public class JobManagement {
     }
 
     private void searchBySalary(Employer currentEmployer) {
-        System.out.print("Enter minimum salary (e.g., 1000): ");
+        System.out.print("Enter MINimum salary (e.g., 100): ");
         double minSalary = scanner.nextDouble();
-        System.out.print("Enter maximum salary (e.g., 2000): ");
+        System.out.print("Enter MAXimum salary (e.g., 200): ");
         double maxSalary = scanner.nextDouble();
         scanner.nextLine(); 
 
@@ -676,5 +710,152 @@ public class JobManagement {
     
     
     
+    //sort job
+    public void viewSortedJobs(Employer currentEmployer) {
+    System.out.println("\n+--------------------------------------------+");
+    System.out.println("|               Sort Jobs Menu               |");
+    System.out.println("+--------------------------------------------+");
+    System.out.println("| 1. Sort by Job Title (A-Z)                 |");
+    System.out.println("| 2. Sort by Highest Salary                  |");
+    System.out.println("| 3. Sort by Highest Total Skill Proficiency |");
+    System.out.println("| 4. Back to Main Menu                       |");
+    System.out.println("+--------------------------------------------+");
+    System.out.print("\nEnter your choice: ");
+
+    int choice = scanner.nextInt();
+    scanner.nextLine();
+
+    switch (choice) {
+        case 1:
+            sortJobs(1, currentEmployer); // Sort by Job Title
+            break;
+        case 2:
+            sortJobs(2, currentEmployer); // Sort by Highest Salary
+            break;
+        case 3:
+            sortJobs(3, currentEmployer); // Sort by Highest Skill Proficiency
+            break;
+        case 4:
+            return;
+        default:
+            System.out.println("Invalid choice. Please try again.");
+    }
+}
+
+    public void sortJobs(int sortBy, Employer currentEmployer) {
+        if (jobPostings.isEmpty()) {
+            System.out.println("No job postings available to sort.");
+            return;
+        }
+
+         // Step 2: Sort the filtered list
+        mergeSort(1, jobPostings.getCount(), sortBy, currentEmployer);
+
+        // Step 3: Display sorted results
+        System.out.println("\n+-----------------------------------------------+");
+            System.out.println("|               Sorted Job Posting               |");
+            System.out.println("+-----------------------------------------------+");
+
+
+       for (int i = 1; i <= jobPostings.getCount(); i++) {
+            JobPosting job = jobPostings.getPosition(i);
+            if (job.getEmployer().equals(currentEmployer)) {
+            System.out.println("Employer: " + job.getEmployer().getName());
+            System.out.println("Job Title: " + job.getTitle());
+            System.out.println("Description: " + job.getDescription());
+            System.out.println("Salary: " + job.getSalaryRange());
+            System.out.println("Skills Required:");
+            for (int j = 1; j <= job.getSkills().getCount(); j++) {
+                System.out.println(j + ". " + job.getSkills().getPosition(j).getName() 
+                    + ": " + job.getSkills().getPosition(j).getProficiency());
+            }
+            System.out.println("--------------------------------------------------");
+        }
+       }
+        MessageUI.pressAnyKeyContinue();
+    }
+
+    private void mergeSort(int start, int end, int sortBy, Employer currentEmployer) {
+        if (start < end) {
+            int mid = start + (end - start) / 2;
+            mergeSort(start, mid, sortBy, currentEmployer);
+            mergeSort(mid + 1, end, sortBy, currentEmployer);
+            merge(start, mid, end, sortBy, currentEmployer);
+        }
+    }
+
+        private void merge(int start, int mid, int end, int sortBy, Employer currentEmployer) {
+        int i = start;
+        int j = mid + 1;
+
+        while (i <= mid && j <= end) {
+            JobPosting leftJob = jobPostings.getPosition(i);
+            JobPosting rightJob = jobPostings.getPosition(j);
+
+            // Only compare employer's jobs
+            if (leftJob.getEmployer().equals(currentEmployer) && 
+                rightJob.getEmployer().equals(currentEmployer)) {
+
+                if (shouldSwap(leftJob, rightJob, sortBy)) {
+                    // Swap positions
+                    jobPostings.replacePosition(rightJob, i);
+                    jobPostings.replacePosition(leftJob, j);
+                    i++;
+                }
+                j++;
+            } 
+            else if (!leftJob.getEmployer().equals(currentEmployer)) {
+                i++;
+            }
+            else {
+                j++;
+            }
+        }
+    }
+        
+    private boolean shouldSwap(JobPosting left, JobPosting right, int sortBy) {
+        switch (sortBy) {
+            case 1: // Sort by title (A-Z)
+                return left.getTitle().compareToIgnoreCase(right.getTitle()) > 0;
+
+            case 2: // Sort by highest salary (descending)
+                return extractMaxSalary(left.getSalaryRange()) < 
+                       extractMaxSalary(right.getSalaryRange());
+
+            case 3: // Sort by total skill proficiency (descending)
+                return getTotalSkillProficiency(left) < 
+                       getTotalSkillProficiency(right);
+
+            default:
+                return false;
+        }
+    }
+
+//    // Comparison methods remain the same as before
+//    private int compareJobs(JobPosting a, JobPosting b, int sortBy) {
+//        switch (sortBy) {
+//            case 1: return a.getTitle().compareToIgnoreCase(b.getTitle());
+//            case 2: return Double.compare(
+//                extractMaxSalary(b.getSalaryRange()),
+//                extractMaxSalary(a.getSalaryRange()));
+//            case 3: return Integer.compare(
+//                getTotalSkillProficiency(b),
+//                getTotalSkillProficiency(a));
+//            default: return 0;
+//        }
+//    }
+
+    private double extractMaxSalary(String range) {
+        String[] parts = range.replaceAll("[^0-9-]", "").split("-");
+        return parts.length > 1 ? Double.parseDouble(parts[1]) : Double.parseDouble(parts[0]);
+    }
+
+    private int getTotalSkillProficiency(JobPosting job) {
+        int total = 0;
+        for (int i = 1; i <= job.getSkills().getCount(); i++) {
+            total += job.getSkills().getPosition(i).getProficiency();
+        }
+        return total;
+    }
     
 }

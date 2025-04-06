@@ -56,7 +56,7 @@ public class JobPostingUI {
                     //SearchJobs();
                     break;
                 case 5:
-                    //View All Jobs();
+                    //viewEmployerJobPosting();
                     break;
                 case 6:
                     //jobManagement.viewSortedJobs(); 

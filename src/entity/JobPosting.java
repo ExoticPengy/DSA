@@ -18,10 +18,6 @@ public class JobPosting {
     private String salaryRange;
     private String qualification;
     private DoublyLinkedListInterface<Skill> skills;
-
-    public JobPosting(){
-        
-    }
     
     public JobPosting(Employer employer, String title, String description, String salaryRange, String qualification, DoublyLinkedListInterface<Skill> skills) {
         this.employer = employer;

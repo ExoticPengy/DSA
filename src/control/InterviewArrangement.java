@@ -8,7 +8,7 @@ import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
 import boundary.InterviewArrangementUI;
 import dao.EmployerInitializer;
-import dao.InterviewInitializer;
+//import dao.InterviewInitializer;
 import dao.JobPostingInitializer;
 import entity.Employer;
 import entity.Interview;
@@ -21,7 +21,7 @@ import entity.Skill;
  */
 public class InterviewArrangement {
 
-    private InterviewInitializer interviewInitializer;
+    //private InterviewInitializer interviewInitializer;
     private JobPostingInitializer jobPostingInitializer;
     private EmployerInitializer employerInitializer;
 
@@ -46,7 +46,7 @@ public class InterviewArrangement {
     private InterviewArrangementUI interviewUI;
 
     public InterviewArrangement() {
-        interviewInitializer = new InterviewInitializer();
+        //interviewInitializer = new InterviewInitializer();
         interviewUI = new InterviewArrangementUI();
         jobPostingInitializer = new JobPostingInitializer();
         employerInitializer = new EmployerInitializer();
@@ -56,7 +56,7 @@ public class InterviewArrangement {
 //        interviewList = interviewInitializer.getInterview();
 //    }
     public void displayStudentSchedule(JobSeeker jobSeeker) {
-        studentInterviewList = interviewInitializer.getInterview();
+        //studentInterviewList = interviewInitializer.getInterview();
         studentDateList = new DoublyLinkedList<>();
         studentTimeList = new DoublyLinkedList<>();
         studentJobList = new DoublyLinkedList<>();
@@ -79,7 +79,7 @@ public class InterviewArrangement {
     }
 
     public void displayCompanySchedule(Employer employer) {
-        companyInterviewList = interviewInitializer.getInterview();
+        //companyInterviewList = interviewInitializer.getInterview();
         companyDateList = new DoublyLinkedList<>();
         companyTimeList = new DoublyLinkedList<>();
         companyJobList = new DoublyLinkedList<>();
@@ -105,7 +105,7 @@ public class InterviewArrangement {
     }
 
     public void displayStudentResult(JobSeeker jobSeeker) {
-        studentInterviewList = interviewInitializer.getInterview();
+        //studentInterviewList = interviewInitializer.getInterview();
         studentDateList = new DoublyLinkedList<>();
         studentTimeList = new DoublyLinkedList<>();
         studentJobList = new DoublyLinkedList<>();
@@ -130,7 +130,7 @@ public class InterviewArrangement {
     }
 
     public void displayCompanyResult(Employer employer) {
-        companyInterviewList = interviewInitializer.getInterview();
+        //companyInterviewList = interviewInitializer.getInterview();
         companyDateList = new DoublyLinkedList<>();
         companyTimeList = new DoublyLinkedList<>();
         companyJobList = new DoublyLinkedList<>();
