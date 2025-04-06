@@ -39,6 +39,12 @@ public class MatchingUI {
         System.out.println("+-------------------------------------------------+");
     }
     
+    public void displayApplyListHead() {
+        System.out.println("\n+-------------------------------------------------+");
+        System.out.println("|                 Your Applications               |");
+        System.out.println("+-------------------------------------------------+");
+    }
+    
     public void displayJobMatches(Score score, int index) {
         JobPosting job = score.getJobPosting(); 
         System.out.println("Option Number: " + index);
@@ -99,7 +105,7 @@ public class MatchingUI {
         }
     }
     
-    public void displayNewApplication(JobApplication jobApplication) {
+    public void displayApplication(JobApplication jobApplication) {
         JobPosting job = jobApplication.getScore().getJobPosting();
         System.out.println("Applicant name: " + jobApplication.getJobSeeker().getName());
         System.out.println("Company: " + job.getEmployer().getName());
@@ -115,4 +121,5 @@ public class MatchingUI {
         System.out.println("Matched Score: " + jobApplication.getScore().getScore());
         System.out.println("--------------------------------------------------");
     }
+    
 }

@@ -75,7 +75,15 @@ public class MatchingEngine {
         
         jobApplicationList.insertBack(newJobApplication);
         matchingUI.displayAppliedHead();
-        matchingUI.displayNewApplication(jobApplicationList.getBack());
+        matchingUI.displayApplication(jobApplicationList.getBack());
+    }
+    
+    public void viewUserApplications(JobSeeker jobSeeker) {
+        for (int i = 1; i <= jobApplicationList.getCount(); i++) {
+            if (jobApplicationList.getPosition(i).getJobSeeker().equals(jobSeeker)) {
+                matchingUI.displayApplication(jobApplicationList.getPosition(i));
+            }
+        }
     }
     
     public boolean checkApplicationExists(JobApplication newJobApplication, JobSeeker jobSeeker) {
