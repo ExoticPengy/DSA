@@ -41,6 +41,16 @@ public class MatchingEngine {
         this.jobPostingList = jobPostingList;
         calculateMatches();
         sortMatch();
+        Match initializeList = getLatestMatch();
+        matchingUI.displayInitializeHead();
+            for (int i = 1; i <= initializeList.getJobSeekerList().getCount(); i++) {
+                matchingUI.displayJobSeekerHead(initializeList.getJobSeekerList().getPosition(i).getName());
+                DoublyLinkedListInterface<MatchScore> scoreList = getLatestMatch().getMatchScoreList().getPosition(i);
+                for (int j = 1; j <= scoreList.getCount(); j++) {
+                    matchingUI.displayJobMatches(scoreList.getPosition(j), j);
+                }
+            }
+        matchingUI.displayMatchFoot();
     }
     
     public void startMatchingEngine(JobSeeker jobSeeker) {
@@ -74,7 +84,7 @@ public class MatchingEngine {
         }
         
         jobApplicationList.insertBack(newJobApplication);
-        matchingUI.displayAppliedHead();
+        matchingUI.displayNewApplicationHead();
         matchingUI.displayApplication(jobApplicationList.getBack());
     }
     
