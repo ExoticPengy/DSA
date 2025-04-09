@@ -31,18 +31,16 @@ public class InternshipApplication {
     private static boolean isNum = true;
 
     public static void main(String[] args) {
-        
+        employerManagement.initializeEmployer();
         applicantManagement.initializeApplicantManagement();
-        jobManagement.runJobManagement();
+        jobManagement.runJobManagement(employerManagement.getEmployerList());
         
         matchingEngine.initializeMatchingEngine(
                 applicantManagement.getJobSeekerList(), 
                 jobManagement.getJobPostingList()
         );
         
-        jobManagement.runJobManagement();
         interviewArrangement.runInterviewArrangement();
-        employerManagement.initializeEmployer();
         
         int num = 0;
 
