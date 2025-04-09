@@ -14,32 +14,32 @@ import adt.DoublyLinkedListInterface;
  */
 public class Match {
     private DoublyLinkedListInterface<JobSeeker> jobSeekerList;
-    private DoublyLinkedListInterface<DoublyLinkedListInterface<Score>> matchedScoreList;
+    private DoublyLinkedListInterface<DoublyLinkedListInterface<MatchScore>> matchScoreList;
 
-    public Match(DoublyLinkedListInterface<JobSeeker> jobSeekerList, DoublyLinkedListInterface<DoublyLinkedListInterface<Score>> matchedScoreList) {
+    public Match(DoublyLinkedListInterface<JobSeeker> jobSeekerList, DoublyLinkedListInterface<DoublyLinkedListInterface<MatchScore>> matchScoreList) {
         this.jobSeekerList = jobSeekerList;
-        this.matchedScoreList = matchedScoreList;
+        this.matchScoreList = matchScoreList;
     }
 
     public DoublyLinkedListInterface<JobSeeker> getJobSeekerList() {
         return jobSeekerList;
     }
 
-    public DoublyLinkedListInterface<DoublyLinkedListInterface<Score>> getMatchedScoreList() {
-        return matchedScoreList;
+    public DoublyLinkedListInterface<DoublyLinkedListInterface<MatchScore>> getMatchScoreList() {
+        return matchScoreList;
     }
 
     public void setJobSeekerList(DoublyLinkedListInterface<JobSeeker> jobSeekerList) {
         this.jobSeekerList = jobSeekerList;
     }
 
-    public void setMatchedScoreList(DoublyLinkedListInterface<DoublyLinkedListInterface<Score>> matchedScoreList) {
-        this.matchedScoreList = matchedScoreList;
+    public void setMatchScoreList(DoublyLinkedListInterface<DoublyLinkedListInterface<MatchScore>> matchScoreList) {
+        this.matchScoreList = matchScoreList;
     }
 
     @Override
     public String toString() {
-        return "Match{" + "jobSeekerList=" + jobSeekerList + ", matchedScoreList=" + matchedScoreList + '}';
+        return "Match{" + "jobSeekerList=" + jobSeekerList + ", matchScoreList=" + matchScoreList + '}';
     }
 
     

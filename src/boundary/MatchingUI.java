@@ -4,7 +4,7 @@ package boundary;
 import entity.JobApplication;
 import entity.JobPosting;
 import entity.Match;
-import entity.Score;
+import entity.MatchScore;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -22,9 +22,15 @@ public class MatchingUI {
     private Scanner scanner = new Scanner(System.in);
     
     public void displayMatchHead() {
-        System.out.println("\n+-------------------------------------------------+");
-        System.out.println("|              Matched Job Postings               |");
-        System.out.println("+-------------------------------------------------+");
+        System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                                   Matched Job Postings                                                                                        |");
+        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
+        System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s | %-6s |\n",
+                "No", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
+    }
+    
+    public void displayMatchFoot() {
+        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
     }
     
     public void displayApplicationHead() {
@@ -45,21 +51,42 @@ public class MatchingUI {
         System.out.println("+-------------------------------------------------+");
     }
     
-    public void displayJobMatches(Score score, int index) {
-        JobPosting job = score.getJobPosting(); 
-        System.out.println("Option Number: " + index);
-        System.out.println("Company: " + job.getEmployer().getName());
-        System.out.println("Title: " + job.getTitle());
-        System.out.println("Description: " + job.getDescription());
-        System.out.println("Salary Range: " + job.getSalaryRange());
-        System.out.println("Qualification: " + job.getQualification());
-        System.out.println("Skills Required: ");
-        for (int j = 1; j <= job.getSkills().getCount(); j++) {
-            System.out.println(j + ". " + job.getSkills().getPosition(j).getName() 
-                    + ": " + job.getSkills().getPosition(j).getProficiency());
+    public void displayJobMatches(MatchScore score, int index) {
+        JobPosting job = score.getJobPosting();
+        String shortTitle = job.getTitle().length() > 29 ?
+                           job.getTitle().substring(0, 25) + "..." :
+                           job.getTitle();
+        
+        String shortDesc = job.getDescription().length() > 29 ? 
+                       job.getDescription().substring(0, 25) + "..." : 
+                       job.getDescription();
+        
+        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
+        System.out.printf("| %-2d ", index);
+        System.out.printf("| %-14s ", job.getEmployer().getName());
+        System.out.printf("| %-14s ", job.getEmployer().getLocation());
+        System.out.printf("| %-30s ", shortTitle);
+        System.out.printf("| %-30s ", shortDesc);
+        System.out.printf("| %-14s ", job.getSalaryRange());
+        System.out.printf("| %-30s ", job.getQualification());
+            
+        for (int i = 1; i <= job.getSkills().getCount(); i++) {
+            if (job.getSkills().getCount() == 1) {
+                System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
+                System.out.printf("| %-6d |", score.getScore());
+            } else {
+                System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
+                if (i == 1) {
+                    System.out.printf("| %-6d |\n", score.getScore());
+                } else {
+                    System.out.printf("| %-6s |\n", "");
+                }
+                if (i < job.getSkills().getCount()) {
+                    System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s ",
+                            "", "", "", "", "", "", "");
+                }
+            }
         }
-        System.out.println("Matched Score: " + score.getScore());
-        System.out.println("--------------------------------------------------");
     }
     
     public int askChoice(String question) {

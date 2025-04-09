@@ -8,11 +8,11 @@ package entity;
  *
  * @author USER
  */
-public class Score {
+public class MatchScore {
     private JobPosting jobPosting;
     private int score;
 
-    public Score(JobPosting jobPosting, int score) {
+    public MatchScore(JobPosting jobPosting, int score) {
         this.jobPosting = jobPosting;
         this.score = score;
     }

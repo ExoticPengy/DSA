@@ -10,32 +10,32 @@ package entity;
  */
 public class JobApplication {
     JobSeeker jobSeeker;
-    Score score;
+    MatchScore matchScore;
 
-    public JobApplication(JobSeeker jobSeeker, Score score) {
+    public JobApplication(JobSeeker jobSeeker, MatchScore matchScore) {
         this.jobSeeker = jobSeeker;
-        this.score = score;
+        this.matchScore = matchScore;
     }
 
     public JobSeeker getJobSeeker() {
         return jobSeeker;
     }
 
-    public Score getScore() {
-        return score;
+    public MatchScore getMatchScore() {
+        return matchScore;
     }
 
     public void setJobSeeker(JobSeeker jobSeeker) {
         this.jobSeeker = jobSeeker;
     }
 
-    public void setScore(Score score) {
-        this.score = score;
+    public void setScore(MatchScore matchScore) {
+        this.matchScore = matchScore;
     }
 
     @Override
     public String toString() {
-        return "JobApplication{" + "jobSeeker=" + jobSeeker + ", score=" + score + '}';
+        return "JobApplication{" + "jobSeeker=" + jobSeeker + ", matchScore=" + matchScore + '}';
     }
     
     
