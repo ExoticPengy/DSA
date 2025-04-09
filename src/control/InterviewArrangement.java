@@ -56,8 +56,8 @@ public class InterviewArrangement {
         interviewUI = new InterviewArrangementUI();
     }
 
-    public void runInterviewArrangement() {
-        interviewList = interviewInitializer.getInterview();
+    public void runInterviewArrangement(DoublyLinkedListInterface<JobPosting> jobList) {
+        interviewList = interviewInitializer.getInterview(jobList);
     }
 
     public void displayStudent(int num, JobSeeker jobSeeker) {

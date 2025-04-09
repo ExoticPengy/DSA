@@ -40,7 +40,7 @@ public class InternshipApplication {
                 jobManagement.getJobPostingList()
         );
         
-        interviewArrangement.runInterviewArrangement();
+        interviewArrangement.runInterviewArrangement(jobManagement.getJobPostingList());
         
         int num = 0;
 

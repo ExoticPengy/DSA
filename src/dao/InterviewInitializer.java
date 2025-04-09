@@ -26,10 +26,9 @@ public class InterviewInitializer {
         jobSeekerInitializer = new JobSeekerInitializer();
     }
 
-    public DoublyLinkedListInterface<Interview> getInterview() {
+    public DoublyLinkedListInterface<Interview> getInterview(DoublyLinkedListInterface<JobPosting> jobList) {
         DoublyLinkedListInterface<Interview> interviewList = new DoublyLinkedList<>();
         
-        DoublyLinkedListInterface<JobPosting> jobList = jobInitializer.getJobPosting();
         DoublyLinkedListInterface<JobPosting> interviewJobList = new DoublyLinkedList<>();
         
         DoublyLinkedListInterface<JobSeeker> jobSeeker = jobSeekerInitializer.getJobSeeker();
