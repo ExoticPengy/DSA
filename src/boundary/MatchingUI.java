@@ -29,9 +29,17 @@ public class MatchingUI {
                 "No", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
     }
     
-    public void displayInitializeHead() {
+    public void displayInitializeMatchHead() {
         System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
         System.out.println("|                                                                                     Initialized Match List                                                                                    |");
+    }
+    
+    public void displayInitializeApplicationHead() {
+        System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                                    Initialized Application List                                                                                           |");
+        System.out.println("+----------------+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
+        System.out.printf("| %-14s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s | %-6s |\n",
+                "Applicant", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
     }
     
     public void displayJobSeekerHead(String jobSeeker) {
@@ -44,6 +52,10 @@ public class MatchingUI {
     
     public void displayMatchFoot() {
         System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
+    }
+    
+    public void displayApplicationFoot() {
+        System.out.println("+----------------+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
     }
     
     public void displayApplicationHead() {
@@ -61,9 +73,11 @@ public class MatchingUI {
     }
     
     public void displayApplyListHead() {
-        System.out.println("\n+-------------------------------------------------+");
-        System.out.println("|                 Your Applications               |");
-        System.out.println("+-------------------------------------------------+");
+        System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                                           Your Applications                                                                                               |");
+        System.out.println("+----------------+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
+        System.out.printf("| %-14s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s | %-6s |\n",
+                "Applicant", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
     }
     
     public void displayJobMatches(MatchScore score, int index) {
@@ -185,7 +199,6 @@ public class MatchingUI {
                 }
             }
         }
-        System.out.println("+----------------+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
     }
     
 }

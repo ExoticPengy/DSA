@@ -146,10 +146,11 @@ public class InternshipApplication {
                 System.out.println("+------------------------+");
                 System.out.println("|  What do you want?     |");
                 System.out.println("|  1. Apply Job          |");
-                System.out.println("|  2. View Schedule      |");
-                System.out.println("|  3. View Result        |");
+                System.out.println("|  2. View Applications  |");
+                System.out.println("|  3. View Schedule      |");
+                System.out.println("|  4. View Result        |");
                 System.out.println("|                        |");
-                System.out.println("|  4. Previous Page      |");
+                System.out.println("|  5. Previous Page      |");
                 System.out.println("+------------------------+\n");
             }
             System.out.print("Enter a choice: ");
@@ -163,12 +164,15 @@ public class InternshipApplication {
                         matchingEngine.startMatchingEngine(jobSeeker);
                         break;
                     case 2:
-                        interviewArrangement.displayStudent(1, jobSeeker);
+                        matchingEngine.viewUserApplications(jobSeeker);
                         break;
                     case 3:
-                        interviewArrangement.displayStudent(2, jobSeeker);
+                        interviewArrangement.displayStudent(1, jobSeeker);
                         break;
                     case 4:
+                        interviewArrangement.displayStudent(2, jobSeeker);
+                        break;
+                    case 5:
                         break;
                     default:
                         isNum = false;

@@ -7,6 +7,7 @@ package control;
 import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
 import boundary.MatchingUI;
+import dao.JobApplicationInitializer;
 import entity.JobApplication;
 import entity.JobPosting;
 import entity.JobSeeker;
@@ -24,6 +25,7 @@ public class MatchingEngine {
     private DoublyLinkedListInterface<JobSeeker> jobSeekerList;
     private DoublyLinkedListInterface<JobPosting> jobPostingList;
     private DoublyLinkedListInterface<JobApplication> jobApplicationList;
+    private JobApplicationInitializer jobApplicationInitializer;
     
     public MatchingEngine(){
         matchingUI = new MatchingUI();
@@ -31,6 +33,7 @@ public class MatchingEngine {
         jobSeekerList = new DoublyLinkedList<>();
         jobPostingList = new DoublyLinkedList<>();
         jobApplicationList = new DoublyLinkedList<>();
+        jobApplicationInitializer = new JobApplicationInitializer();
     }
     
     public void initializeMatchingEngine(
@@ -42,15 +45,28 @@ public class MatchingEngine {
         calculateMatches();
         sortMatch();
         Match initializeList = getLatestMatch();
-        matchingUI.displayInitializeHead();
-            for (int i = 1; i <= initializeList.getJobSeekerList().getCount(); i++) {
-                matchingUI.displayJobSeekerHead(initializeList.getJobSeekerList().getPosition(i).getName());
-                DoublyLinkedListInterface<MatchScore> scoreList = getLatestMatch().getMatchScoreList().getPosition(i);
-                for (int j = 1; j <= scoreList.getCount(); j++) {
-                    matchingUI.displayJobMatches(scoreList.getPosition(j), j);
-                }
+        
+        matchingUI.displayInitializeMatchHead();
+        for (int i = 1; i <= initializeList.getJobSeekerList().getCount(); i++) {
+            matchingUI.displayJobSeekerHead(initializeList.getJobSeekerList().getPosition(i).getName());
+            DoublyLinkedListInterface<MatchScore> scoreList = getLatestMatch().getMatchScoreList().getPosition(i);
+            for (int j = 1; j <= scoreList.getCount(); j++) {
+                matchingUI.displayJobMatches(scoreList.getPosition(j), j);
             }
+        }
         matchingUI.displayMatchFoot();
+        
+        initializeApplicants(getLatestMatch());
+        matchingUI.displayInitializeApplicationHead();
+        for (int i = 1; i <= initializeList.getJobSeekerList().getCount(); i++) {
+            displayUserApplications(initializeList.getJobSeekerList().getPosition(i));
+        }
+        matchingUI.displayApplicationFoot();
+                
+    }
+    
+    private void initializeApplicants(Match match) {
+        jobApplicationList = jobApplicationInitializer.getJobApplication(match);
     }
     
     public void startMatchingEngine(JobSeeker jobSeeker) {
@@ -86,9 +102,16 @@ public class MatchingEngine {
         jobApplicationList.insertBack(newJobApplication);
         matchingUI.displayNewApplicationHead();
         matchingUI.displayApplication(jobApplicationList.getBack());
+        matchingUI.displayApplicationFoot();
     }
     
     public void viewUserApplications(JobSeeker jobSeeker) {
+        matchingUI.displayApplyListHead();
+        displayUserApplications(jobSeeker);
+        matchingUI.displayApplicationFoot();
+    }
+    
+    public void displayUserApplications(JobSeeker jobSeeker) {
         for (int i = 1; i <= jobApplicationList.getCount(); i++) {
             if (jobApplicationList.getPosition(i).getJobSeeker().equals(jobSeeker)) {
                 matchingUI.displayApplication(jobApplicationList.getPosition(i));
@@ -121,6 +144,10 @@ public class MatchingEngine {
     
     public Match getLatestMatch() {
         return matchList.getBack();
+    }
+    
+    public DoublyLinkedListInterface<JobApplication> getJobApplicationList() {
+        return jobApplicationList;
     }
     
     private int getCurrentSeekerIndex(JobSeeker jobSeeker) {
@@ -228,8 +255,11 @@ public class MatchingEngine {
                         matchScore += analysisSkill;
                     }
 
-                    // Add 10 points if location matches
                     if (jobPosting.getEmployer().getLocation().equals(jobSeeker.getLocation())) {
+                        matchScore += 10;
+                    }
+                    
+                    if (jobPosting.getQualification().equals(jobSeeker.getQualification())) {
                         matchScore += 10;
                     }
 
