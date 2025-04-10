@@ -6,6 +6,7 @@ package control;
 
 import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
+import boundary.JobPostingUI;
 import dao.JobPostingInitializer;
 import entity.Employer;
 import entity.JobPosting;
@@ -19,17 +20,20 @@ import utility.MessageUI;
  * @author Elaine
  */
 public class JobManagement {
-    private Scanner scanner = new Scanner(System.in);
     private JobPostingInitializer jobPostingInitializer;
     private DoublyLinkedListInterface<JobPosting> jobPostings;
+    private JobPostingUI jobPostingUI;
+    private Scanner scanner = new Scanner(System.in);
     
     public JobManagement(){
         jobPostingInitializer = new JobPostingInitializer();
         jobPostings = new DoublyLinkedList<>();
+        jobPostingUI = new JobPostingUI();
     }
     
     public void runJobManagement(DoublyLinkedListInterface<Employer> employerList) {
         jobPostings = jobPostingInitializer.getJobPosting(employerList);
+        viewAllJobs();
     }
     
     public DoublyLinkedListInterface<JobPosting> getJobPostingList() {
@@ -39,105 +43,26 @@ public class JobManagement {
     public void createJobPosting(Employer employer) {
 
         boolean keepCreating = true;
-    
         while (keepCreating)  {
-            System.out.print("\nEnter Job Title: ");
-            String title = scanner.nextLine();
-            System.out.print("Enter Job Description: ");
-            String description = scanner.nextLine();
-            System.out.print("Enter Salary Range: ");
-            String salaryRange = scanner.nextLine();
-            System.out.print("Enter Qualification: ");
-            String qualification = scanner.nextLine();
+            String title = jobPostingUI.addTitle();
+            String description = jobPostingUI.addDescription();
+            String salaryRange = jobPostingUI.addSalaryRange();
+            String qualification = jobPostingUI.addQualification();
 
             boolean repeat = true;
-            boolean validOption = false;
-            int choice;
             DoublyLinkedListInterface<Skill> skills = new DoublyLinkedList<>();
         
             while (repeat) {
-                String skillName = "";
-                int proficiency = 0;
-                validOption = false;
-            
                 // Prompt for required skills
-                while (!validOption) {
-                    System.out.print("\nWhat is the skill required?\n"
-                            + "1. Communication \n2. Leadership \n3. Programming \n4. Analysis\n"
-                            + "\nEnter your choice: ");
+                String skillName = jobPostingUI.askSkills();
 
-                    try {
-                        choice = scanner.nextInt();
-                        scanner.nextLine();
-                        switch (choice) {
-                            case 1:
-                                skillName = "Communication";
-                                validOption = true;
-                                break;
-                            case 2:
-                                skillName = "Leadership";
-                                validOption = true;
-                                break;
-                            case 3:
-                                skillName = "Programming";
-                                validOption = true;
-                                break;
-                            case 4:
-                                skillName = "Analysis";
-                                validOption = true;
-                                break;
-                            default:
-                                System.out.println("Invalid choice. Please try again.");
-                        }
-                    } catch (InputMismatchException e) {
-                        System.out.println("Invalid input! Please enter a number between 1-4.");
-                        scanner.nextLine();
-                    }
-                }
-
-                // Get proficiency level
-                validOption = false;
-                while (!validOption) {
-                    System.out.print(" *Enter proficiency of chosen skill (1-10): ");
-
-                    try {
-                        proficiency = scanner.nextInt();
-                        scanner.nextLine();
-                        if (proficiency >= 1 && proficiency <= 10) {
-                            validOption = true;
-                        } else {
-                            System.out.println("Invalid input, please enter a number between 1-10.");
-                        }
-                    } catch (InputMismatchException e) {
-                        System.out.println("Invalid input! Please enter a valid number.");
-                        scanner.nextLine(); 
-                    }
-                }
+                // Ask proficiency level
+                int proficiency = jobPostingUI.askProficiency();
 
                 skills.insertBack(new Skill(skillName, proficiency));
 
-                // add new skill
-                validOption = false;
-                while (!validOption) {
-                    System.out.print("\nAdd another skill?" + "\n1. Yes\n2. No\nEnter your choice: ");
-                    try {
-                        choice = scanner.nextInt();
-                        scanner.nextLine();
-                        switch (choice) {
-                            case 1:
-                                validOption = true;
-                                break;
-                            case 2:
-                                repeat = false;
-                                validOption = true;
-                                break;
-                            default:
-                                System.out.println("Invalid option, please try again.");
-                        }
-                    } catch (InputMismatchException e) {
-                        System.out.println("Invalid input! Please enter 1 or 2.");
-                        scanner.nextLine(); 
-                    }
+                if (jobPostingUI.askChoice("\nDo you want to add another skill?") == 2) {
+                    repeat = false;
                 }
             }
 
@@ -147,44 +72,12 @@ public class JobManagement {
             // Add the job posting to the list
             jobPostings.insertUniqueBack(job);
 
-        // Display created job
-        System.out.println("\n+-----------------------------------------------+");
-        System.out.println("|             Newly Created Job Posting         |");
-        System.out.println("+-----------------------------------------------+");
-        System.out.println("Employer: " + job.getEmployer().getName());
-        System.out.println("Job Title: " + job.getTitle());
-        System.out.println("Description: " + job.getDescription());
-        System.out.println("Salary Range: " + job.getSalaryRange());
-        System.out.println("Qualification: " + job.getQualification());
-        System.out.println("Skills Required:");
-        for (int j = 1; j <= job.getSkills().getCount(); j++) {
-            System.out.println(" " + j + ". " + job.getSkills().getPosition(j).getName() 
-            + ": " + job.getSkills().getPosition(j).getProficiency());
-        }
-        System.out.println("--------------------------------------------------");
-        System.out.println("Job posting created successfully!");
-        
-            boolean validCreateChoice = false;
-            while (!validCreateChoice) {
-                System.out.print("\nDo you want to create another job listing?" + "\n1. Yes\n2. No\nEnter your choice: ");
-                try {
-                    choice = scanner.nextInt();
-                    scanner.nextLine();
-                    switch (choice) {
-                        case 1:
-                            validCreateChoice = true;
-                            break;
-                        case 2:
-                            keepCreating = false;
-                            validCreateChoice = true;
-                            break;
-                        default:
-                            System.out.println("Invalid option, please try again.");
-                    }
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid input! Please enter 1 or 2.");
-                    scanner.nextLine(); 
-                }
+            // Display created job
+            jobPostingUI.displayCreateJobsHead();
+            jobPostingUI.viewJobPosting(job, 0);          
+            jobPostingUI.displayViewJobPostingFoot();
+            if (jobPostingUI.askChoice("\nDo you want to add another job posting?") == 2) {
+                keepCreating = false;
             }
         }
     }
@@ -194,27 +87,17 @@ public class JobManagement {
         if (jobPostings.isEmpty()) {
             System.out.println("No job postings available.");
         } else {
-                  
-            System.out.println("\n+-------------------------------------------------+");
-            System.out.println("|                All Job Postings                 |");
-            System.out.println("+-------------------------------------------------+");
+            int count = 0;
+            jobPostingUI.displayViewJobPostingHead();
             for (int i = 1; i <= jobPostings.getCount(); i++) { 
                 JobPosting job = jobPostings.getPosition(i);
                 if (!job.getEmployer().equals(currentEmployer)) {
-                    continue;
+                continue;
                 }
-                System.out.println("Employer: " + job.getEmployer().getName());
-                System.out.println("Job Title: " + job.getTitle());
-                System.out.println("Description: " + job.getDescription());
-                System.out.println("Salary Range: " + job.getSalaryRange());
-                System.out.println("Qualification: " + job.getQualification());
-                System.out.println("Skills Required: ");
-                for (int j = 1; j <= job.getSkills().getCount(); j++) {
-                    System.out.println(" " + j + ". " + job.getSkills().getPosition(j).getName() 
-                            + ": " + job.getSkills().getPosition(j).getProficiency());
-                }
-                System.out.println("--------------------------------------------------");
+                count++;
+                jobPostingUI.viewJobPosting(job, count);
             }
+            jobPostingUI.displayViewJobPostingFoot();
         }
     }
  
@@ -223,24 +106,12 @@ public class JobManagement {
         if (jobPostings.isEmpty()) {
             System.out.println("No job postings available.");
         } else {
-                  
-            System.out.println("\n+-------------------------------------------------+");
-            System.out.println("|                All Job Postings                 |");
-            System.out.println("+-------------------------------------------------+");
+            jobPostingUI.displayViewJobPostingHead();
             for (int i = 1; i <= jobPostings.getCount(); i++) { 
-                JobPosting job = jobPostings.getPosition(i); 
-                System.out.println("Employer: " + job.getEmployer().getName());
-                System.out.println("Job Title: " + job.getTitle());
-                System.out.println("Description: " + job.getDescription());
-                System.out.println("Salary Range: " + job.getSalaryRange());
-                System.out.println("Qualification: " + job.getQualification());
-                System.out.println("Skills Required: ");
-                for (int j = 1; j <= job.getSkills().getCount(); j++) {
-                    System.out.println(" " + j + ". " + job.getSkills().getPosition(j).getName() 
-                            + ": " + job.getSkills().getPosition(j).getProficiency());
-                }
-                System.out.println("--------------------------------------------------");
+                JobPosting job = jobPostings.getPosition(i);
+                jobPostingUI.viewJobPosting(job, i);                
             }
+            jobPostingUI.displayViewJobPostingFoot();
         }
     }
     
