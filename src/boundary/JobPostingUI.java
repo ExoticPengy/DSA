@@ -4,9 +4,6 @@
  */
 package boundary;
 
-import adt.DoublyLinkedList;
-import adt.DoublyLinkedListInterface;
-import control.JobManagement;
 import entity.Employer;
 import entity.JobPosting;
 import java.util.InputMismatchException;
@@ -71,7 +68,11 @@ public class JobPostingUI {
     }    
     
     public void noJobPosting(){
-        System.out.println("No job postings available.");
+        System.out.println("No job postings found.");
+    }
+    
+    public void invalidChoice(){
+        System.out.println("Invalid input! Please enter a valid number.");
     }
     
     public void displayCreateJobsHead() {
@@ -142,6 +143,42 @@ public class JobPostingUI {
         }
     }
     
+    public int displaySearchMenu(Employer currentEmployer){
+        while(true){
+            System.out.println("\n+--------------------------------+");
+            System.out.println("|         Search Job Posting     |");
+            System.out.println("+--------------------------------+");
+            System.out.println("| Search by:                     |");
+            System.out.println("| 1. Job Title                   |");
+            System.out.println("| 2. Skill Required              |");
+            System.out.println("| 3. Salary Range                |");
+            System.out.println("| 4. Back to Menu                |");
+            System.out.println("+--------------------------------+");
+            System.out.print("Enter your choice: ");
+
+            try {
+                    int searchChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    switch (searchChoice) {
+                        case 1:
+                            return searchChoice; 
+                        case 2:
+                            return searchChoice; 
+                        case 3:
+                            return searchChoice; 
+                        case 4:
+                            return searchChoice;
+                        default:
+                            System.out.println("Invalid choice. Please try again.");
+                    }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a number from 1 - 4.");
+                scanner.nextLine();
+            }
+        }
+    }
+    
     public int displaySortMenu(Employer currentEmployer){
         while (true) {
             System.out.println("\n+--------------------------------------------+");
@@ -176,7 +213,7 @@ public class JobPostingUI {
         }
     }
 
-    //ask to repeat
+    //ask to repeat again
     public int askChoice(String question) {
         while (true) {
             System.out.print(question
@@ -231,7 +268,7 @@ public class JobPostingUI {
             }
         }
     }
-    //add function
+    
     public int askProficiency() {
         int proficiency = 0;
         while (true) {
@@ -252,7 +289,7 @@ public class JobPostingUI {
         }
     }
     
-    //Create Job Posting
+    //Creating Job Posting
     public String addTitle(){
         System.out.print("\nEnter Job Title: ");
         String title = scanner.nextLine();
@@ -276,10 +313,90 @@ public class JobPostingUI {
         String qualification = scanner.nextLine();
         return qualification;
     }
+    
+    //update function
     public void newUpdateJobTitle(){
         System.out.println("\nUpdated Job Postings:");
     }
-    //remove 
+    
+    public int updateChoice(int jobNumber, String question){
+        int choice = 0;
+        while (true) {
+                System.out.print(question);
+                choice = scanner.nextInt();
+                scanner.nextLine(); 
+
+                if (choice >= 1 && choice <= jobNumber) {
+                    return choice;
+                } else {
+                    System.out.println("Invalid input! Please enter a valid number.");
+                }  
+            }
+    }
+    
+    public int selectToUpdate(){
+        int updateChoice = 0;
+            
+        while (true) {
+            System.out.println("\nWhat would you like to update?");
+            System.out.println("1. Title");
+            System.out.println("2. Description");
+            System.out.println("3. Salary Range");
+            System.out.println("4. Qualification");
+            System.out.println("5. Skills");
+            System.out.print("\nEnter your choice: ");
+            updateChoice = scanner.nextInt();
+            scanner.nextLine(); 
+
+            if(updateChoice >= 1&& updateChoice <= 5) {
+                return updateChoice;
+            } else {
+                System.out.print("Invalid input! Please enter number 1-5.\n");
+            }
+        }
+    }
+    
+    public int selectSkillToUpdate(JobPosting jobToUpdate){
+        System.out.print("\nChoose skill to update: \n");
+        for (int j = 1; j <= jobToUpdate.getSkills().getCount(); j++) {
+            System.out.println(j + ". " + jobToUpdate.getSkills().getPosition(j).getName()
+                    + ": " + jobToUpdate.getSkills().getPosition(j).getProficiency());
+        }
+        
+        int selectSkill = 0;
+        while (true) {
+            System.out.print("\nEnter the skill number you want to update: ");
+            selectSkill = scanner.nextInt();
+            scanner.nextLine();
+
+                if(selectSkill >= 1 && selectSkill <= jobToUpdate.getSkills().getCount()) {
+                    return selectSkill;
+                } else {
+                    System.out.print("Invalid input! Please enter a valid number.\n");
+                }
+        }
+    }
+    
+    public int proficiencyUpdate(){
+        int newProficiency = 0;
+        while (true) {
+            System.out.print("Enter new proficiency(1-10): ");
+            newProficiency = scanner.nextInt();
+            scanner.nextLine();
+
+            if(newProficiency >= 1 && newProficiency <= 10) {
+                  return newProficiency;
+            } else {
+                System.out.print("Invalid input. Please enter a valid number.\n");
+            }
+        }
+    }
+    
+    public void successUpdate(){
+        System.out.println("Job posting update successfully!\n");
+    }
+    
+    //remove function
     public void successRemove(){
         System.out.println("Job posting remove successfully!\n");
     }
@@ -288,7 +405,20 @@ public class JobPostingUI {
         System.out.println("Removal cancelled.");
     }
     
+    //search function
+    public String searchTitle(){
+        System.out.print("Enter job title to search: ");
+        String searchTerm = scanner.nextLine().toLowerCase();
+        return searchTerm;
+    }
     
+    public String searchSkill(){
+        System.out.print("\nWhich skill you want to search: \n"
+                            + "1. Communication \n2. Leadership \n3. Programming \n4. Analysis\n"
+                            + "\nEnter your choice: ");
+        String searchTerm = scanner.nextLine().toLowerCase();
+        return searchTerm;
+    }
     
     
     
