@@ -184,7 +184,7 @@ public class InternshipApplication {
                 MessageUI.displayInvalidCharacterMessage();
                 sc.next();
             }
-        } while (studentNum != 4);
+        } while (studentNum != 5);
     }
 
     public static void companyNameMenu(DoublyLinkedListInterface<Employer> employerList) {
@@ -233,7 +233,7 @@ public class InternshipApplication {
 
     public static void companyMenu(Employer employer) {
         int companyNum = 0;
-        jobManagement.runJobManagement(employerManagement.getEmployerList());
+        
         do {
             if (isNum) {
                 System.out.println("\n+-------------------------------------+");
@@ -330,7 +330,7 @@ public class InternshipApplication {
                         //applicant management module
                         break;
                     case 5:
-                        //matching engine module
+                        matchingEngine.generateMatchReport();
                         break;
                     case 6:
                         interviewArrangement.displayInterviewReport();

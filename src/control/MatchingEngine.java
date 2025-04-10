@@ -345,4 +345,86 @@ public class MatchingEngine {
             list.replacePosition(rightList.getPosition(rightIdx++), i++);
         }
     }
+    
+    public void generateMatchReport() {
+        if (matchList.getCount() < 2) {
+            System.out.println("Not enough match lists.");
+            return;
+        }
+        
+        boolean foundDiscrepancies = false;
+    
+        for (int i = 1; i <= matchList.getCount(); i++) {
+            Match currentMatch = matchList.getPosition(i);
+
+            for (int j = i + 1; j <= matchList.getCount(); j++) {
+                Match compareMatch = matchList.getPosition(j);
+
+                for (int k = 1; k <= currentMatch.getJobSeekerList().getCount(); k++) {
+                    JobSeeker seeker = currentMatch.getJobSeekerList().getPosition(k);
+
+                    int compareSeekerIdx = compareSeeker(seeker, compareMatch.getJobSeekerList());
+                    if (compareSeekerIdx == -1) { 
+                        continue;
+                    }
+
+                    DoublyLinkedListInterface<MatchScore> currentScores = currentMatch.getMatchScoreList().getPosition(k);
+                    DoublyLinkedListInterface<MatchScore> compareScores = compareMatch.getMatchScoreList().getPosition(compareSeekerIdx);
+
+                    for (int scoreIdx = 1; scoreIdx <= currentScores.getCount(); scoreIdx++) {
+                        MatchScore currentScore = currentScores.getPosition(scoreIdx);
+
+                        MatchScore compareScore = compareJobPosting(currentScore.getJobPosting(), compareScores);
+                        if (compareScore == null) { 
+                            continue;
+                        }
+
+                        if (currentScore.getScore() != compareScore.getScore()) {
+                            if (!foundDiscrepancies) {
+                                matchingUI.printReportHeader();
+                                foundDiscrepancies = true;
+                            }
+                            int scoreDiff;
+                            String scoreDifference;
+                            if (currentScore.getScore() > compareScore.getScore()) {
+                                scoreDiff = currentScore.getScore() - compareScore.getScore();
+                                scoreDifference = "-" + scoreDiff;
+                            } else {
+                                scoreDiff = compareScore.getScore() - currentScore.getScore();
+                                scoreDifference = "+" + scoreDiff;
+                            }
+                            
+                            matchingUI.printReport(
+                                i, seeker, currentScore, j, compareMatch.getJobSeekerList().getPosition(compareSeekerIdx), compareScore, scoreDifference 
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!foundDiscrepancies) {
+            System.out.println("No score discrepancies found across all match sets.");
+        } else {
+            matchingUI.printReportFooter();
+        }
+    }
+    
+    private int compareSeeker(JobSeeker seeker, DoublyLinkedListInterface<JobSeeker> list) {
+        for (int i = 1; i <= list.getCount(); i++) {
+            if (list.getPosition(i).equals(seeker)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    private MatchScore compareJobPosting(JobPosting posting, DoublyLinkedListInterface<MatchScore> scores) {
+        for (int i = 1; i <= scores.getCount(); i++) {
+            if (scores.getPosition(i).getJobPosting().equals(posting)) {
+                return scores.getPosition(i);
+            }
+        }
+        return null;
+    }
 }

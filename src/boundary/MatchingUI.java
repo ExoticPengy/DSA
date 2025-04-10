@@ -97,6 +97,62 @@ public class MatchingUI {
                 "Applicant", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
     }
     
+    public void printReportHeader() {
+        System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                         MATCH SCORE DISCREPANCY REPORT                                                                        |");
+        System.out.println("+----------------+----------------+--------------------------------+----------------------+--------------------------------+---------------------------+-----+--------+---------+");
+        System.out.printf("| %-14s | %-14s | %-30s | %-20s | %-30s | %-25s | %-3s | %-6s | %-7s |\n", 
+                "Applicant", "Company", "Job Posting", "Location", "Qualification", "Skills", "Set","Score", "Changes");
+        System.out.println("+----------------+----------------+--------------------------------+----------------------+--------------------------------+---------------------------+-----+--------+---------+");
+    }
+    
+    public void printReport(
+        int setNo1, JobSeeker oldJobSeeker, MatchScore oldScore, int setNo2, JobSeeker newJobSeeker, MatchScore newScore, String scoreDifference
+    ) {
+        System.out.printf("| %-14s | %-14s | %-30s | %-20s | %-30s ", 
+                
+                oldJobSeeker.getName(), 
+                oldScore.getJobPosting().getEmployer().getName(),
+                oldScore.getJobPosting().getTitle(), 
+                oldScore.getJobPosting().getEmployer().getLocation(),
+                oldScore.getJobPosting().getQualification()
+             );
+        
+        for (int i = 1; i <= oldScore.getJobPosting().getSkills().getCount(); i++) {
+            if (oldScore.getJobPosting().getSkills().getCount() == 1) {
+                System.out.printf("| (%d) %-19s %-2d", i, oldScore.getJobPosting().getSkills().getPosition(i).getName(), oldScore.getJobPosting().getSkills().getPosition(i).getProficiency());
+                System.out.printf("| %-3s | %-6d | %-7s |\n", setNo1, oldScore.getScore(), scoreDifference);
+                System.out.printf("| %-14s | %-14s | %-30s | %-20s | %-30s | %-25s | %-3s | %-6d | %-7s |\n",
+                                "", "", "", "", "", "", setNo2, newScore.getScore(), "");
+            } else {
+                System.out.printf("| (%d) %-19s %-2d", i, oldScore.getJobPosting().getSkills().getPosition(i).getName(), oldScore.getJobPosting().getSkills().getPosition(i).getProficiency());
+                switch (i) {
+                    case 1:
+                        System.out.printf("| %-3s | %-6d | %-7s |\n", setNo1, oldScore.getScore(), scoreDifference);
+                        break;
+                    case 2:
+                        System.out.printf("| %-3s | %-6d | %-7s |\n", setNo2, newScore.getScore(), "");
+                        break;
+                    default:
+                        System.out.printf("| %-3s | %-6s | %-7s |\n", "","", "");
+                        break;
+                }
+
+                if (i < oldScore.getJobPosting().getSkills().getCount()) {
+                    System.out.printf("| %-14s | %-14s | %-30s | %-20s | %-30s ",
+                            "", "", "", "", "", "", "");
+                }
+            }
+        }
+
+        System.out.println("+----------------+----------------+--------------------------------+----------------------+--------------------------------+---------------------------+-----+--------+---------+");
+    }
+
+    public void printReportFooter() {
+        System.out.println("| End of Report                                                    |");
+        System.out.println("+------------------------------------------------------------------+");
+    }
+    
     public void displayJobSeeker(JobSeeker jobSeeker) {
         System.out.println("+--------------------------------------------------------------------------------------------------------+");
         System.out.println("|                                         Applicant Details                                              |");
