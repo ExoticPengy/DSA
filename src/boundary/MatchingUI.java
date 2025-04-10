@@ -3,6 +3,7 @@ package boundary;
 
 import entity.JobApplication;
 import entity.JobPosting;
+import entity.JobSeeker;
 import entity.Match;
 import entity.MatchScore;
 import java.util.InputMismatchException;
@@ -42,9 +43,25 @@ public class MatchingUI {
                 "Applicant", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
     }
     
-    public void displayJobSeekerHead(String jobSeeker) {
+    public void displayJobSeekerHead(JobSeeker jobSeeker, int index) {
         System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.printf("|                                                                                      Applicant: %-20s                                                                          |\n", jobSeeker);
+        System.out.printf("| %-2s | %-14s | %-14s | %-40s | %-25s |\n", "No", "Applicant", "Location", "Qualification", "Skills");
+        System.out.println("+-------------------------------------------------------------------------------------------------------------+");
+        System.out.printf("| %-2d ", index);
+        System.out.printf("| %-14s ", jobSeeker.getName());
+        System.out.printf("| %-14s ", jobSeeker.getLocation());
+        System.out.printf("| %-40s ", jobSeeker.getQualification());
+        for (int i = 1; i <= jobSeeker.getSkills().getCount(); i++) {
+            if (jobSeeker.getSkills().getCount() == 1) {
+                System.out.printf("| (%d) %-19s %-2d|\n", i, jobSeeker.getSkills().getPosition(i).getName(), jobSeeker.getSkills().getPosition(i).getProficiency());
+            } else {
+                System.out.printf("| (%d) %-19s %-2d|\n", i, jobSeeker.getSkills().getPosition(i).getName(), jobSeeker.getSkills().getPosition(i).getProficiency());
+                if (i < jobSeeker.getSkills().getCount()) {
+                    System.out.printf("| %-2s | %-14s | %-14s | %-40s ",
+                            "", "", "", "");
+                }
+            }
+        }
         System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
         System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s | %-6s |\n",
                 "No", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
@@ -78,6 +95,29 @@ public class MatchingUI {
         System.out.println("+----------------+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
         System.out.printf("| %-14s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s | %-6s |\n",
                 "Applicant", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
+    }
+    
+    public void displayJobSeeker(JobSeeker jobSeeker) {
+        System.out.println("+--------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                         Applicant Details                                              |");
+        System.out.println("+--------------------------------------------------------------------------------------------------------+");
+        System.out.printf("| %-14s | %-14s | %-40s | %-25s |\n", "No", "Applicant", "Location", "Qualification", "Skills");
+        System.out.println("+--------------------------------------------------------------------------------------------------------+");
+        System.out.printf("| %-14s ", jobSeeker.getName());
+        System.out.printf("| %-14s ", jobSeeker.getLocation());
+        System.out.printf("| %-40s ", jobSeeker.getQualification());
+        for (int i = 1; i <= jobSeeker.getSkills().getCount(); i++) {
+            if (jobSeeker.getSkills().getCount() == 1) {
+                System.out.printf("| (%d) %-19s %-2d|\n", i, jobSeeker.getSkills().getPosition(i).getName(), jobSeeker.getSkills().getPosition(i).getProficiency());
+            } else {
+                System.out.printf("| (%d) %-19s %-2d|\n", i, jobSeeker.getSkills().getPosition(i).getName(), jobSeeker.getSkills().getPosition(i).getProficiency());
+                if (i < jobSeeker.getSkills().getCount()) {
+                    System.out.printf("| %-14s | %-14s | %-40s ",
+                            "", "", "", "");
+                }
+            }
+        }
+        System.out.println("+--------------------------------------------------------------------------------------------------------+");
     }
     
     public void displayJobMatches(MatchScore score, int index) {
