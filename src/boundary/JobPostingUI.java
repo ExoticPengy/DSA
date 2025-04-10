@@ -7,6 +7,7 @@ package boundary;
 import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
 import control.JobManagement;
+import entity.Employer;
 import entity.JobPosting;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -68,6 +69,11 @@ public class JobPostingUI {
             }
         }
     }    
+    
+    public void noJobPosting(){
+        System.out.println("No job postings available.");
+    }
+    
     public void displayCreateJobsHead() {
         System.out.println("\n+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
         System.out.println("|                                                                                     Newly Created Job Postings                                                                       |");
@@ -84,6 +90,23 @@ public class JobPostingUI {
                 "No", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills");
     }
     
+    public void displaySelectedJobsHead() {
+        System.out.println("\n+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                                     Selected Job Postings                                                                          |");
+        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+");
+        System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s |\n",
+                "No", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills");
+    }
+    
+    public void displayListJobsHead() {
+        System.out.println("\n+-------------------------------------------+");
+        System.out.println("|            List of Job Postings           |");
+        System.out.println("+-------------------------------------------+");
+    }
+    
+    public void displayJobsNumber(int jobNumber, JobPosting job) {
+        System.out.println(jobNumber + ". " + job.getTitle());
+    }
     public void displayViewJobPostingFoot() {
         System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+");
     }
@@ -119,6 +142,41 @@ public class JobPostingUI {
         }
     }
     
+    public int displaySortMenu(Employer currentEmployer){
+        while (true) {
+            System.out.println("\n+--------------------------------------------+");
+            System.out.println("|               Sort Jobs Menu               |");
+            System.out.println("+--------------------------------------------+");
+            System.out.println("| 1. Sort by Job Title (A-Z)                 |");
+            System.out.println("| 2. Sort by Highest Salary                  |");
+            System.out.println("| 3. Sort by Highest Total Skill Proficiency |");
+            System.out.println("| 4. Back to Main Menu                       |");
+            System.out.println("+--------------------------------------------+");
+            System.out.print("\nEnter your choice: ");
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        return choice; // Sort by Job Title
+                    case 2:
+                        return choice; // Sort by Highest Salary
+                    case 3:
+                        return choice; // Sort by Highest Skill Proficiency
+                    case 4:
+                        return choice;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a number from 1 - 4.");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    //ask to repeat
     public int askChoice(String question) {
         while (true) {
             System.out.print(question
@@ -143,6 +201,8 @@ public class JobPostingUI {
         }
     }
     
+
+    //add function
     public String askSkills() {
         int choice;
         while (true) {
@@ -171,7 +231,7 @@ public class JobPostingUI {
             }
         }
     }
-    
+    //add function
     public int askProficiency() {
         int proficiency = 0;
         while (true) {
@@ -216,9 +276,17 @@ public class JobPostingUI {
         String qualification = scanner.nextLine();
         return qualification;
     }
+    public void newUpdateJobTitle(){
+        System.out.println("\nUpdated Job Postings:");
+    }
+    //remove 
+    public void successRemove(){
+        System.out.println("Job posting remove successfully!\n");
+    }
     
-    
-    
+    public void cancelRemove(){
+        System.out.println("Removal cancelled.");
+    }
     
     
     

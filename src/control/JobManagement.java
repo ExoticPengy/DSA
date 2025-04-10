@@ -85,7 +85,7 @@ public class JobManagement {
     //view the *specific employer's job posting
     public void viewEmployerJobPosting(Employer currentEmployer) { 
         if (jobPostings.isEmpty()) {
-            System.out.println("No job postings available.");
+            jobPostingUI.noJobPosting();
         } else {
             int count = 0;
             jobPostingUI.displayViewJobPostingHead();
@@ -104,7 +104,7 @@ public class JobManagement {
     //display all job postings for admin use
     public void viewAllJobs() { 
         if (jobPostings.isEmpty()) {
-            System.out.println("No job postings available.");
+            jobPostingUI.noJobPosting();
         } else {
             jobPostingUI.displayViewJobPostingHead();
             for (int i = 1; i <= jobPostings.getCount(); i++) { 
@@ -117,7 +117,7 @@ public class JobManagement {
     
     public void updateJobPosting(Employer currentEmployer) {
         if (jobPostings.isEmpty()) {
-            System.out.println("No job postings available to update.");
+            jobPostingUI.noJobPosting();
             return;
         }
 
@@ -125,15 +125,13 @@ public class JobManagement {
 
         while (keepUpdating)  {
             // Display a list of job titles
-            System.out.println("\n+-------------------------------------------+");
-            System.out.println("|            List of Job Postings           |");
-            System.out.println("+-------------------------------------------+");
+            jobPostingUI.displayListJobsHead();
             int jobNumber = 0;
             for (int i = 1; i <= jobPostings.getCount(); i++) {
                 JobPosting job = jobPostings.getPosition(i);
                 if (job.getEmployer().equals(currentEmployer)) {
                     jobNumber++;
-                    System.out.println(jobNumber + ". " + job.getTitle());
+                    jobPostingUI.displayJobsNumber(jobNumber, job);
                 }
             }
 
@@ -168,20 +166,9 @@ public class JobManagement {
             JobPosting jobToUpdate = jobPostings.getPosition(jobIndex);
 
             // Display the selected job posting
-            System.out.println("\n+-----------------------------------------------+");
-            System.out.println("|             Selected Job Posting              |");
-            System.out.println("+-----------------------------------------------+");
-            System.out.println("Employer: " + jobToUpdate.getEmployer().getName());
-            System.out.println("Job Title: " + jobToUpdate.getTitle());
-            System.out.println("Description: " + jobToUpdate.getDescription());
-            System.out.println("Salary Range: " + jobToUpdate.getSalaryRange());
-            System.out.println("Qualification: " + jobToUpdate.getQualification());
-            System.out.println("Skills Required: ");
-            for (int j = 1; j <= jobToUpdate.getSkills().getCount(); j++) {
-                System.out.println(j + ". " + jobToUpdate.getSkills().getPosition(j).getName()
-                        + ": " + jobToUpdate.getSkills().getPosition(j).getProficiency());
-            }
-            System.out.println("+-----------------------------------------------+");
+            jobPostingUI.displaySelectedJobsHead();
+            jobPostingUI.viewJobPosting(jobToUpdate, 0);
+            jobPostingUI.displayViewJobPostingFoot();
 
             int updateChoice = 0;
             boolean validUpdateChoice = false;
@@ -278,50 +265,29 @@ public class JobManagement {
             viewEmployerJobPosting(currentEmployer);
 
             // Ask repeat
-            boolean validOption = false;
-            while (!validOption) {
-                System.out.print("\nUpdate another job listing?" + "\n1. Yes\n2. No\nEnter your choice: ");
-                try {
-                    choice = scanner.nextInt();
-                    scanner.nextLine();
-                    switch (choice) {
-                        case 1:
-                            validOption = true;
-                            break;
-                        case 2:
-                            keepUpdating = false;
-                            validOption = true;
-                            break;
-                        default:
-                            System.out.println("Invalid option, please try again.");
-                    }
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid input! Please enter 1 or 2.");
-                    scanner.nextLine(); 
-                }
+            if (jobPostingUI.askChoice("\nDo you want to update another job posting?") == 2) {
+                keepUpdating = false;
             }
+          
         }
     }
 
     public void removeJobPosting(Employer currentEmployer) {
         if (jobPostings.isEmpty()) {
-        System.out.println("No job postings available to remove.");
+        jobPostingUI.noJobPosting();
         return;
         }
         
       boolean keepRemoving = true;
       while (keepRemoving)  {
         // Display a list of job titles
-        System.out.println("\n+-------------------------------------------+");
-        System.out.println("|            List of Job Postings           |");
-        System.out.println("+-------------------------------------------+");
-        
+        jobPostingUI.displayListJobsHead();
         int jobNumber = 0;
         for (int i = 1; i <= jobPostings.getCount(); i++) {
             JobPosting job = jobPostings.getPosition(i);
             if (job.getEmployer().equals(currentEmployer)) {
                 jobNumber++;
-                System.out.println(jobNumber + ". " + job.getTitle());
+                jobPostingUI.displayJobsNumber(jobNumber,job);
             }
         }
 
@@ -354,82 +320,38 @@ public class JobManagement {
         
         JobPosting jobToRemove = jobPostings.getPosition(jobIndex);
         // Display the selected job posting
-        System.out.println("\n+-----------------------------------------------+");
-        System.out.println("|             Selected Job Posting              |");
-        System.out.println("+-----------------------------------------------+");
-        System.out.println("Employer: " + jobToRemove.getEmployer().getName());
-        System.out.println("Job Title: " + jobToRemove.getTitle());
-        System.out.println("Description: " + jobToRemove.getDescription());
-        System.out.println("Salary Range: " + jobToRemove.getSalaryRange());
-        System.out.println("Qualification: " + jobToRemove.getQualification());
-        System.out.println("Skills Required: ");
-        for (int j = 1; j <= jobToRemove.getSkills().getCount(); j++) {
-            System.out.println(j + ". " + jobToRemove.getSkills().getPosition(j).getName()
-                    + ": " + jobToRemove.getSkills().getPosition(j).getProficiency());
-        }
-        System.out.println("+-----------------------------------------------+");
+        jobPostingUI.displaySelectedJobsHead();
+        jobPostingUI.viewJobPosting(jobToRemove, 0);
+        jobPostingUI.displayViewJobPostingFoot();
         
-        int removeChoice = 0;
-        boolean confirmation = false;
-        while (!confirmation) {
-            System.out.print("\nConfirm remove this job posting?" + "\n1. Yes\n2. No\nEnter your choice: ");
-            try {
-            removeChoice = scanner.nextInt();
-            scanner.nextLine();
+        int removeChoice = jobPostingUI.askChoice("\nConfirm remove this job posting?");
             
-            switch(removeChoice) {
-                case 1:
-                    jobPostings.deletePosition(jobIndex); 
-                    System.out.println("Job posting remove successfully!");
-                    System.out.println("\nUpdated Job Postings:");
-                    viewEmployerJobPosting(currentEmployer);
-                    confirmation = true;
-                    break;
-                case 2:
-                    System.out.println("Removal cancelled.");
-                    confirmation = true;
-                    break;
-                default: 
-                    System.out.print("Invalid input. Please enter a valid number.\n");
-            }
-            
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter 1 or 2");
-                scanner.nextLine();
-            }
+        switch(removeChoice) {
+            case 1:
+                jobPostings.deletePosition(jobIndex); 
+                jobPostingUI.successRemove();
+                jobPostingUI.newUpdateJobTitle();
+                viewEmployerJobPosting(currentEmployer);
+                break;
+            case 2:
+                jobPostingUI.cancelRemove();
+                break;
+            default: 
+                break;
         }
     
         // Ask repeat
-        boolean removeOption = false;
-        while (!removeOption) {
-            System.out.print("\nRemove another job listing?" + "\n1. Yes\n2. No\nEnter your choice: ");
-            try {
-                choice = scanner.nextInt();
-                scanner.nextLine();
-                switch (choice) {
-                    case 1:
-                        removeOption = true;
-                        break;
-                    case 2:
-                        keepRemoving = false;
-                        removeOption = true;
-                        break;
-                    default:
-                        System.out.println("Invalid option, please try again.");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input! Please enter 1 or 2.");
-                scanner.nextLine(); 
-            }
+        if (jobPostingUI.askChoice("\nDo you want to remove another job posting?") == 2) {
+                keepRemoving = false;
         }
-        
+     
       }
     }
         
     //search job-----------------------------------------------------------------------------------------
     public void searchJobs(Employer currentEmployer) {
         if (jobPostings.isEmpty()) {
-            System.out.println("No job postings available to search.");
+            jobPostingUI.noJobPosting();
             return;
         }
 
@@ -550,52 +472,16 @@ public class JobManagement {
         System.out.println("--------------------------------------------------");
                
         // Ask repeat
-            boolean validOption = false;
-            int searchChoice;
-            while (!validOption) {
-                System.out.print("\nDo you want to search another job posting?" + "\n1. Yes\n2. No\nEnter your choice: ");
-                try {
-                    searchChoice = scanner.nextInt();
-                    scanner.nextLine();
-                    switch (searchChoice) {
-                        case 1:
-                            validOption = true;
-                            searchJobs(job.getEmployer());
-                            break;
-                        case 2:
-                            validOption = true;
-                            break;
-                        default:
-                            System.out.println("Invalid option, please try again.");
-                    }
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid input! Please enter 1 or 2.");
-                    scanner.nextLine(); 
-                }
-            }
-        
-        
-        
+        if (jobPostingUI.askChoice("\nDo you want to search another job posting?") == 1) {
+                searchJobs(job.getEmployer());
+        }
+            
     }
-    //end of search job function-----------------------------------------------------------------------
-    
-    
-    
+       
     //sort job
     public void viewSortedJobs(Employer currentEmployer) {
-    System.out.println("\n+--------------------------------------------+");
-    System.out.println("|               Sort Jobs Menu               |");
-    System.out.println("+--------------------------------------------+");
-    System.out.println("| 1. Sort by Job Title (A-Z)                 |");
-    System.out.println("| 2. Sort by Highest Salary                  |");
-    System.out.println("| 3. Sort by Highest Total Skill Proficiency |");
-    System.out.println("| 4. Back to Main Menu                       |");
-    System.out.println("+--------------------------------------------+");
-    System.out.print("\nEnter your choice: ");
-
-    int choice = scanner.nextInt();
-    scanner.nextLine();
-
+    
+    int choice = jobPostingUI.displaySortMenu(currentEmployer);
     switch (choice) {
         case 1:
             sortJobs(1, currentEmployer); // Sort by Job Title
@@ -615,7 +501,7 @@ public class JobManagement {
 
     public void sortJobs(int sortBy, Employer currentEmployer) {
         if (jobPostings.isEmpty()) {
-            System.out.println("No job postings available to sort.");
+            jobPostingUI.noJobPosting();
             return;
         }
 
@@ -701,20 +587,6 @@ public class JobManagement {
                 return false;
         }
     }
-
-//    // Comparison methods remain the same as before
-//    private int compareJobs(JobPosting a, JobPosting b, int sortBy) {
-//        switch (sortBy) {
-//            case 1: return a.getTitle().compareToIgnoreCase(b.getTitle());
-//            case 2: return Double.compare(
-//                extractMaxSalary(b.getSalaryRange()),
-//                extractMaxSalary(a.getSalaryRange()));
-//            case 3: return Integer.compare(
-//                getTotalSkillProficiency(b),
-//                getTotalSkillProficiency(a));
-//            default: return 0;
-//        }
-//    }
 
     private double extractMaxSalary(String range) {
         String[] parts = range.replaceAll("[^0-9-]", "").split("-");
