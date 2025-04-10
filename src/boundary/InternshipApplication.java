@@ -40,7 +40,10 @@ public class InternshipApplication {
                 jobManagement.getJobPostingList()
         );
         
-        interviewArrangement.runInterviewArrangement(jobManagement.getJobPostingList());
+        interviewArrangement.runInterviewArrangement(
+                jobManagement.getJobPostingList(), 
+                applicantManagement.getJobSeekerList()
+        );
         
         int num = 0;
 
@@ -184,7 +187,7 @@ public class InternshipApplication {
                 MessageUI.displayInvalidCharacterMessage();
                 sc.next();
             }
-        } while (studentNum != 4);
+        } while (studentNum != 5);
     }
 
     public static void companyNameMenu(DoublyLinkedListInterface<Employer> employerList) {
@@ -244,9 +247,10 @@ public class InternshipApplication {
                         + "|  2. View Job Applicant              |\n"
                         + "|  3. Select Candidate for Interview  |\n"
                         + "|  4. View Schedule                   |\n"
-                        + "|  5. View Result                     |\n"
+                        + "|  5. Assign Score                    |\n"
+                        + "|  6. View Result                     |\n"
                         + "|                                     |\n"
-                        + "|  6. Previous Page                   |\n"
+                        + "|  7. Previous Page                   |\n"
                         + "+-------------------------------------+\n");
             }
             System.out.print("Enter a choice: ");
@@ -273,9 +277,12 @@ public class InternshipApplication {
                         interviewArrangement.displayCompany(1, employer);
                         break;
                     case 5:
-                        interviewArrangement.displayCompany(2, employer);
+                        interviewArrangement.assignScore(employer);
                         break;
                     case 6:
+                        interviewArrangement.displayCompany(2, employer);
+                        break;
+                    case 7:
                         break;
                     default:
                         isNum = false;
@@ -287,7 +294,7 @@ public class InternshipApplication {
                 MessageUI.displayInvalidCharacterMessage();
                 sc.next();
             }
-        } while (companyNum != 6);
+        } while (companyNum != 7);
     }
 
     public static void adminMenu() {
