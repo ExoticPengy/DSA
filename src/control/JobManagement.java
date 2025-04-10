@@ -29,7 +29,7 @@ public class JobManagement {
     
     public void runJobManagement(DoublyLinkedListInterface<Employer> employerList) {
         jobPostings = jobPostingInitializer.getJobPosting(employerList);
-        viewAllJobs(); //?????????????????????????????????????????
+        //viewAllJobs(); //?????????????????????????????????????????
     }
     
     public DoublyLinkedListInterface<JobPosting> getJobPostingList() {
@@ -164,8 +164,7 @@ public class JobManagement {
             jobPostingUI.viewJobPosting(jobToUpdate, 0);
             jobPostingUI.displayViewJobPostingFoot();
 
-            int updateChoice = 0;
-            jobPostingUI.selectToUpdate();
+            int updateChoice = jobPostingUI.selectToUpdate();
 
             switch (updateChoice) {
                 case 1:
@@ -201,11 +200,11 @@ public class JobManagement {
 
             // Replace the old job posting with the updated one
             jobPostings.replacePosition(jobToUpdate, jobIndex);
-            jobPostingUI.successUpdate();
-
+            
             // Display all job postings after updating
             jobPostingUI.newUpdateJobTitle();
             viewEmployerJobPosting(currentEmployer);
+            jobPostingUI.successUpdate();
 
             // Ask repeat
             if (jobPostingUI.askChoice("\nDo you want to update another job posting?") == 2) {
@@ -363,8 +362,8 @@ public class JobManagement {
                 return left.getTitle().compareToIgnoreCase(right.getTitle()) > 0;
 
             case 2: // Sort by highest salary (descending)
-                return extractMaxSalary(left.getSalaryRange()) < 
-                       extractMaxSalary(right.getSalaryRange());
+                return getMaxSalaryValue(left.getSalaryRange()) < 
+                       getMaxSalaryValue(right.getSalaryRange());
 
             case 3: // Sort by total skill proficiency (descending)
                 return getTotalSkillProficiency(left) < 
@@ -375,10 +374,22 @@ public class JobManagement {
         }
     }
 
-    private double extractMaxSalary(String range) { ////////////////////////////////MUST CHANGE NOT USE ARRAY
-        String[] parts = range.replaceAll("[^0-9-]", "").split("-");
-        return parts.length > 1 ? Double.parseDouble(parts[1]) : Double.parseDouble(parts[0]);
+    private int getMaxSalaryValue(String range) {
+        int max = 0;
+        int current = 0;
+
+        for (int i = 0; i < range.length(); i++) {
+            char c = range.charAt(i);
+            if (Character.isDigit(c)) {
+                current = current * 10 + (c - '0');
+            } else {
+                max = Math.max(max, current);
+                current = 0;
+            }
+        }
+        return Math.max(max, current);
     }
+
 
     private int getTotalSkillProficiency(JobPosting job) {
         int total = 0;
