@@ -99,6 +99,14 @@ public class JobPostingUI {
                 "No", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills");
     }
     
+    public void displaySortJobsHead() {
+        System.out.println("\n+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                                   Job Postings Found                                                                          |");
+        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+");
+        System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s |\n",
+                "No", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills");
+    }
+    
     public void displayListJobsHead() {
         System.out.println("\n+-------------------------------------------+");
         System.out.println("|            List of Job Postings           |");
@@ -142,43 +150,7 @@ public class JobPostingUI {
             }
         }
     }
-    
-    public int displaySearchMenu(Employer currentEmployer){
-        while(true){
-            System.out.println("\n+--------------------------------+");
-            System.out.println("|         Search Job Posting     |");
-            System.out.println("+--------------------------------+");
-            System.out.println("| Search by:                     |");
-            System.out.println("| 1. Job Title                   |");
-            System.out.println("| 2. Skill Required              |");
-            System.out.println("| 3. Salary Range                |");
-            System.out.println("| 4. Back to Menu                |");
-            System.out.println("+--------------------------------+");
-            System.out.print("Enter your choice: ");
-
-            try {
-                    int searchChoice = scanner.nextInt();
-                    scanner.nextLine();
-
-                    switch (searchChoice) {
-                        case 1:
-                            return searchChoice; 
-                        case 2:
-                            return searchChoice; 
-                        case 3:
-                            return searchChoice; 
-                        case 4:
-                            return searchChoice;
-                        default:
-                            System.out.println("Invalid choice. Please try again.");
-                    }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input! Please enter a number from 1 - 4.");
-                scanner.nextLine();
-            }
-        }
-    }
-    
+   
     public int displaySortMenu(Employer currentEmployer){
         while (true) {
             System.out.println("\n+--------------------------------------------+");
@@ -314,6 +286,10 @@ public class JobPostingUI {
         return qualification;
     }
     
+    public void skillAlreadyCreated(){
+        System.out.print("\nThis skill has already been created. Please choose another skill to add. ");        
+    }
+    
     //update function
     public void newUpdateJobTitle(){
         System.out.println("\nUpdated Job Postings:");
@@ -405,23 +381,7 @@ public class JobPostingUI {
         System.out.println("Removal cancelled.");
     }
     
-    //search function
-    public String searchTitle(){
-        System.out.print("Enter job title to search: ");
-        String searchTerm = scanner.nextLine().toLowerCase();
-        return searchTerm;
-    }
-    
-    public String searchSkill(){
-        System.out.print("\nWhich skill you want to search: \n"
-                            + "1. Communication \n2. Leadership \n3. Programming \n4. Analysis\n"
-                            + "\nEnter your choice: ");
-        String searchTerm = scanner.nextLine().toLowerCase();
-        return searchTerm;
-    }
-    
-    
-    
+  
     
     
     
