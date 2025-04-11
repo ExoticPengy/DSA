@@ -129,8 +129,7 @@ public class JobManagement {
         }
 
         boolean keepUpdating = true;
-
-        while (keepUpdating)  {
+        while (keepUpdating) {
             // Display a list of job titles
             jobPostingUI.displayListJobsHead();
             int jobNumber = 0;
@@ -216,8 +215,8 @@ public class JobManagement {
 
     public void removeJobPosting(Employer currentEmployer) {
         if (jobPostings.isEmpty()) {
-        jobPostingUI.noJobPosting();
-        return;
+            jobPostingUI.noJobPosting();
+            return;
         }
         
       boolean keepRemoving = true;
@@ -339,6 +338,48 @@ public class JobManagement {
             }
         }
     }
+    
+    //search employer and skill
+    public void serchJobPosting(){
+        if (jobPostings.isEmpty()) {
+            jobPostingUI.noJobPosting();
+            return;
+        }
+        
+        boolean keepSearching = true;
+        while (keepSearching) {
+        
+        jobPostingUI.searchEmployer();
+        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            // Ask repeat
+            if (jobPostingUI.askChoice("\nDo you want to search another job posting?") == 2) {
+                keepSearching = false;
+            }
+        }
+    }
+    
+    //report
+    
+    
+    
+    
     
     
     
