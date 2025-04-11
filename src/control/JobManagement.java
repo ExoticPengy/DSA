@@ -29,7 +29,7 @@ public class JobManagement {
     
     public void runJobManagement(DoublyLinkedListInterface<Employer> employerList) {
         jobPostings = jobPostingInitializer.getJobPosting(employerList);
-        //viewAllJobs(); //?????????????????????????????????????????
+        viewAllJobs(); 
     }
     
     public DoublyLinkedListInterface<JobPosting> getJobPostingList() {
@@ -259,9 +259,9 @@ public class JobManagement {
         switch(removeChoice) {
             case 1:
                 jobPostings.deletePosition(jobIndex); 
-                jobPostingUI.successRemove();
                 jobPostingUI.newUpdateJobTitle();
                 viewEmployerJobPosting(currentEmployer);
+                jobPostingUI.successRemove();
                 break;
             case 2:
                 jobPostingUI.cancelRemove();
@@ -280,24 +280,23 @@ public class JobManagement {
         
     //sort job
     public void viewSortedJobs(Employer currentEmployer) {
-    
-    int choice = jobPostingUI.displaySortMenu(currentEmployer);
-    switch (choice) {
-        case 1:
-            sortJobs(1, currentEmployer); // Sort by Job Title
-            break;
-        case 2:
-            sortJobs(2, currentEmployer); // Sort by Highest Salary
-            break;
-        case 3:
-            sortJobs(3, currentEmployer); // Sort by Highest Skill Proficiency
-            break;
-        case 4:
-            return;
-        default:
-            jobPostingUI.invalidChoice();
+        int choice = jobPostingUI.displaySortMenu(currentEmployer);
+        switch (choice) {
+            case 1:
+                sortJobs(1, currentEmployer); // Sort by Job Title
+                break;
+            case 2:
+                sortJobs(2, currentEmployer); // Sort by Highest Salary
+                break;
+            case 3:
+                sortJobs(3, currentEmployer); // Sort by Highest Skill Proficiency
+                break;
+            case 4:
+                return;
+            default:
+                jobPostingUI.invalidChoice();
+        }
     }
-}
 
     public void sortJobs(int sortBy, Employer currentEmployer) {
         if (jobPostings.isEmpty()) {
@@ -308,11 +307,13 @@ public class JobManagement {
         mergeSort(1, jobPostings.getCount(), sortBy, currentEmployer);
 
         //Display sorted results
+        int count = 0;  
         jobPostingUI.displaySortJobsHead();
         for (int i = 1; i <= jobPostings.getCount(); i++) {
             JobPosting job = jobPostings.getPosition(i);
                 if (job.getEmployer().equals(currentEmployer)) {
-                   jobPostingUI.viewJobPosting(job, i);
+                   count++;
+                   jobPostingUI.viewJobPosting(job, count);
                 }   
         }
         jobPostingUI.displayViewJobPostingFoot();
@@ -327,7 +328,7 @@ public class JobManagement {
         }
     }
 
-        private void merge(int start, int mid, int end, int sortBy, Employer currentEmployer) {
+    private void merge(int start, int mid, int end, int sortBy, Employer currentEmployer) {
         int i = start;
         int j = mid + 1;
 
@@ -335,22 +336,23 @@ public class JobManagement {
             JobPosting leftJob = jobPostings.getPosition(i);
             JobPosting rightJob = jobPostings.getPosition(j);
 
-            // Only compare employer's jobs
+            // Only compare if both are employer's jobs
             if (leftJob.getEmployer().equals(currentEmployer) && 
                 rightJob.getEmployer().equals(currentEmployer)) {
 
                 if (shouldSwap(leftJob, rightJob, sortBy)) {
-                    // Swap positions
+                    // Perform the swap
                     jobPostings.replacePosition(rightJob, i);
                     jobPostings.replacePosition(leftJob, j);
-                    i++;
                 }
-                j++;
-            } 
-            else if (!leftJob.getEmployer().equals(currentEmployer)) {
-                i++;
             }
-            else {
+
+            // Always move at least one pointer
+            if (j > end || !rightJob.getEmployer().equals(currentEmployer) ||
+                (leftJob.getEmployer().equals(currentEmployer) && 
+                 !shouldSwap(leftJob, rightJob, sortBy))) {
+                i++;
+            } else {
                 j++;
             }
         }
@@ -358,14 +360,14 @@ public class JobManagement {
         
     private boolean shouldSwap(JobPosting left, JobPosting right, int sortBy) {
         switch (sortBy) {
-            case 1: // Sort by title (A-Z)
+            case 1: // Title A-Z
                 return left.getTitle().compareToIgnoreCase(right.getTitle()) > 0;
 
-            case 2: // Sort by highest salary (descending)
+            case 2: // Highest salary (compare right side only)
                 return getMaxSalaryValue(left.getSalaryRange()) < 
                        getMaxSalaryValue(right.getSalaryRange());
 
-            case 3: // Sort by total skill proficiency (descending)
+            case 3: // Highest total skills
                 return getTotalSkillProficiency(left) < 
                        getTotalSkillProficiency(right);
 
@@ -375,19 +377,20 @@ public class JobManagement {
     }
 
     private int getMaxSalaryValue(String range) {
-        int max = 0;
-        int current = 0;
+        int value = 0;
+        boolean afterHyphen = false;
 
         for (int i = 0; i < range.length(); i++) {
             char c = range.charAt(i);
-            if (Character.isDigit(c)) {
-                current = current * 10 + (c - '0');
-            } else {
-                max = Math.max(max, current);
-                current = 0;
+            if (c == '-') {
+                afterHyphen = true;
+                value = 0; // Reset to get right side value
+            } 
+            else if (Character.isDigit(c) && afterHyphen) {
+                value = value * 10 + (c - '0');
             }
         }
-        return Math.max(max, current);
+        return value;
     }
 
 

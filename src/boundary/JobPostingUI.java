@@ -101,7 +101,7 @@ public class JobPostingUI {
     
     public void displaySortJobsHead() {
         System.out.println("\n+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("|                                                                                   Job Postings Found                                                                          |");
+        System.out.println("|                                                                                      Sorted Job Postings                                                                             |");
         System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+");
         System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s |\n",
                 "No", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills");

@@ -20,7 +20,13 @@ public class EmployerInitializer {
         employerList.insertBack(new Employer("Macrosoft", "Petaling Jaya", "macrobecausenotmicrosoft@gmail.com"));
         employerList.insertBack(new Employer("Amazoff", "Kuala Lumpur", "amazoffbecausenoton@gmail.com"));
         employerList.insertBack(new Employer("Mayblank", "Puchong", "mayblankbecausenomoney@gmail.com"));
-
+        employerList.insertBack(new Employer("Goggle", "Selangor", "gogglebecauseswimming@gmail.com"));
+        employerList.insertBack(new Employer("Facepaper", "Shah Alam", "noenoughpapermakebook@gmail.com"));
+        employerList.insertBack(new Employer("Netflux", "Putrajaya", "netflukandburn@gmail.com"));
+        employerList.insertBack(new Employer("Instakilogram", "Setapak", "instagrambutheavier@gmail.com"));
+        employerList.insertBack(new Employer("Snapstalk", "Kepong", "snapstalk@gmail.com"));
+        employerList.insertBack(new Employer("Toktik", "Ampang", "toktiktiktok@gmail.com"));
+        employerList.insertBack(new Employer("Pineapple", "Cheras", "applebutwithpine@gmail.com"));
         return employerList;
     }
 }
