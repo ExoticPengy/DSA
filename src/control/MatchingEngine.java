@@ -73,12 +73,78 @@ public class MatchingEngine {
         calculateMatches();
         sortMatch();
         displayMatches(jobSeeker);
-        switch(matchingUI.askChoice("\nApply for a job?")) {
+        switch(matchingUI.applicationMenu()) {
             case 1:
                 applyJob(jobSeeker);
                 break;
+            case 2:
+                filterJob(jobSeeker);
+                break;
             default:
                 break;
+        }
+    }
+    
+    public void filterJob(JobSeeker jobSeeker) {
+        String location = matchingUI.askLocation();
+        int minScore = matchingUI.askScore();
+        int jobCount = 0;
+        
+        if (jobSeeker != null) {
+            matchingUI.displayMatchHead();
+            DoublyLinkedListInterface<MatchScore> scoreList = getLatestMatch().getMatchScoreList().getPosition(getCurrentSeekerIndex(jobSeeker));
+            for (int i = 1; i <= scoreList.getCount(); i++) {
+                if (scoreList.getPosition(i).getJobPosting().getEmployer().getLocation().equals(location) && scoreList.getPosition(i).getScore() >= minScore) {
+                    jobCount++;
+                    matchingUI.displayJobMatches(scoreList.getPosition(i), jobCount);
+                }
+            }
+            matchingUI.displayMatchFoot();
+        
+            if (jobCount > 0) {
+                if (matchingUI.askChoice("\nWould you like to apply for a job?") == 1) {
+                    Match latestMatch = getLatestMatch();
+                    DoublyLinkedListInterface<MatchScore> currentUserScoreList = latestMatch.getMatchScoreList().getPosition(getCurrentSeekerIndex(jobSeeker));
+                    int selectedJobIndex = matchingUI.selectJob(jobCount);
+                    int findJob = 0;
+                    for (int i = 1; i <= scoreList.getCount(); i++) {
+                        if (scoreList.getPosition(i).getJobPosting().getEmployer().getLocation().equals(location) && scoreList.getPosition(i).getScore() >= minScore) {
+                            findJob++;
+                            if (findJob == selectedJobIndex) {
+                                selectedJobIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                    JobApplication newJobApplication = new JobApplication(jobSeeker, currentUserScoreList.getPosition(selectedJobIndex));
+
+                    if (checkApplicationExists(newJobApplication, jobSeeker)) {
+                        switch(matchingUI.askChoice("\nYou have already applied to this job. Please wait for the company to review your application.\nWould you like to select another job?"
+                            + "\nEnter your choice: ")){
+                        case 1:
+                            filterJob(jobSeeker);
+                            return;
+                        default:
+                            return;
+                        }
+                    }
+
+                    jobApplicationList.insertBack(newJobApplication);
+                    matchingUI.displayNewApplicationHead();
+                    matchingUI.displayApplication(jobApplicationList.getBack());
+                    matchingUI.displayApplicationFoot();
+                    matchingUI.displayJobSeeker(jobSeeker);
+                }
+            } else {
+                switch(matchingUI.askChoice("\nNo job with these filters found, Try again?"
+                            + "\nEnter your choice: ")){
+                    case 1:
+                        filterJob(jobSeeker);
+                        return;
+                    default:
+                        return;
+                    }
+            }
         }
     }
     

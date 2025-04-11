@@ -198,7 +198,7 @@ public class MatchingUI {
         for (int i = 1; i <= job.getSkills().getCount(); i++) {
             if (job.getSkills().getCount() == 1) {
                 System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
-                System.out.printf("| %-6d |", score.getScore());
+                System.out.printf("| %-6d |\n", score.getScore());
             } else {
                 System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
                 if (i == 1) {
@@ -212,6 +212,46 @@ public class MatchingUI {
                 }
             }
         }
+    }
+    
+    public int applicationMenu() {
+        while (true) {
+            System.out.print("\nWould you like to"
+                    + "\n1. Apply for a job"
+                    + "\n2. Filter location and score"
+                    + "\n3. Return"
+                    + "\nEnter your choice: ");
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+                switch (choice) {
+                    case 1:
+                        return choice;
+                    case 2:
+                        return choice;
+                    case 3:
+                        return choice;
+                    default:
+                        System.out.println("Invalid option, please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter 1, 2 or 3.");
+                scanner.nextLine(); 
+            }
+        }
+    }
+    
+    public String askLocation() {
+        System.out.print("Enter location to filter: ");
+        String location = scanner.nextLine();
+        return location;
+    }
+    
+    public int askScore() {
+        System.out.print("Enter minimum score to filter: ");
+        int score = scanner.nextInt();
+        scanner.nextLine();
+        return score;
     }
     
     public int askChoice(String question) {
@@ -281,7 +321,7 @@ public class MatchingUI {
         for (int i = 1; i <= job.getSkills().getCount(); i++) {
             if (job.getSkills().getCount() == 1) {
                 System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
-                System.out.printf("| %-6d |", score.getScore());
+                System.out.printf("| %-6d |\n", score.getScore());
             } else {
                 System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
                 if (i == 1) {
