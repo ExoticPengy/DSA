@@ -305,19 +305,19 @@ public class InternshipApplication {
         do {
             if (isNum) {
                 System.out.println("\n"
-                        + "+-------------------------------------+\n"
-                        + "|  Admin                              |\n"
-                        + "+-------------------------------------+\n"
-                        + "|  What do you want?                  |\n"
-                        + "|  1. Update / Remove Job Posting     |\n"
-                        + "|  2. Update / Remove Job Seeker      |\n"
-                        + "|  3. Job Posting Report              |\n"
-                        + "|  4. Applicant Report                |\n"
-                        + "|  5. Match Report                    |\n"
-                        + "|  6. Interview Report                |\n"
-                        + "|                                     |\n"
-                        + "|  7. Back to Main Menu               |\n"
-                        + "+-------------------------------------+\n");
+                        + "+----------------------------------+\n"
+                        + "|  Admin                           |\n"
+                        + "+----------------------------------+\n"
+                        + "|  What do you want?               |\n"
+                        + "|  1. Update / Remove Job Posting  |\n"
+                        + "|  2. Update / Remove Job Seeker   |\n"
+                        + "|  3. Job Posting Report           |\n"
+                        + "|  4. Applicant Report             |\n"
+                        + "|  5. Match Report                 |\n"
+                        + "|  6. Interview Report             |\n"
+                        + "|                                  |\n"
+                        + "|  7. Back to Main Menu            |\n"
+                        + "+----------------------------------+\n");
             }
             System.out.print("Enter a choice: ");
 
