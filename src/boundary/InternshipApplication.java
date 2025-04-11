@@ -257,7 +257,7 @@ public class InternshipApplication {
 
                 switch (companyNum) {
                     case 1:
-                        jobManagement.viewSortedJobs(employer);
+                        jobManagement.sortedJobPosting(employer);
                         //jobManagement.createJobPosting(employer);
                         //jobManagement.updateJobPosting(employer);
                         //jobManagement.removeJobPosting(employer);

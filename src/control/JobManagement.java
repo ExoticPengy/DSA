@@ -279,56 +279,38 @@ public class JobManagement {
     }
         
     //sort job
-    public void viewSortedJobs(Employer currentEmployer) {
-        int choice = jobPostingUI.displaySortMenu(currentEmployer);
-        switch (choice) {
-            case 1:
-                sortJobs(1, currentEmployer); // Sort by Job Title
-                break;
-            case 2:
-                sortJobs(2, currentEmployer); // Sort by Highest Salary
-                break;
-            case 3:
-                sortJobs(3, currentEmployer); // Sort by Highest Skill Proficiency
-                break;
-            case 4:
-                return;
-            default:
-                jobPostingUI.invalidChoice();
-        }
-    }
-
-    public void sortJobs(int sortBy, Employer currentEmployer) {
+    public void sortedJobPosting(Employer currentEmployer) {
         if (jobPostings.isEmpty()) {
             jobPostingUI.noJobPosting();
             return;
         }
 
-        mergeSort(1, jobPostings.getCount(), sortBy, currentEmployer);
+        mergeSort(1, jobPostings.getCount(), currentEmployer);
 
-        //Display sorted results
-        int count = 0;  
+        // Display results
+        int count = 0;
         jobPostingUI.displaySortJobsHead();
         for (int i = 1; i <= jobPostings.getCount(); i++) {
             JobPosting job = jobPostings.getPosition(i);
-                if (job.getEmployer().equals(currentEmployer)) {
-                   count++;
-                   jobPostingUI.viewJobPosting(job, count);
-                }   
+            if (job.getEmployer().equals(currentEmployer)) {
+                count++;
+                jobPostingUI.viewJobPosting(job, count);
+            }
         }
         jobPostingUI.displayViewJobPostingFoot();
+        jobPostingUI.successSort();
     }
 
-    private void mergeSort(int start, int end, int sortBy, Employer currentEmployer) {
+    private void mergeSort(int start, int end, Employer currentEmployer) {
         if (start < end) {
             int mid = start + (end - start) / 2;
-            mergeSort(start, mid, sortBy, currentEmployer);
-            mergeSort(mid + 1, end, sortBy, currentEmployer);
-            merge(start, mid, end, sortBy, currentEmployer);
+            mergeSort(start, mid, currentEmployer);
+            mergeSort(mid + 1, end, currentEmployer);
+            merge(start, mid, end, currentEmployer);
         }
     }
 
-    private void merge(int start, int mid, int end, int sortBy, Employer currentEmployer) {
+    private void merge(int start, int mid, int end, Employer currentEmployer) {
         int i = start;
         int j = mid + 1;
 
@@ -336,70 +318,29 @@ public class JobManagement {
             JobPosting leftJob = jobPostings.getPosition(i);
             JobPosting rightJob = jobPostings.getPosition(j);
 
-            // Only compare if both are employer's jobs
+            // compare employer's jobs
             if (leftJob.getEmployer().equals(currentEmployer) && 
                 rightJob.getEmployer().equals(currentEmployer)) {
 
-                if (shouldSwap(leftJob, rightJob, sortBy)) {
-                    // Perform the swap
+                // Swap if left title comes after right (A-Z order)
+                if (leftJob.getTitle().compareToIgnoreCase(rightJob.getTitle()) > 0) {
                     jobPostings.replacePosition(rightJob, i);
                     jobPostings.replacePosition(leftJob, j);
                 }
             }
 
-            // Always move at least one pointer
+            // Move pointers
             if (j > end || !rightJob.getEmployer().equals(currentEmployer) ||
                 (leftJob.getEmployer().equals(currentEmployer) && 
-                 !shouldSwap(leftJob, rightJob, sortBy))) {
+                 leftJob.getTitle().compareToIgnoreCase(rightJob.getTitle()) <= 0)) {
                 i++;
             } else {
                 j++;
             }
         }
     }
-        
-    private boolean shouldSwap(JobPosting left, JobPosting right, int sortBy) {
-        switch (sortBy) {
-            case 1: // Title A-Z
-                return left.getTitle().compareToIgnoreCase(right.getTitle()) > 0;
-
-            case 2: // Highest salary (compare right side only)
-                return getMaxSalaryValue(left.getSalaryRange()) < 
-                       getMaxSalaryValue(right.getSalaryRange());
-
-            case 3: // Highest total skills
-                return getTotalSkillProficiency(left) < 
-                       getTotalSkillProficiency(right);
-
-            default:
-                return false;
-        }
-    }
-
-    private int getMaxSalaryValue(String range) {
-        int value = 0;
-        boolean afterHyphen = false;
-
-        for (int i = 0; i < range.length(); i++) {
-            char c = range.charAt(i);
-            if (c == '-') {
-                afterHyphen = true;
-                value = 0; // Reset to get right side value
-            } 
-            else if (Character.isDigit(c) && afterHyphen) {
-                value = value * 10 + (c - '0');
-            }
-        }
-        return value;
-    }
-
-
-    private int getTotalSkillProficiency(JobPosting job) {
-        int total = 0;
-        for (int i = 1; i <= job.getSkills().getCount(); i++) {
-            total += job.getSkills().getPosition(i).getProficiency();
-        }
-        return total;
-    }
+    
+    
+    
     
 }

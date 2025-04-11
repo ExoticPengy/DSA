@@ -150,40 +150,6 @@ public class JobPostingUI {
             }
         }
     }
-   
-    public int displaySortMenu(Employer currentEmployer){
-        while (true) {
-            System.out.println("\n+--------------------------------------------+");
-            System.out.println("|               Sort Jobs Menu               |");
-            System.out.println("+--------------------------------------------+");
-            System.out.println("| 1. Sort by Job Title (A-Z)                 |");
-            System.out.println("| 2. Sort by Highest Salary                  |");
-            System.out.println("| 3. Sort by Highest Total Skill Proficiency |");
-            System.out.println("| 4. Back to Main Menu                       |");
-            System.out.println("+--------------------------------------------+");
-            System.out.print("\nEnter your choice: ");
-            try {
-                int choice = scanner.nextInt();
-                scanner.nextLine();
-
-                switch (choice) {
-                    case 1:
-                        return choice; // Sort by Job Title
-                    case 2:
-                        return choice; // Sort by Highest Salary
-                    case 3:
-                        return choice; // Sort by Highest Skill Proficiency
-                    case 4:
-                        return choice;
-                    default:
-                        System.out.println("Invalid choice. Please try again.");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input! Please enter a number from 1 - 4.");
-                scanner.nextLine();
-            }
-        }
-    }
 
     //ask to repeat again
     public int askChoice(String question) {
@@ -381,8 +347,10 @@ public class JobPostingUI {
         System.out.println("Removal cancelled.");
     }
     
-  
-    
+    //sort function
+    public void successSort(){
+        System.out.println("Job postings are successfully sorted!\n");
+    }
     
     
     
