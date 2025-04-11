@@ -1,6 +1,8 @@
 package boundary;
 
 
+import adt.DoublyLinkedListInterface;
+import entity.Discrepancy;
 import entity.JobApplication;
 import entity.JobPosting;
 import entity.JobSeeker;
@@ -21,6 +23,10 @@ import java.util.Scanner;
 public class MatchingUI {
     
     private Scanner scanner = new Scanner(System.in);
+    
+    public void displayMessage(String message) {
+        System.out.println(message);
+    }
     
     public void displayMatchHead() {
         System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
@@ -153,6 +159,34 @@ public class MatchingUI {
         System.out.println("+------------------------------------------------------------------+");
     }
     
+    public void displayDiscrepancyChart(DoublyLinkedListInterface<Discrepancy> discrepancyList) {
+        System.out.println("| DISCREPANCY DISTRIBUTION |");
+        System.out.println("+-----------------------+");
+        System.out.println("| Set # | Count | Graph |");
+        System.out.println("+-------+-------+-------+");
+
+        int maxSet = 0, maxValue = 0;
+        for (int i = 1; i <= discrepancyList.getCount(); i++) {
+            Discrepancy discrepancy = discrepancyList.getPosition(i);
+
+            if (discrepancyList.getPosition(i).getAmount() > maxValue) {
+                maxValue = discrepancyList.getPosition(i).getAmount();
+                maxSet = discrepancyList.getPosition(i).getSetNo();
+            }
+            
+            System.out.printf("| %-5d | %-5d | ",
+                discrepancy.getSetNo(),
+                discrepancy.getAmount());
+            for (int j = 1; j <= discrepancy.getAmount(); j++) {
+                 System.out.printf("[]");
+            }
+            System.out.printf(" |\n");
+        }
+        
+        System.out.printf("Highest discrepancies: %d (Set %d)\n", maxValue, maxSet);
+        System.out.println("+-----------------------+");
+    }
+    
     public void displayJobSeeker(JobSeeker jobSeeker) {
         System.out.println("+--------------------------------------------------------------------------------------------------------+");
         System.out.println("|                                         Applicant Details                                              |");
@@ -198,7 +232,7 @@ public class MatchingUI {
         for (int i = 1; i <= job.getSkills().getCount(); i++) {
             if (job.getSkills().getCount() == 1) {
                 System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
-                System.out.printf("| %-6d |", score.getScore());
+                System.out.printf("| %-6d |\n", score.getScore());
             } else {
                 System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
                 if (i == 1) {
@@ -212,6 +246,46 @@ public class MatchingUI {
                 }
             }
         }
+    }
+    
+    public int applicationMenu() {
+        while (true) {
+            System.out.print("\nWould you like to"
+                    + "\n1. Apply for a job"
+                    + "\n2. Filter location and score"
+                    + "\n3. Return"
+                    + "\nEnter your choice: ");
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+                switch (choice) {
+                    case 1:
+                        return choice;
+                    case 2:
+                        return choice;
+                    case 3:
+                        return choice;
+                    default:
+                        System.out.println("Invalid option, please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter 1, 2 or 3.");
+                scanner.nextLine(); 
+            }
+        }
+    }
+    
+    public String askLocation() {
+        System.out.print("Enter location to filter: ");
+        String location = scanner.nextLine();
+        return location;
+    }
+    
+    public int askScore() {
+        System.out.print("Enter minimum score to filter: ");
+        int score = scanner.nextInt();
+        scanner.nextLine();
+        return score;
     }
     
     public int askChoice(String question) {
@@ -281,7 +355,7 @@ public class MatchingUI {
         for (int i = 1; i <= job.getSkills().getCount(); i++) {
             if (job.getSkills().getCount() == 1) {
                 System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
-                System.out.printf("| %-6d |", score.getScore());
+                System.out.printf("| %-6d |\n", score.getScore());
             } else {
                 System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
                 if (i == 1) {

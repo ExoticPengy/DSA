@@ -203,10 +203,10 @@ public class InternshipApplication {
                 System.out.println("+-------------------------+");
                 System.out.println("|  What is your company?  |");
                 for (i = 1; i <= employerList.getCount(); i++) {
-                    System.out.printf("|  %d. %-13s       |\n", i, employerList.getPosition(i).getName());
+                    System.out.printf("|  %d. %-14s      |\n", i, employerList.getPosition(i).getName());
                 }
                 System.out.println("|                         |");
-                System.out.println("|  " + i++ + ". Back to Main Menu   |");
+                System.out.println("|  " + i++ + ". Back to Main Menu  |");
                 System.out.println("+-------------------------+");
             }
             System.out.print("Enter a choice: ");
@@ -262,13 +262,14 @@ public class InternshipApplication {
 
                 switch (companyNum) {
                     case 1:
-                        //jobManagement.viewSortedJobs(employer);
+                        //jobManagement.sortedJobPosting(employer);
                         //jobManagement.createJobPosting(employer);
                         jobManagement.updateJobPosting(employer);
+                        //jobManagement.removeJobPosting(employer);
                         //jobManagement.viewEmployerJobPosting(employer);
-                        //jobManagement.searchJobs(employer);
                         break;
                     case 2:
+                        jobManagement.viewEmployerJobPosting(employer);
                         //applicant management module
                         break;
                     case 3:
