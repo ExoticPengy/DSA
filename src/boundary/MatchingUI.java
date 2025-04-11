@@ -102,7 +102,7 @@ public class MatchingUI {
         for (int i = 1; i <= job.getSkills().getCount(); i++) {
             if (job.getSkills().getCount() == 1) {
                 System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
-                System.out.printf("| %-6d |", score.getScore());
+                System.out.printf("| %-6d |\n", score.getScore());
             } else {
                 System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
                 if (i == 1) {
@@ -185,7 +185,7 @@ public class MatchingUI {
         for (int i = 1; i <= job.getSkills().getCount(); i++) {
             if (job.getSkills().getCount() == 1) {
                 System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
-                System.out.printf("| %-6d |", score.getScore());
+                System.out.printf("| %-6d |\n", score.getScore());
             } else {
                 System.out.printf("| (%d) %-19s %-2d", i, job.getSkills().getPosition(i).getName(), job.getSkills().getPosition(i).getProficiency());
                 if (i == 1) {

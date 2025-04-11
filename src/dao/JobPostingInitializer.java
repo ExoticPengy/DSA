@@ -12,7 +12,7 @@ import entity.Skill;
 
 /**
  *
- * @author mings
+ * @author Elaine
  */
 public class JobPostingInitializer {
     
@@ -130,7 +130,7 @@ public class JobPostingInitializer {
         skills = new DoublyLinkedList<>();
         skills.insertFront(new Skill("Programming", 10));
         skills.insertBack(new Skill("Analysis", 8));
-        jobList.insertBack(new JobPosting(employer, "Systems Analyst Intern", "System requirements analysis", "RM900-RM1100", "Bachelor in Information Systems", skills));
+        jobList.insertBack(new JobPosting(employer, "Systems Analyst Intern", "System requirements analysis", "RM900-RM1100", "Bachelor in Information System", skills));
 
         skills = new DoublyLinkedList<>();
         skills.insertFront(new Skill("Communication", 7));
@@ -143,12 +143,12 @@ public class JobPostingInitializer {
         skills = new DoublyLinkedList<>();
         skills.insertFront(new Skill("Programming", 9));
         skills.insertBack(new Skill("Analysis", 5));
-        jobList.insertBack(new JobPosting(employer, "Embedded Systems Intern", "Firmware development, hardware integration", "RM950-RM1200", "Bachelor in Electrical Engineering", skills));
+        jobList.insertBack(new JobPosting(employer, "Embedded Systems Intern", "Firmware development, hardware integration", "RM950-RM1200", "Bachelor in IT", skills));
 
         skills = new DoublyLinkedList<>();
         skills.insertFront(new Skill("Communication", 9));
         skills.insertBack(new Skill("Leadership", 3));
-        jobList.insertBack(new JobPosting(employer, "Content Writer Intern", "Technical writing, content creation", "RM750-RM850", "Bachelor in English or Journalism", skills));
+        jobList.insertBack(new JobPosting(employer, "Content Writer Intern", "Technical writing, content creation", "RM750-RM850", "Bachelor in English", skills));
 
         skills = new DoublyLinkedList<>();
         skills.insertFront(new Skill("Analysis", 7));
@@ -182,7 +182,7 @@ public class JobPostingInitializer {
         skills = new DoublyLinkedList<>();
         skills.insertFront(new Skill("Programming", 9));
         skills.insertBack(new Skill("Analysis", 8));
-        jobList.insertBack(new JobPosting(employer, "AI Developer Intern", "AI model training, implementation", "RM1000-RM1300", "Bachelor in AI", skills));
+        jobList.insertBack(new JobPosting(employer, "AI Developer Intern", "AI model training, implementation", "RM1000-RM1300", "Bachelor in Computer Science", skills));
 
         skills = new DoublyLinkedList<>();
         skills.insertFront(new Skill("Communication", 9));
@@ -193,7 +193,7 @@ public class JobPostingInitializer {
         skills = new DoublyLinkedList<>();
         skills.insertFront(new Skill("Leadership", 7));
         skills.insertBack(new Skill("Communication", 8));
-        jobList.insertBack(new JobPosting(employer, "Operations Intern", "Process improvement, logistics", "RM750-RM850", "Bachelor in Operations Management", skills));
+        jobList.insertBack(new JobPosting(employer, "Operations Intern", "Process improvement, logistics", "RM750-RM850", "Diploma in Business Management", skills));
         
         //employer 10
         employer = employerList.getPosition(10);
@@ -206,7 +206,7 @@ public class JobPostingInitializer {
         skills.insertFront(new Skill("Communication", 8));
         skills.insertBack(new Skill("Leadership", 5));
         skills.insertBack(new Skill("Analysis", 7));
-        jobList.insertBack(new JobPosting(employer, "Recruitment Intern", "Candidate screening, interviews", "RM700-RM800", "Diploma in HR", skills));
+        jobList.insertBack(new JobPosting(employer, "Recruitment Intern", "Candidate screening, interviews", "RM700-RM800", "Diploma in Business", skills));
 
         skills = new DoublyLinkedList<>();
         skills.insertFront(new Skill("Analysis", 8));
