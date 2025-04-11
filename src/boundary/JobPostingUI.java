@@ -352,6 +352,12 @@ public class JobPostingUI {
         System.out.println("Job postings are successfully sorted!\n");
     }
     
+    //search function
+    public String searchEmployer(){
+        System.out.print("Enter an employer name to search: ");
+        String searchEmployerName = scanner.nextLine();
+        return searchEmployerName;
+    }
     
     
     
