@@ -7,7 +7,8 @@ package adt;
 
 /**
  *
- * @author MingLi
+ * @author All Members
+ * @param <T>
  */
 public interface DoublyLinkedListInterface<T> {
     public boolean insertFront(T newEntry);

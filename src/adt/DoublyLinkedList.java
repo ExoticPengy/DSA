@@ -6,7 +6,7 @@ package adt;
 
 /**
  *
- * @author MingLi
+ * @author All Members
  * @param <T>
  */
 public class DoublyLinkedList<T> implements DoublyLinkedListInterface<T> {

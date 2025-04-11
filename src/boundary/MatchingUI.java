@@ -1,6 +1,8 @@
 package boundary;
 
 
+import adt.DoublyLinkedListInterface;
+import entity.Discrepancy;
 import entity.JobApplication;
 import entity.JobPosting;
 import entity.JobSeeker;
@@ -21,6 +23,10 @@ import java.util.Scanner;
 public class MatchingUI {
     
     private Scanner scanner = new Scanner(System.in);
+    
+    public void displayMessage(String message) {
+        System.out.println(message);
+    }
     
     public void displayMatchHead() {
         System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
@@ -151,6 +157,34 @@ public class MatchingUI {
     public void printReportFooter() {
         System.out.println("| End of Report                                                    |");
         System.out.println("+------------------------------------------------------------------+");
+    }
+    
+    public void displayDiscrepancyChart(DoublyLinkedListInterface<Discrepancy> discrepancyList) {
+        System.out.println("| DISCREPANCY DISTRIBUTION |");
+        System.out.println("+-----------------------+");
+        System.out.println("| Set # | Count | Graph |");
+        System.out.println("+-------+-------+-------+");
+
+        int maxSet = 0, maxValue = 0;
+        for (int i = 1; i <= discrepancyList.getCount(); i++) {
+            Discrepancy discrepancy = discrepancyList.getPosition(i);
+
+            if (discrepancyList.getPosition(i).getAmount() > maxValue) {
+                maxValue = discrepancyList.getPosition(i).getAmount();
+                maxSet = discrepancyList.getPosition(i).getSetNo();
+            }
+            
+            System.out.printf("| %-5d | %-5d | ",
+                discrepancy.getSetNo(),
+                discrepancy.getAmount());
+            for (int j = 1; j <= discrepancy.getAmount(); j++) {
+                 System.out.printf("[]");
+            }
+            System.out.printf(" |\n");
+        }
+        
+        System.out.printf("Highest discrepancies: %d (Set %d)\n", maxValue, maxSet);
+        System.out.println("+-----------------------+");
     }
     
     public void displayJobSeeker(JobSeeker jobSeeker) {

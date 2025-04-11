@@ -8,6 +8,7 @@ import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
 import boundary.MatchingUI;
 import dao.JobApplicationInitializer;
+import entity.Discrepancy;
 import entity.JobApplication;
 import entity.JobPosting;
 import entity.JobSeeker;
@@ -414,11 +415,17 @@ public class MatchingEngine {
     
     public void generateMatchReport() {
         if (matchList.getCount() < 2) {
-            System.out.println("Not enough match lists.");
+            matchingUI.displayMessage("Not enough match lists.");
             return;
         }
         
         boolean foundDiscrepancies = false;
+        DoublyLinkedListInterface<Discrepancy> discrepancyList = new DoublyLinkedList<>();
+
+        // Initialize trackers for all sets
+        for (int i = 1; i <= matchList.getCount(); i++) {
+            discrepancyList.insertBack(new Discrepancy(i, 0));
+        }
     
         for (int i = 1; i <= matchList.getCount(); i++) {
             Match currentMatch = matchList.getPosition(i);
@@ -446,6 +453,9 @@ public class MatchingEngine {
                         }
 
                         if (currentScore.getScore() != compareScore.getScore()) {
+                            incrementDiscrepancy(discrepancyList, i);
+                            incrementDiscrepancy(discrepancyList, j);
+                        
                             if (!foundDiscrepancies) {
                                 matchingUI.printReportHeader();
                                 foundDiscrepancies = true;
@@ -470,8 +480,9 @@ public class MatchingEngine {
         }
 
         if (!foundDiscrepancies) {
-            System.out.println("No score discrepancies found across all match sets.");
+            matchingUI.displayMessage("No score discrepancies found across all match sets.");
         } else {
+            matchingUI.displayDiscrepancyChart(discrepancyList);
             matchingUI.printReportFooter();
         }
     }
@@ -493,4 +504,14 @@ public class MatchingEngine {
         }
         return null;
     }
+    
+    private void incrementDiscrepancy(DoublyLinkedListInterface<Discrepancy> discrepancyList, int setNumber) {
+    for (int i = 1; i <= discrepancyList.getCount(); i++) {
+        Discrepancy discrepancy = discrepancyList.getPosition(i);
+        if (discrepancy.getSetNo() == setNumber) {
+            discrepancy.incrementAmount();
+            return;
+        }
+    }
+}
 }
