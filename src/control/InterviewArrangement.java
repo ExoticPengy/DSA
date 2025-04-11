@@ -10,8 +10,10 @@ import boundary.InterviewArrangementUI;
 import dao.InterviewInitializer;
 import entity.Employer;
 import entity.Interview;
+import entity.JobApplication;
 import entity.JobPosting;
 import entity.JobSeeker;
+import entity.MatchScore;
 import entity.Skill;
 import entity.Status;
 import entity.Time;
@@ -19,7 +21,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import utility.MessageUI;
 
 /**
  *
@@ -29,6 +30,7 @@ public class InterviewArrangement {
 
     private DoublyLinkedListInterface<Interview> interviewList;
     private InterviewInitializer interviewInitializer;
+    private DoublyLinkedListInterface<JobApplication> jobApplicationList;
 
     private DoublyLinkedListInterface<Time> studentTimeList;
     private DoublyLinkedListInterface<JobPosting> studentJobList;
@@ -39,6 +41,8 @@ public class InterviewArrangement {
     private DoublyLinkedListInterface<JobSeeker> companyJobSeekerList;
     private DoublyLinkedListInterface<DoublyLinkedListInterface<Skill>> companySkillList;
     private DoublyLinkedListInterface<Status> companyStatusList;
+    
+    private DoublyLinkedListInterface<MatchScore> matchList;
 
     private LocalDate currentDate;
     private LocalDateTime leftDateTime, rightDateTime;
@@ -59,8 +63,11 @@ public class InterviewArrangement {
         interviewUI = new InterviewArrangementUI();
     }
 
-    public void runInterviewArrangement(DoublyLinkedListInterface<JobPosting> jobList, DoublyLinkedListInterface<JobSeeker> jobSeekerList) {
+    public void runInterviewArrangement(DoublyLinkedListInterface<JobPosting> jobList, DoublyLinkedListInterface<JobSeeker> jobSeekerList, DoublyLinkedListInterface<JobApplication> applicationList) {
         interviewList = interviewInitializer.getInterview(jobList, jobSeekerList);
+        jobApplicationList = applicationList;
+
+        interviewUI.initializeUI(interviewList);
     }
 
     public void displayStudent(int num, JobSeeker jobSeeker) {
@@ -84,7 +91,7 @@ public class InterviewArrangement {
                     } else {
                         if (interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getName().equals(jobSeeker.getName())
                                 && LocalDate.parse(interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k).getDate(), formatter).isBefore(currentDate)
-                                && interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).getScore() != -1) {
+                                && !interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).getStatus().equals("Interviewed")) {
                             studentTimeList.insertBack(interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k));
                             studentJobList.insertBack(interviewList.getPosition(i).getJobPostingList().getPosition(j));
                             studentStatusList.insertBack(interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k));
@@ -103,32 +110,12 @@ public class InterviewArrangement {
                     if (num == 1) {
                         if (studentScheduleNum >= 1 && studentScheduleNum <= 4) {
                             mergeSortStudent(studentScheduleNum, studentTimeList, studentJobList, studentStatusList);
-                        } else if (studentScheduleNum == 5 || studentScheduleNum == 6) {
-                            studentScheduleNum = 6;
-                            break;
-                        } else if (studentScheduleNum == -2) {
-                            break;
                         } else {
-                            isNum = false;
-                            MessageUI.displayInvalidChoiceMessage();
-                            sc.nextLine();
-                            sc.nextLine();
+                            studentScheduleNum = 6;
                             break;
                         }
                     } else {
-                        if (studentScheduleNum >= 1 && studentScheduleNum <= 5) {
-                            mergeSortStudent(studentScheduleNum, studentTimeList, studentJobList, studentStatusList);
-                        } else if (studentScheduleNum == 6) {
-                            break;
-                        } else if (studentScheduleNum == -2) {
-                            break;
-                        } else {
-                            isNum = false;
-                            MessageUI.displayInvalidChoiceMessage();
-                            sc.nextLine();
-                            sc.nextLine();
-                            break;
-                        }
+                        mergeSortStudent(studentScheduleNum, studentTimeList, studentJobList, studentStatusList);
                     }
                     break;
             }
@@ -159,7 +146,7 @@ public class InterviewArrangement {
                     } else {
                         if (interviewList.getPosition(i).getJobPostingList().getPosition(j).getEmployer().getName().equals(employer.getName())
                                 && LocalDate.parse(interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k).getDate(), formatter).isBefore(currentDate)
-                                && interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).getScore() != -1) {
+                                && !interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).getStatus().equals("Interviewed")) {
                             companyTimeList.insertBack(interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k));
                             companyJobList.insertBack(interviewList.getPosition(i).getJobPostingList().getPosition(j));
                             companyJobSeekerList.insertBack(interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k));
@@ -180,27 +167,13 @@ public class InterviewArrangement {
                         if (companyScheduleNum >= 1 && companyScheduleNum <= 5) {
                             mergeSortCompany(companyScheduleNum, companyTimeList, companyJobList,
                                     companyJobSeekerList, companySkillList, companyStatusList);
-                        } else if (companyScheduleNum == 6 || companyScheduleNum == 7) {
-                            companyScheduleNum = 7;
-                            break;
                         } else {
-                            isNum = false;
-                            MessageUI.displayInvalidChoiceMessage();
-                            sc.next();
+                            companyScheduleNum = 7;
                             break;
                         }
                     } else {
-                        if (companyScheduleNum >= 1 && companyScheduleNum <= 6) {
-                            mergeSortCompany(companyScheduleNum, companyTimeList, companyJobList,
-                                    companyJobSeekerList, companySkillList, companyStatusList);
-                        } else if (companyScheduleNum == 7) {
-                            break;
-                        } else {
-                            isNum = false;
-                            MessageUI.displayInvalidChoiceMessage();
-                            sc.next();
-                            break;
-                        }
+                        mergeSortCompany(companyScheduleNum, companyTimeList, companyJobList,
+                                companyJobSeekerList, companySkillList, companyStatusList);
                     }
                     break;
             }
@@ -542,12 +515,32 @@ public class InterviewArrangement {
         }
     }
 
-    public void implementSchedule(){
+    public void implementSchedule(Employer employer) {
+        int implementNum, selectNum, slot;
         
+        companyJobList = new DoublyLinkedList<>();
+        companyJobSeekerList = new DoublyLinkedList<>();
+        companySkillList = new DoublyLinkedList<>();
+        matchList = new DoublyLinkedList<>();
+        
+        for(int i = 1; i <= jobApplicationList.getCount(); i++){
+            companyJobList.insertBack(jobApplicationList.getPosition(i).getMatchScore().getJobPosting());
+            companyJobSeekerList.insertBack(jobApplicationList.getPosition(i).getJobSeeker());
+            companySkillList.insertBack(jobApplicationList.getPosition(i).getJobSeeker().getSkills());
+            matchList.insertBack(jobApplicationList.getPosition(i).getMatchScore());
+        }
+        
+        implementNum = interviewUI.implementUI(companyJobList, companyJobSeekerList, companySkillList, matchList);
+        
+        if (implementNum == 1) {
+            selectNum = interviewUI.numberUI(companyJobList.getCount());
+            slot = interviewUI.slotUI(interviewList);
+        }
     }
-    
+
     public void assignScore(Employer employer) {
-        int assignNum;
+        int assignNum, scoreNum, score, finalScore, matchScore = 0, continueNum;
+        String finalStatus;
 
         companyTimeList = new DoublyLinkedList<>();
         companyJobList = new DoublyLinkedList<>();
@@ -560,7 +553,7 @@ public class InterviewArrangement {
                 for (int k = 1; k <= interviewList.getPosition(i).getJobSeekerList().getPosition(j).getCount(); k++) {
                     if (interviewList.getPosition(i).getJobPostingList().getPosition(j).getEmployer().getName().equals(employer.getName())
                             && LocalDate.parse(interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k).getDate(), formatter).isBefore(currentDate)
-                            && interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).getScore() == -1) {
+                            && interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).getStatus().equals("Interviewed")) {
                         companyTimeList.insertBack(interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k));
                         companyJobList.insertBack(interviewList.getPosition(i).getJobPostingList().getPosition(j));
                         companyJobSeekerList.insertBack(interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k));
@@ -570,8 +563,55 @@ public class InterviewArrangement {
                 }
             }
         }
-        
-        assignNum = interviewUI.companyScoreUI(companyTimeList, companyJobList, companyJobSeekerList, companySkillList, companyStatusList);
+
+        assignNum = interviewUI.companyAssignUI(companyTimeList, companyJobList, companyJobSeekerList, companySkillList, companyStatusList);
+
+        if (assignNum == 1) {
+            scoreNum = interviewUI.numberUI(companyTimeList.getCount());
+            score = interviewUI.getScoreUI();
+
+            if (companyTimeList.getCount() != 0) {
+                outerloop:
+                for (int i = 1; i <= interviewList.getCount(); i++) {
+                    for (int j = 1; j <= interviewList.getPosition(i).getJobSeekerList().getCount(); j++) {
+                        for (int k = 1; k <= interviewList.getPosition(i).getJobSeekerList().getPosition(j).getCount(); k++) {
+                            if (companyTimeList.getPosition(scoreNum).equals(interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k))
+                                    && companyJobList.getPosition(scoreNum).equals(interviewList.getPosition(i).getJobPostingList().getPosition(j))
+                                    && companyJobSeekerList.getPosition(scoreNum).equals(interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k))
+                                    && companySkillList.getPosition(scoreNum).equals(interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills())
+                                    && companyStatusList.getPosition(scoreNum).equals(interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k))) {
+                                for (int l = 1; l <= jobApplicationList.getCount(); l++) {
+                                    if (jobApplicationList.getPosition(l).getJobSeeker().equals(interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k))
+                                            && jobApplicationList.getPosition(l).getMatchScore().getJobPosting().equals(interviewList.getPosition(i).getJobPostingList().getPosition(j))) {
+                                        matchScore = jobApplicationList.getPosition(l).getMatchScore().getScore();
+                                    }
+                                }
+                                finalScore = (int) (matchScore * 0.6 + score * 0.4);
+                                interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).setScore(finalScore);
+
+                                if (finalScore >= 50) {
+                                    finalStatus = "Hired";
+                                } else {
+                                    finalStatus = "Rejected";
+                                }
+                                interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).setStatus(finalStatus);
+
+                                continueNum = interviewUI.assignedUI(interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k),
+                                        interviewList.getPosition(i).getJobPostingList().getPosition(j),
+                                        interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k),
+                                        interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills(),
+                                        interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k));
+
+                                if (continueNum == 1) {
+                                    assignScore(employer);
+                                    break outerloop;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void displayInterviewReport() {

@@ -7,6 +7,7 @@ package dao;
 import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
 import entity.Interview;
+import entity.JobApplication;
 import entity.JobPosting;
 import entity.JobSeeker;
 import entity.Status;
@@ -17,15 +18,7 @@ import entity.Time;
  * @author mings
  */
 public class InterviewInitializer {
-
-    private JobPostingInitializer jobInitializer;
-    private JobSeekerInitializer jobSeekerInitializer;
-
-    public InterviewInitializer() {
-        jobInitializer = new JobPostingInitializer();
-        jobSeekerInitializer = new JobSeekerInitializer();
-    }
-
+    
     public DoublyLinkedListInterface<Interview> getInterview(DoublyLinkedListInterface<JobPosting> jobList, DoublyLinkedListInterface<JobSeeker> jobSeeker) {
         DoublyLinkedListInterface<Interview> interviewList = new DoublyLinkedList<>();
         
@@ -65,8 +58,8 @@ public class InterviewInitializer {
         statusList.insertFront(status);
         
         status = new Status();
-        status.setStatus("Rejected");
-        status.setScore(20);
+        status.setStatus("Interviewed");
+        status.setScore(0);
         statusList.insertBack(status);
         interviewStatusList.insertFront(statusList);
         

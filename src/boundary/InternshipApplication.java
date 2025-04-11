@@ -42,7 +42,8 @@ public class InternshipApplication {
         
         interviewArrangement.runInterviewArrangement(
                 jobManagement.getJobPostingList(), 
-                applicantManagement.getJobSeekerList()
+                applicantManagement.getJobSeekerList(),
+                matchingEngine.getJobApplicationList()
         );
         
         int num = 0;
@@ -239,19 +240,19 @@ public class InternshipApplication {
         
         do {
             if (isNum) {
-                System.out.println("\n+-------------------------------------+");
-                System.out.printf("|  %-10s                         |\n", employer.getName());
-                System.out.println("+-------------------------------------+\n"
-                        + "|  What do you want?                  |\n"
-                        + "|  1. Job Posting                     |\n"
-                        + "|  2. View Job Applicant              |\n"
-                        + "|  3. Select Candidate for Interview  |\n"
-                        + "|  4. View Schedule                   |\n"
-                        + "|  5. Assign Score                    |\n"
-                        + "|  6. View Result                     |\n"
-                        + "|                                     |\n"
-                        + "|  7. Previous Page                   |\n"
-                        + "+-------------------------------------+\n");
+                System.out.println("\n+--------------------------+");
+                System.out.printf("|  %-10s              |\n", employer.getName());
+                System.out.println("+--------------------------+\n"
+                        + "|  What do you want?       |\n"
+                        + "|  1. Job Posting          |\n"
+                        + "|  2. View Job Applicant   |\n"
+                        + "|  3. Shortlist Applicant  |\n"
+                        + "|  4. View Schedule        |\n"
+                        + "|  5. Assign Score         |\n"
+                        + "|  6. View Result          |\n"
+                        + "|                          |\n"
+                        + "|  7. Previous Page        |\n"
+                        + "+--------------------------+\n");
             }
             System.out.print("Enter a choice: ");
 
@@ -271,7 +272,7 @@ public class InternshipApplication {
                         //applicant management module
                         break;
                     case 3:
-                        //matching engine module
+                        interviewArrangement.implementSchedule(employer);
                         break;
                     case 4:
                         interviewArrangement.displayCompany(1, employer);
