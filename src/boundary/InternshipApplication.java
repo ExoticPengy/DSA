@@ -203,7 +203,7 @@ public class InternshipApplication {
                 System.out.println("+-------------------------+");
                 System.out.println("|  What is your company?  |");
                 for (i = 1; i <= employerList.getCount(); i++) {
-                    System.out.printf("|  %d. %-14s      |\n", i, employerList.getPosition(i).getName());
+                    System.out.printf("|  %02d. %-17s  |\n", i, employerList.getPosition(i).getName());
                 }
                 System.out.println("|                         |");
                 System.out.println("|  " + i++ + ". Back to Main Menu  |");

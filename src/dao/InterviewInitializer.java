@@ -21,7 +21,6 @@ public class InterviewInitializer {
     
     public DoublyLinkedListInterface<Interview> getInterview(DoublyLinkedListInterface<JobPosting> jobList, DoublyLinkedListInterface<JobSeeker> jobSeeker) {
         DoublyLinkedListInterface<Interview> interviewList = new DoublyLinkedList<>();
-        
         DoublyLinkedListInterface<JobPosting> interviewJobList = new DoublyLinkedList<>();
         DoublyLinkedListInterface<JobSeeker> jobSeekerList = new DoublyLinkedList<>();
         DoublyLinkedListInterface<DoublyLinkedListInterface<JobSeeker>> interviewJobSeekerList = new DoublyLinkedList<>();
@@ -42,14 +41,14 @@ public class InterviewInitializer {
         interviewJobSeekerList.insertFront(jobSeekerList);
         
         time.setDate("29-04-2025");
-        time.setStartTime("0900");
-        time.setEndTime("1000");
+        time.setStartTime(900);
+        time.setEndTime(1000);
         timeList.insertFront(time);
         
         time = new Time();
         time.setDate("10-03-2025");
-        time.setStartTime("1100");
-        time.setEndTime("1200");
+        time.setStartTime(1100);
+        time.setEndTime(1200);
         timeList.insertBack(time);
         interviewTimeList.insertFront(timeList);
         
@@ -83,14 +82,14 @@ public class InterviewInitializer {
         interviewJobSeekerList.insertFront(jobSeekerList);
                 
         time.setDate("05-03-2025");
-        time.setStartTime("1500");
-        time.setEndTime("1600");
+        time.setStartTime(1500);
+        time.setEndTime(1600);
         timeList.insertFront(time);
         
         time = new Time();
         time.setDate("27-04-2025");
-        time.setStartTime("1000");
-        time.setEndTime("1100");
+        time.setStartTime(1000);
+        time.setEndTime(1100);
         timeList.insertBack(time);
         interviewTimeList.insertFront(timeList);
         

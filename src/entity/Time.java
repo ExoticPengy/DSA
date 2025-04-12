@@ -10,8 +10,8 @@ package entity;
  */
 public class Time {
     private String date;
-    private String startTime;
-    private String endTime;
+    private int startTime;
+    private int endTime;
 
     public String getDate() {
         return date;
@@ -21,23 +21,23 @@ public class Time {
         this.date = date;
     }
 
-    public String getStartTime() {
+    public int getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(int startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public int getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
 
-    public Time(String date, String startTime, String endTime) {
+    public Time(String date, int startTime, int endTime) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;

@@ -21,7 +21,7 @@ public class MessageUI {
         System.out.println("Exiting the system...");
     }
     
-    public static void pressAnyKeyContinue(){
-        System.out.print("Press any key to continue...");
+    public static void pressEnterContinue(){
+        System.out.print("Press enter to continue...");
     }
 }
