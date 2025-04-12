@@ -340,35 +340,66 @@ public class JobManagement {
     }
     
     //search employer and skill
-    public void serchJobPosting(){
+    public void searchJobPosting() {
         if (jobPostings.isEmpty()) {
             jobPostingUI.noJobPosting();
             return;
         }
-        
+
         boolean keepSearching = true;
         while (keepSearching) {
-        
-        jobPostingUI.searchEmployer();
-        
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            // Ask repeat
+            // 1. Get employer name to search
+            String employerName = jobPostingUI.searchEmployer();
+
+            // 2. Find first job from this employer to show skills
+            JobPosting sampleJob = null;
+            for (int i = 1; i <= jobPostings.getCount(); i++) {
+                JobPosting job = jobPostings.getPosition(i);
+                if (job.getEmployer().getName().equalsIgnoreCase(employerName)) {
+                    sampleJob = job;
+                    break;
+                }
+            }
+
+            if (sampleJob == null) {
+                if (jobPostingUI.askChoice("\nNo jobs found for employer: " + employerName + "Do you want to Search again?") == 2) {
+                    keepSearching = false;
+                }
+                continue;
+            }
+
+            // 3. Let user select a skill from the sample job
+            int skillIndex = jobPostingUI.searchSkill(sampleJob);
+            String selectedSkill = sampleJob.getSkills().getPosition(skillIndex).getName();
+
+            // 4. Search and display matching jobs
+            boolean foundResults = false;
+            jobPostingUI.displaySearchResultsHead();
+
+            for (int i = 1; i <= jobPostings.getCount(); i++) {
+                JobPosting job = jobPostings.getPosition(i);
+
+                // Check employer name match
+                if (!job.getEmployer().getName().equalsIgnoreCase(employerName)) {
+                    continue;
+                }
+
+                // Check if job has the selected skill
+                for (int j = 1; j <= job.getSkills().getCount(); j++) {
+                    if (job.getSkills().getPosition(j).getName().equalsIgnoreCase(selectedSkill)) {
+                        jobPostingUI.viewJobPosting(job, i);
+                        foundResults = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!foundResults) {
+                jobPostingUI.noJobPosting();
+            }
+            jobPostingUI.displayViewJobPostingFoot();
+
+            // 5. Ask to search again
             if (jobPostingUI.askChoice("\nDo you want to search another job posting?") == 2) {
                 keepSearching = false;
             }

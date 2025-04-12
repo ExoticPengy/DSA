@@ -113,6 +113,12 @@ public class JobPostingUI {
         System.out.println("+-------------------------------------------+");
     }
     
+    public void displaySearchResultsHead() {
+    System.out.println("\n+-----------------------------------------------+");
+    System.out.println("|              Search Results                  |");
+    System.out.println("+-----------------------------------------------+");
+}
+    
     public void displayJobsNumber(int jobNumber, JobPosting job) {
         System.out.println(jobNumber + ". " + job.getTitle());
     }
@@ -299,7 +305,7 @@ public class JobPostingUI {
     }
     
     public int selectSkillToUpdate(JobPosting jobToUpdate){
-        System.out.print("\nChoose skill to update: \n");
+        System.out.print("\nChoose a skill to update: \n");
         for (int j = 1; j <= jobToUpdate.getSkills().getCount(); j++) {
             System.out.println(j + ". " + jobToUpdate.getSkills().getPosition(j).getName()
                     + ": " + jobToUpdate.getSkills().getPosition(j).getProficiency());
@@ -359,7 +365,26 @@ public class JobPostingUI {
         return searchEmployerName;
     }
     
-    
+    public int searchSkill(JobPosting job){
+        System.out.print("\nWhich skill you would like to search: \n");
+        for (int j = 1; j <= job.getSkills().getCount(); j++) {
+            System.out.println(j + ". " + job.getSkills().getPosition(j).getName()
+                    + ": " + job.getSkills().getPosition(j).getProficiency());
+        }
+        
+        int selectSkill = 0;
+        while (true) {
+            System.out.print("\nEnter the skill number you want to search: ");
+            selectSkill = scanner.nextInt();
+            scanner.nextLine();
+
+                if(selectSkill >= 1 && selectSkill <= job.getSkills().getCount()) {
+                    return selectSkill;
+                } else {
+                    System.out.print("Invalid input! Please enter a valid number.\n");
+                }
+        }
+    }
     
     
     
