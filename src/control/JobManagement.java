@@ -11,7 +11,6 @@ import dao.JobPostingInitializer;
 import entity.Employer;
 import entity.JobPosting;
 import entity.Skill;
-
 /**
  *
  * @author Elaine
@@ -82,6 +81,8 @@ public class JobManagement {
             jobPostingUI.displayCreateJobsHead();
             jobPostingUI.viewJobPosting(job, 0);          
             jobPostingUI.displayViewJobPostingFoot();
+            jobPostingUI.continueKey();
+            
             //ask repeat
             if (jobPostingUI.askChoice("\nDo you want to add another job posting?") == 2) {
                 keepCreating = false;
@@ -105,6 +106,7 @@ public class JobManagement {
                 jobPostingUI.viewJobPosting(job, count);
             }
             jobPostingUI.displayViewJobPostingFoot();
+            jobPostingUI.continueKey();
         }
     }
  
@@ -119,6 +121,7 @@ public class JobManagement {
                 jobPostingUI.viewJobPosting(job, i);                
             }
             jobPostingUI.displayViewJobPostingFoot();
+            jobPostingUI.continueKey();
         }
     }
     
@@ -204,6 +207,7 @@ public class JobManagement {
             jobPostingUI.newUpdateJobTitle();
             viewEmployerJobPosting(currentEmployer);
             jobPostingUI.successUpdate();
+            jobPostingUI.continueKey();
 
             // Ask repeat
             if (jobPostingUI.askChoice("\nDo you want to update another job posting?") == 2) {
@@ -261,6 +265,7 @@ public class JobManagement {
                 jobPostingUI.newUpdateJobTitle();
                 viewEmployerJobPosting(currentEmployer);
                 jobPostingUI.successRemove();
+                jobPostingUI.continueKey();
                 break;
             case 2:
                 jobPostingUI.cancelRemove();
@@ -298,6 +303,7 @@ public class JobManagement {
         }
         jobPostingUI.displayViewJobPostingFoot();
         jobPostingUI.successSort();
+        jobPostingUI.continueKey();
     }
 
     private void mergeSort(int start, int end, Employer currentEmployer) {
@@ -348,7 +354,7 @@ public class JobManagement {
 
         boolean keepSearching = true;
         while (keepSearching) {
-            // Get search criteria
+            
             String employerName = jobPostingUI.searchEmployer();
             String selectedSkill = jobPostingUI.searchSkill(); 
 
@@ -360,7 +366,7 @@ public class JobManagement {
                 JobPosting posting = jobPostings.getPosition(i);  
 
                 // Check if matches employer AND has the skill
-                if (posting.getEmployer().getName().equalsIgnoreCase(employerName)) {
+                if (posting.getEmployer().getName().toLowerCase().contains(employerName.toLowerCase())) {
                     for (int j = 1; j <= posting.getSkills().getCount(); j++) {
                         if (posting.getSkills().getPosition(j).getName().equalsIgnoreCase(selectedSkill)) {
                             jobPostingUI.viewJobPosting(posting, i);
@@ -370,15 +376,19 @@ public class JobManagement {
                     }
                 }
             }
-
-            if (!found) {
-                jobPostingUI.noJobPosting();
-            }
             jobPostingUI.displayViewJobPostingFoot();
+            
+            if (!found) {
+            jobPostingUI.noJobPosting();
+     
+                if (jobPostingUI.askChoice("\nWould you like to try a different search?") == 2) {
+                    keepSearching = false;
+                }
+            } else {
 
-            // Ask to repeat
-            if (jobPostingUI.askChoice("\nDo you want to search another job posting?") == 2) {
-                keepSearching = false;
+                if (jobPostingUI.askChoice("\nDo you want to search another job posting?") == 2) {
+                    keepSearching = false;
+                }
             }
         }
     }

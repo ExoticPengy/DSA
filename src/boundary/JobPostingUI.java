@@ -8,6 +8,7 @@ import entity.Employer;
 import entity.JobPosting;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import utility.MessageUI;
 
 /**
  *
@@ -115,7 +116,7 @@ public class JobPostingUI {
     
     public void displaySearchResultsHead() {
         System.out.println("\n+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("|                                                                                      Search Result                                                                             |");
+        System.out.println("|                                                                                         Search Result                                                                                |");
         System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+");
         System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s |\n",
                 "No", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills");
@@ -124,8 +125,15 @@ public class JobPostingUI {
     public void displayJobsNumber(int jobNumber, JobPosting job) {
         System.out.println(jobNumber + ". " + job.getTitle());
     }
+    
     public void displayViewJobPostingFoot() {
         System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+");
+    }
+    
+    public void continueKey(){
+        System.out.print("\n");
+        MessageUI.pressAnyKeyContinue();
+        scanner.nextLine(); 
     }
     
     public void viewJobPosting(JobPosting jobPosting, int index) {
