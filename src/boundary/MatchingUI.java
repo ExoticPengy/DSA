@@ -103,9 +103,17 @@ public class MatchingUI {
                 "Applicant", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
     }
     
+    private String getCurrentTimestamp() {
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(new java.util.Date());
+    }
+    
     public void printReportHeader() {
+        String timestamp = getCurrentTimestamp();
         System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
         System.out.println("|                                                                         MATCH SCORE DISCREPANCY REPORT                                                                        |");
+        System.out.println("|                                                                                                                                                                               |");
+        System.out.printf("| Generated on: %-20s                                                                                                                                            |\n", timestamp);
         System.out.println("+----------------+----------------+--------------------------------+----------------------+--------------------------------+---------------------------+-----+--------+---------+");
         System.out.printf("| %-14s | %-14s | %-30s | %-20s | %-30s | %-25s | %-3s | %-6s | %-7s |\n", 
                 "Applicant", "Company", "Job Posting", "Location", "Qualification", "Skills", "Set","Score", "Changes");
@@ -155,15 +163,15 @@ public class MatchingUI {
     }
 
     public void printReportFooter() {
-        System.out.println("| End of Report                                                    |");
-        System.out.println("+------------------------------------------------------------------+");
+        System.out.println("| End of Report                                                                                                                                                                 |");
+        System.out.println("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
     }
     
     public void displayDiscrepancyChart(DoublyLinkedListInterface<Discrepancy> discrepancyList) {
-        System.out.println("| DISCREPANCY DISTRIBUTION |");
-        System.out.println("+-----------------------+");
-        System.out.println("| Set # | Count | Graph |");
-        System.out.println("+-------+-------+-------+");
+        System.out.printf("| DISCREPANCY DISTRIBUTION %149s|\n", "");
+        System.out.println("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.printf("| %-5s | %-5s | %-157s |\n", "Set #", "Count", "Graph");
+        System.out.println("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
 
         int maxSet = 0, maxValue = 0;
         for (int i = 1; i <= discrepancyList.getCount(); i++) {
@@ -177,14 +185,15 @@ public class MatchingUI {
             System.out.printf("| %-5d | %-5d | ",
                 discrepancy.getSetNo(),
                 discrepancy.getAmount());
-            for (int j = 1; j <= discrepancy.getAmount(); j++) {
-                 System.out.printf("[]");
+            StringBuilder barBuilder = new StringBuilder();
+            for (int j = 0; j < discrepancy.getAmount(); j++) {
+                barBuilder.append("[]");
             }
-            System.out.printf(" |\n");
+            System.out.printf("%-157s |\n", barBuilder.toString());
         }
         
-        System.out.printf("Highest discrepancies: %d (Set %d)\n", maxValue, maxSet);
-        System.out.println("+-----------------------+");
+        System.out.printf("| Highest discrepancies: %d (Set %d)%-142s|\n", maxValue, maxSet, "");
+        System.out.println("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
     }
     
     public void displayJobSeeker(JobSeeker jobSeeker) {
