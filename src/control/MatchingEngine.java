@@ -506,12 +506,12 @@ public class MatchingEngine {
     }
     
     private void incrementDiscrepancy(DoublyLinkedListInterface<Discrepancy> discrepancyList, int setNumber) {
-    for (int i = 1; i <= discrepancyList.getCount(); i++) {
-        Discrepancy discrepancy = discrepancyList.getPosition(i);
-        if (discrepancy.getSetNo() == setNumber) {
-            discrepancy.incrementAmount();
-            return;
+        for (int i = 1; i <= discrepancyList.getCount(); i++) {
+            Discrepancy discrepancy = discrepancyList.getPosition(i);
+            if (discrepancy.getSetNo() == setNumber) {
+                discrepancy.incrementAmount();
+                return;
+            }
         }
     }
-}
 }
