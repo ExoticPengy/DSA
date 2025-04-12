@@ -95,7 +95,7 @@ public class MatchingEngine {
             matchingUI.displayMatchHead();
             DoublyLinkedListInterface<MatchScore> scoreList = getLatestMatch().getMatchScoreList().getPosition(getCurrentSeekerIndex(jobSeeker));
             for (int i = 1; i <= scoreList.getCount(); i++) {
-                if (scoreList.getPosition(i).getJobPosting().getEmployer().getLocation().equals(location) && scoreList.getPosition(i).getScore() >= minScore) {
+                if (scoreList.getPosition(i).getJobPosting().getEmployer().getLocation().toLowerCase().contains(location.toLowerCase()) && scoreList.getPosition(i).getScore() >= minScore) {
                     jobCount++;
                     matchingUI.displayJobMatches(scoreList.getPosition(i), jobCount);
                 }
@@ -109,7 +109,7 @@ public class MatchingEngine {
                     int selectedJobIndex = matchingUI.selectJob(jobCount);
                     int findJob = 0;
                     for (int i = 1; i <= scoreList.getCount(); i++) {
-                        if (scoreList.getPosition(i).getJobPosting().getEmployer().getLocation().equals(location) && scoreList.getPosition(i).getScore() >= minScore) {
+                        if (scoreList.getPosition(i).getJobPosting().getEmployer().getLocation().toLowerCase().contains(location.toLowerCase()) && scoreList.getPosition(i).getScore() >= minScore) {
                             findJob++;
                             if (findJob == selectedJobIndex) {
                                 selectedJobIndex = i;
