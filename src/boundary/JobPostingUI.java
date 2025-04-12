@@ -114,10 +114,12 @@ public class JobPostingUI {
     }
     
     public void displaySearchResultsHead() {
-    System.out.println("\n+-----------------------------------------------+");
-    System.out.println("|              Search Results                  |");
-    System.out.println("+-----------------------------------------------+");
-}
+        System.out.println("\n+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                                      Search Result                                                                             |");
+        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+");
+        System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s |\n",
+                "No", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills");
+    }
     
     public void displayJobsNumber(int jobNumber, JobPosting job) {
         System.out.println(jobNumber + ". " + job.getTitle());
@@ -365,24 +367,32 @@ public class JobPostingUI {
         return searchEmployerName;
     }
     
-    public int searchSkill(JobPosting job){
-        System.out.print("\nWhich skill you would like to search: \n");
-        for (int j = 1; j <= job.getSkills().getCount(); j++) {
-            System.out.println(j + ". " + job.getSkills().getPosition(j).getName()
-                    + ": " + job.getSkills().getPosition(j).getProficiency());
-        }
-        
-        int selectSkill = 0;
+    public String searchSkill() {
+        int choice;
         while (true) {
-            System.out.print("\nEnter the skill number you want to search: ");
-            selectSkill = scanner.nextInt();
-            scanner.nextLine();
+            System.out.print("\nWhich skill you would like to search?\n"
+                    + "1. Communication \n2. Leadership \n3. Programming \n4. Analysis\n"
+                    + "Enter your choice: ");
 
-                if(selectSkill >= 1 && selectSkill <= job.getSkills().getCount()) {
-                    return selectSkill;
-                } else {
-                    System.out.print("Invalid input! Please enter a valid number.\n");
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+                switch (choice) {
+                    case 1:
+                        return "Communication";
+                    case 2:
+                        return "Leadership";
+                    case 3:
+                        return "Programming";
+                    case 4:
+                        return "Analysis";
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
                 }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a number between 1-4.");
+                scanner.nextLine();
+            }
         }
     }
     

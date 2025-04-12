@@ -232,7 +232,7 @@ public class JobManagement {
             }
         }
 
-        int choice =jobPostingUI.updateChoice(jobNumber, "\nEnter the job posting number you want to remove: ");
+        int choice = jobPostingUI.updateChoice(jobNumber, "\nEnter the job posting number you want to remove: ");
 
         int count = 0;
         int jobIndex = 0;
@@ -340,7 +340,7 @@ public class JobManagement {
     }
     
     //search employer and skill
-    public void searchJobPosting() {
+    public void searchJobPosting() { 
         if (jobPostings.isEmpty()) {
             jobPostingUI.noJobPosting();
             return;
@@ -348,58 +348,35 @@ public class JobManagement {
 
         boolean keepSearching = true;
         while (keepSearching) {
-            // 1. Get employer name to search
+            // Get search criteria
             String employerName = jobPostingUI.searchEmployer();
+            String selectedSkill = jobPostingUI.searchSkill(); 
 
-            // 2. Find first job from this employer to show skills
-            JobPosting sampleJob = null;
-            for (int i = 1; i <= jobPostings.getCount(); i++) {
-                JobPosting job = jobPostings.getPosition(i);
-                if (job.getEmployer().getName().equalsIgnoreCase(employerName)) {
-                    sampleJob = job;
-                    break;
-                }
-            }
-
-            if (sampleJob == null) {
-                if (jobPostingUI.askChoice("\nNo jobs found for employer: " + employerName + "Do you want to Search again?") == 2) {
-                    keepSearching = false;
-                }
-                continue;
-            }
-
-            // 3. Let user select a skill from the sample job
-            int skillIndex = jobPostingUI.searchSkill(sampleJob);
-            String selectedSkill = sampleJob.getSkills().getPosition(skillIndex).getName();
-
-            // 4. Search and display matching jobs
-            boolean foundResults = false;
+            // Search and display results
+            boolean found = false;
             jobPostingUI.displaySearchResultsHead();
 
             for (int i = 1; i <= jobPostings.getCount(); i++) {
-                JobPosting job = jobPostings.getPosition(i);
+                JobPosting posting = jobPostings.getPosition(i);  
 
-                // Check employer name match
-                if (!job.getEmployer().getName().equalsIgnoreCase(employerName)) {
-                    continue;
-                }
-
-                // Check if job has the selected skill
-                for (int j = 1; j <= job.getSkills().getCount(); j++) {
-                    if (job.getSkills().getPosition(j).getName().equalsIgnoreCase(selectedSkill)) {
-                        jobPostingUI.viewJobPosting(job, i);
-                        foundResults = true;
-                        break;
+                // Check if matches employer AND has the skill
+                if (posting.getEmployer().getName().equalsIgnoreCase(employerName)) {
+                    for (int j = 1; j <= posting.getSkills().getCount(); j++) {
+                        if (posting.getSkills().getPosition(j).getName().equalsIgnoreCase(selectedSkill)) {
+                            jobPostingUI.viewJobPosting(posting, i);
+                            found = true;
+                            break;
+                        }
                     }
                 }
             }
 
-            if (!foundResults) {
+            if (!found) {
                 jobPostingUI.noJobPosting();
             }
             jobPostingUI.displayViewJobPostingFoot();
 
-            // 5. Ask to search again
+            // Ask to repeat
             if (jobPostingUI.askChoice("\nDo you want to search another job posting?") == 2) {
                 keepSearching = false;
             }
