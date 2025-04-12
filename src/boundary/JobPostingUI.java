@@ -4,7 +4,6 @@
  */
 package boundary;
 
-import entity.Employer;
 import entity.JobPosting;
 import java.util.InputMismatchException;
 import java.util.Scanner;

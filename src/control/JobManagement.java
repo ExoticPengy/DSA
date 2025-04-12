@@ -121,7 +121,6 @@ public class JobManagement {
                 jobPostingUI.viewJobPosting(job, i);                
             }
             jobPostingUI.displayViewJobPostingFoot();
-            jobPostingUI.continueKey();
         }
     }
     
@@ -157,8 +156,7 @@ public class JobManagement {
                     }
                 }
             }
-            
-            // Get the job posting to update
+           
             JobPosting jobToUpdate = jobPostings.getPosition(jobIndex);
 
             // Display the selected job posting
@@ -187,8 +185,6 @@ public class JobManagement {
                     break;
                 case 5:
                     int selectSkill = jobPostingUI.selectSkillToUpdate(jobToUpdate);
-
-                    // Get the selected skill
                     Skill selectedSkill = jobToUpdate.getSkills().getPosition(selectSkill);
 
                     int newProficiency = jobPostingUI.proficiencyUpdate();
@@ -316,31 +312,33 @@ public class JobManagement {
     }
 
     private void merge(int start, int mid, int end, Employer currentEmployer) {
-        int i = start;
-        int j = mid + 1;
+        int left = start;
+        int right = mid + 1;
 
-        while (i <= mid && j <= end) {
-            JobPosting leftJob = jobPostings.getPosition(i);
-            JobPosting rightJob = jobPostings.getPosition(j);
+        while (left <= mid && right <= end) {
+            JobPosting leftJob = jobPostings.getPosition(left);
+            JobPosting rightJob = jobPostings.getPosition(right);
 
-            // compare employer's jobs
-            if (leftJob.getEmployer().equals(currentEmployer) && 
-                rightJob.getEmployer().equals(currentEmployer)) {
-
-                // Swap if left title comes after right (A-Z order)
-                if (leftJob.getTitle().compareToIgnoreCase(rightJob.getTitle()) > 0) {
-                    jobPostings.replacePosition(rightJob, i);
-                    jobPostings.replacePosition(leftJob, j);
-                }
+            if (!leftJob.getEmployer().equals(currentEmployer)) {
+                left++;
+                continue;
+            }
+            if (!rightJob.getEmployer().equals(currentEmployer)) {
+                right++;
+                continue;
             }
 
-            // Move pointers
-            if (j > end || !rightJob.getEmployer().equals(currentEmployer) ||
-                (leftJob.getEmployer().equals(currentEmployer) && 
-                 leftJob.getTitle().compareToIgnoreCase(rightJob.getTitle()) <= 0)) {
-                i++;
+            if (leftJob.getTitle().compareToIgnoreCase(rightJob.getTitle()) > 0) {
+                // Swap jobs 
+                jobPostings.replacePosition(rightJob, left);
+                jobPostings.replacePosition(leftJob, right);
+
+                left++;
+                right++;
+                mid++;
+                
             } else {
-                j++;
+                left++;
             }
         }
     }
@@ -358,7 +356,6 @@ public class JobManagement {
             String employerName = jobPostingUI.searchEmployer();
             String selectedSkill = jobPostingUI.searchSkill(); 
 
-            // Search and display results
             boolean found = false;
             jobPostingUI.displaySearchResultsHead();
 
