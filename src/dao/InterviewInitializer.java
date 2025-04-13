@@ -52,13 +52,13 @@ public class InterviewInitializer {
         timeList.insertBack(time);
         interviewTimeList.insertFront(timeList);
         
-        status.setStatus("Scheduled");
+        status.setStatus("Hired");
         status.setScore(0);
         statusList.insertFront(status);
         
         status = new Status();
-        status.setStatus("Interviewed");
-        status.setScore(0);
+        status.setStatus("Hired");
+        status.setScore(80);
         statusList.insertBack(status);
         interviewStatusList.insertFront(statusList);
         
@@ -75,7 +75,7 @@ public class InterviewInitializer {
         statusList = new DoublyLinkedList<>();
         interviewStatusList = new DoublyLinkedList<>();
         
-        interviewJobList.insertBack(jobList.getPosition(2));
+        interviewJobList.insertBack(jobList.getPosition(6));
                 
         jobSeekerList.insertFront(jobSeeker.getPosition(2));
         jobSeekerList.insertBack(jobSeeker.getPosition(3));
@@ -98,7 +98,7 @@ public class InterviewInitializer {
         statusList.insertFront(status);
         
         status = new Status();
-        status.setStatus("Scheduled");
+        status.setStatus("Hired");
         status.setScore(0);
         statusList.insertBack(status);
         interviewStatusList.insertFront(statusList);
