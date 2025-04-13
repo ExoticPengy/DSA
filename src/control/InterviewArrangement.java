@@ -59,11 +59,22 @@ public class InterviewArrangement {
     private DoublyLinkedListInterface<DoublyLinkedListInterface<Skill>> filterSkillList;
     private DoublyLinkedListInterface<Status> filterStatusList;
 
+    private DoublyLinkedListInterface<Employer> interviewEmployerList;
+    private DoublyLinkedListInterface<Time> interviewTimeList;
+    private DoublyLinkedListInterface<JobPosting> interviewJobList;
+    private DoublyLinkedListInterface<JobSeeker> interviewJobSeekerList;
+    private DoublyLinkedListInterface<JobSeeker> interviewUniqueJobSeekerList;
+
+    private DoublyLinkedListInterface<Employer> hiredEmployerList;
+    private DoublyLinkedListInterface<JobPosting> hiredJobList;
+    private DoublyLinkedListInterface<JobSeeker> hiredJobSeekerList;
+    private DoublyLinkedListInterface<Status> hiredStatusList;
+
     private DoublyLinkedListInterface<MatchScore> matchList;
 
     private LocalDate currentDate;
     private LocalDateTime leftDateTime, rightDateTime;
-    private DateTimeFormatter formatter, formatter2;
+    private DateTimeFormatter formatter, formatter2, formatter3;
 
     private Scanner sc = new Scanner(System.in);
 
@@ -76,6 +87,7 @@ public class InterviewArrangement {
         currentDate = LocalDate.now();
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         formatter2 = DateTimeFormatter.ofPattern("dd-MM-yyyyHHmm");
+        formatter3 = DateTimeFormatter.ofPattern("MMM dd yyyy, HH:mm");
 
         interviewUI = new InterviewArrangementUI();
     }
@@ -86,17 +98,17 @@ public class InterviewArrangement {
 
         interviewUI.initializeUI(interviewList);
 
-        for (int i = 1; i <= interviewList.getCount(); i++) {
-            for (int j = 1; j <= interviewList.getPosition(i).getTimeList().getCount(); j++) {
-                for (int k = 1; k <= interviewList.getPosition(i).getTimeList().getPosition(j).getCount(); k++) {
-                    if (LocalDate.parse(interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k).getDate(), formatter).isAfter(currentDate)
-                            && interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k).getEndTime() < Integer.parseInt(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmm")))
-                            && !interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).getStatus().equals("Interviewed")) {
-                        interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).setStatus("Interviewed");
-                    }
-                }
-            }
-        }
+//        for (int i = 1; i <= interviewList.getCount(); i++) {
+//            for (int j = 1; j <= interviewList.getPosition(i).getTimeList().getCount(); j++) {
+//                for (int k = 1; k <= interviewList.getPosition(i).getTimeList().getPosition(j).getCount(); k++) {
+//                    if (LocalDate.parse(interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k).getDate(), formatter).isAfter(currentDate)
+//                            && interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k).getEndTime() < Integer.parseInt(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmm")))
+//                            && !interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).getStatus().equals("Interviewed")) {
+//                        interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).setStatus("Interviewed");
+//                    }
+//                }
+//            }
+//        }
     }
 
     public void displayStudent(int num, JobSeeker jobSeeker) {
@@ -1032,6 +1044,135 @@ public class InterviewArrangement {
     }
 
     public void displayInterviewReport() {
+        LocalDateTime now = LocalDateTime.now();
+        String formatDateTime = now.format(formatter3);
+        String day = now.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
 
+        int positionCount = 0, interviewCount = 0, applicantCount = 0, uniqueCount = 0, positionCount2 = 0, applicantCount2 = 0;
+
+        interviewUI.reportHeaderUI(formatDateTime, day);
+
+        filterTimeList = new DoublyLinkedList<>();
+        filterJobList = new DoublyLinkedList<>();
+        filterStatusList = new DoublyLinkedList<>();
+
+        interviewEmployerList = new DoublyLinkedList<>();
+
+        hiredEmployerList = new DoublyLinkedList<>();
+
+        for (int i = 1; i <= interviewList.getCount(); i++) {
+            for (int j = 1; j <= interviewList.getPosition(i).getTimeList().getCount(); j++) {
+                for (int k = 1; k <= interviewList.getPosition(i).getTimeList().getPosition(j).getCount(); k++) {
+                    if (interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).getStatus().equals("Scheduled")) {
+                        filterJobList.insertUniqueBack(interviewList.getPosition(i).getJobPostingList().getPosition(j));
+                        interviewEmployerList.insertUniqueBack(interviewList.getPosition(i).getJobPostingList().getPosition(j).getEmployer());
+                    }
+                }
+            }
+        }
+
+        interviewUI.reportScheduleHeaderUI();
+        
+        for (int i = 1; i <= interviewEmployerList.getCount(); i++) {
+            interviewUI.reportScheduleContentHeaderUI(interviewEmployerList.getPosition(i).getName());
+            for (int j = 1; j <= filterJobList.getCount(); j++) {
+                if (filterJobList.getPosition(j).getEmployer().equals(interviewEmployerList.getPosition(i))) {
+                    interviewJobList = new DoublyLinkedList<>();
+                    interviewTimeList = new DoublyLinkedList<>();
+                    interviewJobSeekerList = new DoublyLinkedList<>();
+                    interviewUniqueJobSeekerList = new DoublyLinkedList<>();
+
+                    interviewJobList.insertUniqueBack(filterJobList.getPosition(j));
+                    for (int k = 1; k <= interviewList.getCount(); k++) {
+                        for (int l = 1; l <= interviewList.getPosition(k).getStatusList().getCount(); l++) {
+                            for (int m = 1; m <= interviewList.getPosition(k).getStatusList().getPosition(l).getCount(); m++) {
+                                if (interviewList.getPosition(k).getStatusList().getPosition(l).getPosition(m).getStatus().equals("Scheduled")
+                                        && interviewList.getPosition(k).getJobPostingList().getPosition(l).equals(filterJobList.getPosition(j))
+                                        && interviewList.getPosition(k).getJobPostingList().getPosition(l).getEmployer().equals(interviewEmployerList.getPosition(i))) {
+                                    interviewJobSeekerList.insertBack(interviewList.getPosition(k).getJobSeekerList().getPosition(l).getPosition(m));
+                                    interviewTimeList.insertBack(interviewList.getPosition(k).getTimeList().getPosition(l).getPosition(m));
+                                }
+                            }
+                        }
+                    }
+
+                    for (int k = 1; k <= interviewJobSeekerList.getCount(); k++) {
+                        interviewUniqueJobSeekerList.insertUniqueBack(interviewJobSeekerList.getPosition(k));
+                    }
+
+                    interviewUI.reportScheduleUI(
+                            interviewJobList,
+                            interviewTimeList,
+                            interviewJobSeekerList,
+                            interviewJobSeekerList.getCount(),
+                            interviewJobList.getCount(),
+                            interviewTimeList.getCount(),
+                            interviewUniqueJobSeekerList.getCount()
+                    );
+
+                    positionCount += interviewJobList.getCount();
+                    interviewCount += interviewTimeList.getCount();
+                    applicantCount += interviewJobSeekerList.getCount();
+                    uniqueCount += interviewUniqueJobSeekerList.getCount();
+                }
+            }
+        }
+
+        interviewUI.reportScheduleTotalUI(positionCount, interviewCount, applicantCount, uniqueCount);
+
+        filterJobList = new DoublyLinkedList<>();
+
+        for (int i = 1; i <= interviewList.getCount(); i++) {
+            for (int j = 1; j <= interviewList.getPosition(i).getTimeList().getCount(); j++) {
+                for (int k = 1; k <= interviewList.getPosition(i).getTimeList().getPosition(j).getCount(); k++) {
+                    if (interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).getStatus().equals("Hired")) {
+                        filterJobList.insertUniqueBack(interviewList.getPosition(i).getJobPostingList().getPosition(j));
+                        hiredEmployerList.insertUniqueBack(interviewList.getPosition(i).getJobPostingList().getPosition(j).getEmployer());
+                    }
+                }
+            }
+        }
+
+        interviewUI.reportHiredHeaderUI();
+        
+        for (int i = 1; i <= hiredEmployerList.getCount(); i++) {
+            interviewUI.reportHiredContentHeaderUI(hiredEmployerList.getPosition(i).getName());
+            for (int j = 1; j <= filterJobList.getCount(); j++) {
+                if (filterJobList.getPosition(j).getEmployer().equals(hiredEmployerList.getPosition(i))) {
+                    hiredJobList = new DoublyLinkedList<>();
+                    hiredJobSeekerList = new DoublyLinkedList<>();
+                    hiredStatusList = new DoublyLinkedList<>();
+
+                    hiredJobList.insertUniqueBack(filterJobList.getPosition(j));
+                    for (int k = 1; k <= interviewList.getCount(); k++) {
+                        for (int l = 1; l <= interviewList.getPosition(k).getStatusList().getCount(); l++) {
+                            for (int m = 1; m <= interviewList.getPosition(k).getStatusList().getPosition(l).getCount(); m++) {
+                                if (interviewList.getPosition(k).getStatusList().getPosition(l).getPosition(m).getStatus().equals("Hired")
+                                        && interviewList.getPosition(k).getJobPostingList().getPosition(l).equals(filterJobList.getPosition(j))
+                                        && interviewList.getPosition(k).getJobPostingList().getPosition(l).getEmployer().equals(hiredEmployerList.getPosition(i))) {
+                                    hiredJobSeekerList.insertBack(interviewList.getPosition(k).getJobSeekerList().getPosition(l).getPosition(m));
+                                    hiredStatusList.insertBack(interviewList.getPosition(k).getStatusList().getPosition(l).getPosition(m));
+                                }
+                            }
+                        }
+                    }
+                    
+                    interviewUI.reportHiredUI(
+                            hiredJobList, 
+                            hiredJobSeekerList, 
+                            hiredStatusList, 
+                            hiredJobSeekerList.getCount(),
+                            hiredJobList.getCount(),
+                            hiredJobSeekerList.getCount()
+                    );
+                    
+                    positionCount2 += hiredJobList.getCount();
+                    applicantCount2 += hiredJobSeekerList.getCount();
+                }
+            }
+        }
+        
+        interviewUI.reportHiredTotalUI(positionCount2, applicantCount2);
+        interviewUI.reportFooterUI();
     }
 }
