@@ -400,6 +400,8 @@ public class JobManagement {
     //report
     public void jobPostingReport() {
         
+        jobPostingUI.displayReportHeader(); 
+        
         boolean hasChanges = !newAddedJobPostings.isEmpty() || !deletedJobPostings.isEmpty();
 
         if (!hasChanges && jobPostings.isEmpty()) {
@@ -454,9 +456,12 @@ public class JobManagement {
                     );
                 }
             }
-            jobPostingUI.displaySummaryReportFooter(totalAdded, totalRemoved, netChange);
+            jobPostingUI.displayTotalCountReport(totalAdded, totalRemoved, netChange);
+            jobPostingUI.displaySummaryReportFooter();
         } else {
             jobPostingUI.displayNoChangesSummary();
+            jobPostingUI.displayTotalCountReport(0, 0, 0);
+            jobPostingUI.displaySummaryReportFooter();
         }
         jobPostingUI.continueKey();
     }
