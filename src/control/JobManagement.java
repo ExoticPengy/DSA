@@ -18,15 +18,22 @@ import entity.Skill;
 public class JobManagement {
     private JobPostingInitializer jobPostingInitializer;
     private DoublyLinkedListInterface<JobPosting> jobPostings;
+    private DoublyLinkedListInterface<Employer> employers;
+    private DoublyLinkedListInterface<JobPosting> newAddedJobPostings;
+    private DoublyLinkedListInterface<JobPosting> deletedJobPostings;
     private JobPostingUI jobPostingUI;
     
     public JobManagement(){
         jobPostingInitializer = new JobPostingInitializer();
         jobPostings = new DoublyLinkedList<>();
+        employers = new DoublyLinkedList<>();
+        newAddedJobPostings = new DoublyLinkedList<>();  
+        deletedJobPostings = new DoublyLinkedList<>(); 
         jobPostingUI = new JobPostingUI();
     }
     
     public void runJobManagement(DoublyLinkedListInterface<Employer> employerList) {
+        employers = employerList;
         jobPostings = jobPostingInitializer.getJobPosting(employerList);
         viewAllJobs(); 
     }
@@ -36,7 +43,7 @@ public class JobManagement {
     }
     
     public void createJobPosting(Employer employer) {
-
+       
         boolean keepCreating = true;
         while (keepCreating)  {
             String title = jobPostingUI.addTitle();
@@ -76,6 +83,7 @@ public class JobManagement {
 
             // Add the job posting to the list
             jobPostings.insertUniqueBack(job);
+            newAddedJobPostings.insertUniqueBack(job);
 
             // Display created job
             jobPostingUI.displayCreateJobsHead();
@@ -106,7 +114,6 @@ public class JobManagement {
                 jobPostingUI.viewJobPosting(job, count);
             }
             jobPostingUI.displayViewJobPostingFoot();
-            jobPostingUI.continueKey();
         }
     }
  
@@ -257,8 +264,8 @@ public class JobManagement {
             
         switch(removeChoice) {
             case 1:
-                jobPostings.deletePosition(jobIndex); 
-                jobPostingUI.newUpdateJobTitle();
+                deletedJobPostings.insertBack(jobPostings.deletePosition(jobIndex)); 
+                jobPostingUI.newUpdateJobTitle();//displaying
                 viewEmployerJobPosting(currentEmployer);
                 jobPostingUI.successRemove();
                 jobPostingUI.continueKey();
@@ -391,6 +398,106 @@ public class JobManagement {
     }
     
     //report
+    public void jobPostingReport() {
+        
+        boolean hasChanges = !newAddedJobPostings.isEmpty() || !deletedJobPostings.isEmpty();
+
+        if (!hasChanges && jobPostings.isEmpty()) {
+            jobPostingUI.noJobPosting();
+            return;
+        }
+
+        // Display newly added jobs section only if there are any
+        if (!newAddedJobPostings.isEmpty()) {
+            jobPostingUI.displayAddedJobsHeader(newAddedJobPostings.getCount());
+            for (int i = 1; i <= newAddedJobPostings.getCount(); i++) {
+                JobPosting job = newAddedJobPostings.getPosition(i);
+                jobPostingUI.displayAddedJobRow(i, job.getEmployer().getName(), job.getTitle());
+            }
+        } else {
+            jobPostingUI.displayNoNewAdditions();
+        }
+
+        // Display removed jobs section only if there are any
+        if (!deletedJobPostings.isEmpty()) {
+            jobPostingUI.displayRemovedJobsHeader(deletedJobPostings.getCount());
+            for (int i = 1; i <= deletedJobPostings.getCount(); i++) {
+                JobPosting job = deletedJobPostings.getPosition(i);
+                jobPostingUI.displayRemovedJobRow(i, job.getEmployer().getName(), job.getTitle());
+            }
+        } else {
+            jobPostingUI.displayNoRemovals();
+        }
+
+        // Display summary report 
+        jobPostingUI.displaySummaryReportHeader();
+
+        if (hasChanges) {
+            int totalAdded = newAddedJobPostings.getCount();
+            int totalRemoved = deletedJobPostings.getCount();
+            int netChange = totalAdded - totalRemoved;
+
+            int rowNum = 1;
+            for (int i = 1; i <= employers.getCount(); i++) {
+                Employer employer = employers.getPosition(i);
+                int oldCount = countOldPostings(employer);
+                int newCount = countCurrentPostings(employer);
+                int change = newCount - oldCount;
+
+                if (change != 0) {
+                    jobPostingUI.displaySummaryReport(
+                        rowNum++,
+                        employer.getName(),
+                        oldCount,
+                        newCount,
+                        change
+                    );
+                }
+            }
+            jobPostingUI.displaySummaryReportFooter(totalAdded, totalRemoved, netChange);
+        } else {
+            jobPostingUI.displayNoChangesSummary();
+        }
+        jobPostingUI.continueKey();
+    }
+
+    // Count job postings in previous state 
+    private int countOldPostings(Employer employer) {
+        int count = 0;
+
+        // Count in current postings
+        for (int i = 1; i <= jobPostings.getCount(); i++) {
+            if (jobPostings.getPosition(i).getEmployer().equals(employer)) {
+                count++;
+            }
+        }
+
+        // Subtract jobs that were newly added
+        for (int i = 1; i <= newAddedJobPostings.getCount(); i++) {
+            if (newAddedJobPostings.getPosition(i).getEmployer().equals(employer)) {
+                count--;
+            }
+        }
+
+        // Add back jobs that were recently deleted
+        for (int i = 1; i <= deletedJobPostings.getCount(); i++) {
+            if (deletedJobPostings.getPosition(i).getEmployer().equals(employer)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // Count job postings in current state
+    private int countCurrentPostings(Employer employer) {
+        int count = 0;
+        for (int i = 1; i <= jobPostings.getCount(); i++) {
+            if (jobPostings.getPosition(i).getEmployer().equals(employer)) {
+                count++;
+            }
+        }
+        return count;
+    }
     
     
     

@@ -151,7 +151,7 @@ public class JobPostingInitializer {
         jobList.insertBack(new JobPosting(employer, "Content Writer Intern", "Technical writing, content creation", "RM750-RM850", "Bachelor in English", skills));
 
         skills = new DoublyLinkedList<>();
-        skills.insertFront(new Skill("Analysis", 7));
+        skills.insertFront(new Skill("Analysis", 5));
         skills.insertBack(new Skill("Programming", 8));
         skills.insertBack(new Skill("Leadership", 7));
         jobList.insertBack(new JobPosting(employer, "Database Admin Intern", "Database management, optimization", "RM850-RM950", "Diploma in Database Management", skills));
@@ -165,11 +165,11 @@ public class JobPostingInitializer {
 
         skills = new DoublyLinkedList<>();
         skills.insertFront(new Skill("Programming", 10));
-        skills.insertBack(new Skill("Analysis", 9));
+        skills.insertBack(new Skill("Analysis", 7));
         jobList.insertBack(new JobPosting(employer, "Web Developer Intern", "Website development, maintenance", "RM800-RM950", "Diploma in Web Development", skills));
 
         skills = new DoublyLinkedList<>();
-        skills.insertFront(new Skill("Communication", 10));
+        skills.insertFront(new Skill("Communication", 8));
         jobList.insertBack(new JobPosting(employer, "Social Media Intern", "Content creation, community management", "RM700-RM800", "Diploma in Marketing", skills));
 
         skills = new DoublyLinkedList<>();
@@ -180,7 +180,7 @@ public class JobPostingInitializer {
         //employer 9
         employer = employerList.getPosition(9);
         skills = new DoublyLinkedList<>();
-        skills.insertFront(new Skill("Programming", 9));
+        skills.insertFront(new Skill("Programming", 8));
         skills.insertBack(new Skill("Analysis", 8));
         jobList.insertBack(new JobPosting(employer, "AI Developer Intern", "AI model training, implementation", "RM1000-RM1300", "Bachelor in Computer Science", skills));
 
@@ -209,9 +209,9 @@ public class JobPostingInitializer {
         jobList.insertBack(new JobPosting(employer, "Recruitment Intern", "Candidate screening, interviews", "RM700-RM800", "Diploma in Business", skills));
 
         skills = new DoublyLinkedList<>();
-        skills.insertFront(new Skill("Analysis", 8));
+        skills.insertFront(new Skill("Analysis", 7));
         skills.insertBack(new Skill("Communication", 6));
-        skills.insertFront(new Skill("Programming", 5));
+        skills.insertFront(new Skill("Programming", 4));
         jobList.insertBack(new JobPosting(employer, "Business Intelligence Intern", "Data visualization, reporting", "RM850-RM1000", "Bachelor in Business Analytics", skills));
           
         return jobList;

@@ -7,6 +7,7 @@ package control;
 import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
 import boundary.InternshipApplication;
+import boundary.JobPostingUI;
 import dao.EmployerInitializer;
 import entity.Employer;
 
@@ -18,14 +19,18 @@ public class EmployerManagement {
     private EmployerInitializer employerInitializer;
     private DoublyLinkedListInterface<Employer> employerList;
     private InternshipApplication internshipApplication;
+    private JobPostingUI jobPostingUI;
     
     public EmployerManagement(){
         employerInitializer = new EmployerInitializer();
         employerList = new DoublyLinkedList<>();
+        jobPostingUI = new JobPostingUI();
     }
     
     public void initializeEmployer() {
         employerList = employerInitializer.getEmployer();
+        jobPostingUI.displayEmployersHeader();
+        jobPostingUI.displayEmployers(employerList);
     }
     
     public DoublyLinkedListInterface<Employer> getEmployerList() {
@@ -36,3 +41,4 @@ public class EmployerManagement {
         internshipApplication.companyNameMenu(employerList);
     }
 }
+        
