@@ -453,7 +453,7 @@ public class JobPostingUI {
     }
 
     public void displaySummaryReport(int index, String company, int addedCount, int removedCount, int change) {
-        System.out.printf("| %-2d | %-16s | %-11d | %-12d | %+2d %-6s \n",
+        System.out.printf("| %-2d | %-16s | %-11d | %-12d | %+2d%-9s | \n",
                 index, company, addedCount, removedCount, change, change > 0 ? "(Added)" : "(Removed)");
         System.out.println("+----+------------------+-------------+--------------+-------------+");
     }
@@ -475,6 +475,8 @@ public class JobPostingUI {
         System.out.println("                          End of the report                        ");
         System.out.println("+==================================================================+\n");
     }
+    
+    
 
     //employer list
     public void displayEmployersHeader() {
