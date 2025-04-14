@@ -190,7 +190,7 @@ public class MatchingUI {
                 discrepancy.getAmount());
             StringBuilder barBuilder = new StringBuilder();
             for (int j = 0; j < discrepancy.getAmount(); j++) {
-                barBuilder.append("[]");
+                barBuilder.append("*");
             }
             System.out.printf("%-157s |\n", barBuilder.toString());
         }
