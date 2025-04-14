@@ -453,9 +453,9 @@ public class JobPostingUI {
     }
 
     public void displaySummaryReport(int index, String company, int oldCount, int newCount, int change) {
-        System.out.printf("| %-2d | %-14s   | %-9d | %-9d | %2d %-8s     |\n",
+        System.out.printf("| %-2d | %-14s   | %-9d | %-9d | %2d %-8s      |\n",
                 index, company, oldCount, newCount, change, change > 0 ? "(Added)" : "(Removed)");
-        System.out.println("+----+------------------+-----------+-----------+------------------+\n");
+        System.out.println("+----+------------------+-----------+-----------+------------------+");
     }
 
     public void displayNoChangesSummary() {
