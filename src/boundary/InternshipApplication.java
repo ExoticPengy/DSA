@@ -322,7 +322,7 @@ public class InternshipApplication {
 
                 switch (adminNum) {
                     case 1:
-                       jobManagement.adminJobManagement(employer);
+                       jobManagement.adminJobManagement();
                         break;
                     case 2:
                         //applicant management module
