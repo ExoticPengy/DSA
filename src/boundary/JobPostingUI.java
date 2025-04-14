@@ -4,10 +4,12 @@
  */
 package boundary;
 
+import adt.DoublyLinkedListInterface;
 import entity.Employer;
 import entity.JobPosting;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import utility.MessageUI;
 
 /**
  *
@@ -26,7 +28,7 @@ public class JobPostingUI {
             System.out.println("| 2. Update Job Posting      |");
             System.out.println("| 3. Remove Job Posting      |");
             System.out.println("| 4. Search Jobs             |");
-            System.out.println("| 5. View All Jobs           |");
+            System.out.println("| 5. View Job Post           |");
             System.out.println("| 6. View Sorted Jobs        |");
             System.out.println("| 7. Report                  |");
             System.out.println("| 8. Exit                    |");
@@ -37,22 +39,22 @@ public class JobPostingUI {
 
             switch (choice) {
                 case 1:
-                    //jobManagement.createJobPosting(); 
+                    //jobManagement.createJobPosting(employer); 
                     break;
                 case 2:
-                    //updateJobPosting();
+                    //jobManagement.updateJobPosting(employer);
                     break;
                 case 3:
-                    //removeJobPosting();
+                    //jobManagement.removeJobPosting(employer);
                     break;
                 case 4:
-                    //SearchJobs();
+                    //jobManagement.SearchJobs();
                     break;
                 case 5:
-                    //viewEmployerJobPosting();
+                    //jobManagement.viewEmployerJobPosting(employer);
                     break;
                 case 6:
-                    //jobManagement.viewSortedJobs(); 
+                    //jobManagement.viewSortedJobs(employer); 
                     break;
                 case 7:
                     //jobManagement.report(); 
@@ -113,11 +115,25 @@ public class JobPostingUI {
         System.out.println("+-------------------------------------------+");
     }
     
+    public void displaySearchResultsHead() {
+        System.out.println("\n+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                                         Search Result                                                                                |");
+        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+");
+        System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s |\n",
+                "No", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills");
+    }
+    
     public void displayJobsNumber(int jobNumber, JobPosting job) {
         System.out.println(jobNumber + ". " + job.getTitle());
     }
+    
     public void displayViewJobPostingFoot() {
         System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+");
+    }
+    
+    public void continueKey(){
+        MessageUI.pressAnyKeyContinue();
+        scanner.nextLine(); 
     }
     
     public void viewJobPosting(JobPosting jobPosting, int index) {
@@ -299,7 +315,7 @@ public class JobPostingUI {
     }
     
     public int selectSkillToUpdate(JobPosting jobToUpdate){
-        System.out.print("\nChoose skill to update: \n");
+        System.out.print("\nChoose a skill to update: \n");
         for (int j = 1; j <= jobToUpdate.getSkills().getCount(); j++) {
             System.out.println(j + ". " + jobToUpdate.getSkills().getPosition(j).getName()
                     + ": " + jobToUpdate.getSkills().getPosition(j).getProficiency());
@@ -327,7 +343,7 @@ public class JobPostingUI {
             scanner.nextLine();
 
             if(newProficiency >= 1 && newProficiency <= 10) {
-                  return newProficiency;
+                return newProficiency;
             } else {
                 System.out.print("Invalid input. Please enter a valid number.\n");
             }
@@ -352,47 +368,134 @@ public class JobPostingUI {
         System.out.println("Job postings are successfully sorted!\n");
     }
     
+    //search function
+    public String searchEmployer(){
+        System.out.print("Enter an employer name to search: ");
+        String searchEmployerName = scanner.nextLine();
+        return searchEmployerName;
+    }
     
+    public String searchSkill() {
+        int choice;
+        while (true) {
+            System.out.print("\nWhich skill you would like to search?\n"
+                    + "1. Communication \n2. Leadership \n3. Programming \n4. Analysis\n"
+                    + "Enter your choice: ");
+
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+                switch (choice) {
+                    case 1:
+                        return "Communication";
+                    case 2:
+                        return "Leadership";
+                    case 3:
+                        return "Programming";
+                    case 4:
+                        return "Analysis";
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a number between 1-4.");
+                scanner.nextLine();
+            }
+        }
+    }
     
+    //report function
+    public void displayReportHeader() {
+        System.out.println("\n+==================================================================+");
+        System.out.println("|                     JOB POSTING SUMMARY REPORT                   |");
+        System.out.println("+==================================================================+");
+    }
     
+    public void displayAddedJobsHeader(int count) {
+        System.out.println("\n NEWLY ADDED JOB POSTINGS (" + count + ")                       ");
+        System.out.println("+----+-----------------+-------------------------------------------+");
+        System.out.println("| No | Company         | Job Title                                 |");
+        System.out.println("+----+-----------------+-------------------------------------------+");
+    }
+
+    public void displayAddedJobRow(int index, String company, String title) {
+        System.out.printf("| %-2d | %-15s | %-41s |\n", index, company, title);
+        System.out.println("+----+-----------------+-------------------------------------------+");
+    }
+
+    public void displayRemovedJobsHeader(int count) {
+        System.out.println("\n RECENTLY REMOVED JOB POSTINGS (" + count + ")                            ");
+        System.out.println("+----+-----------------+-------------------------------------------+");
+        System.out.println("| No | Company         | Job Title                                 |");
+        System.out.println("+----+-----------------+-------------------------------------------+");
+    }
+
+    public void displayRemovedJobRow(int index, String company, String title) {
+        System.out.printf("| %-2d | %-15s | %-41s |\n", index, company, title);
+        System.out.println("+----+-----------------+-------------------------------------------+");
+    }
+
+    public void displayNoNewAdditions() {
+        System.out.println("\nNo newly added job postings.");
+        System.out.println("********************************************************************");
+    }
+
+    public void displayNoRemovals() {
+        System.out.println("\nNo recently removed job postings.");
+        System.out.println("********************************************************************");
+    }
+
+    public void displaySummaryReportHeader() {
+        System.out.println("\n*JOB POSTING COMPARING*                 ");
+        System.out.println("+----+------------------+-----------+-----------+------------------+");
+        System.out.println("| No | Company          | Old Count | New Count | Change (+/-)     |");
+        System.out.println("+----+------------------+-----------+-----------+------------------+");
+    }
+
+    public void displaySummaryReport(int index, String company, int oldCount, int newCount, int change) {
+        System.out.printf("| %-2d | %-14s   | %-9d | %-9d | %2d %-8s      |\n",
+                index, company, oldCount, newCount, change, change > 0 ? "(Added)" : "(Removed)");
+        System.out.println("+----+------------------+-----------+-----------+------------------+");
+    }
+
+    public void displayNoChangesSummary() {
+        System.out.println("\n-NO CHANGES MADE IN JOB POSTINGS-");
+    }
     
+    public void displayTotalCountReport(int totalAdded, int totalRemoved, int netChange) {
+        System.out.println("____________________________________________________________________\n");
+        System.out.printf(" Total Job Posting Added: %-3d                                  \n", totalAdded);
+        System.out.printf(" Total Job Posting Removed: %-3d                                \n", totalRemoved);
+        System.out.printf(" Net Change: %+2d                                              \n", netChange);
+        System.out.println("____________________________________________________________________");
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    public void displaySummaryReportFooter() {
+        System.out.println("\n+------------------------------------------------------------------+");
+        System.out.println("                          End of the report                        ");
+        System.out.println("+==================================================================+\n");
+    }
+
+    //employer list
+    public void displayEmployersHeader() {
+        System.out.println("\n+----------------------------------------------------------------------------------------------+");
+        System.out.println("|                                      Employer Listing                                        |");
+        System.out.println("+----+----------------+----------------+-------------------------------------------------------+");
+        System.out.printf("| %-2s | %-14s | %-14s | %-53s |\n", 
+                "No", "Company", "Location", "Email");
+        System.out.println("+----+----------------+----------------+-------------------------------------------------------+");
+    }
+
+    public void displayEmployers(DoublyLinkedListInterface<Employer> employers) {
+        for (int i = 1; i <= employers.getCount(); i++) {
+            Employer employer = employers.getPosition(i);
+            System.out.printf("| %-2d | %-14s | %-14s | %-53s |\n", 
+                            i, 
+                            employer.getName(), 
+                            employer.getLocation(), 
+                            employer.getEmail());
+            System.out.println("+----+----------------+----------------+-------------------------------------------------------+");
+        }
+    }
     
 }
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-

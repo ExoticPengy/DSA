@@ -267,10 +267,13 @@ public class InternshipApplication {
                         jobManagement.updateJobPosting(employer);
                         //jobManagement.removeJobPosting(employer);
                         //jobManagement.viewEmployerJobPosting(employer);
+                        //jobManagement.searchJobPosting();
+                        jobManagement.jobPostingReport();
                         break;
                     case 2:
-                        jobManagement.viewEmployerJobPosting(employer);
+                        //jobManagement.viewEmployerJobPosting(employer);
                         //applicant management module
+                        jobManagement.createJobPosting(employer);
                         break;
                     case 3:
                         interviewArrangement.implementSchedule(employer);
