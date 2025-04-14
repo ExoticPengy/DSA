@@ -412,7 +412,7 @@ public class JobPostingUI {
     }
     
     public void displayAddedJobsHeader(int count) {
-        System.out.println("\n NEWLY ADDED JOB POSTINGS (" + count + ")                       ");
+        System.out.println("\n> NEWLY ADDED JOB POSTINGS: " + count);
         System.out.println("+----+-----------------+-------------------------------------------+");
         System.out.println("| No | Company         | Job Title                                 |");
         System.out.println("+----+-----------------+-------------------------------------------+");
@@ -424,7 +424,7 @@ public class JobPostingUI {
     }
 
     public void displayRemovedJobsHeader(int count) {
-        System.out.println("\n RECENTLY REMOVED JOB POSTINGS (" + count + ")                            ");
+        System.out.println("\n> RECENTLY REMOVED JOB POSTINGS: " + count);
         System.out.println("+----+-----------------+-------------------------------------------+");
         System.out.println("| No | Company         | Job Title                                 |");
         System.out.println("+----+-----------------+-------------------------------------------+");
@@ -446,16 +446,16 @@ public class JobPostingUI {
     }
 
     public void displaySummaryReportHeader() {
-        System.out.println("\n*JOB POSTING COMPARING*                 ");
-        System.out.println("+----+------------------+-----------+-----------+------------------+");
-        System.out.println("| No | Company          | Old Count | New Count | Change (+/-)     |");
-        System.out.println("+----+------------------+-----------+-----------+------------------+");
+        System.out.println("\n> JOB POSTING CHANGES SUMMARY");
+        System.out.println("+----+------------------+-------------+--------------+-------------+");
+        System.out.println("| No | Company          | Jobs Added  | Jobs Removed | Net Change  |");
+        System.out.println("+----+------------------+-------------+--------------+-------------+");
     }
 
-    public void displaySummaryReport(int index, String company, int oldCount, int newCount, int change) {
-        System.out.printf("| %-2d | %-14s   | %-9d | %-9d | %2d %-8s      |\n",
-                index, company, oldCount, newCount, change, change > 0 ? "(Added)" : "(Removed)");
-        System.out.println("+----+------------------+-----------+-----------+------------------+");
+    public void displaySummaryReport(int index, String company, int addedCount, int removedCount, int change) {
+        System.out.printf("| %-2d | %-16s | %-11d | %-12d | %+2d %-6s \n",
+                index, company, addedCount, removedCount, change, change > 0 ? "(Added)" : "(Removed)");
+        System.out.println("+----+------------------+-------------+--------------+-------------+");
     }
 
     public void displayNoChangesSummary() {
@@ -463,7 +463,7 @@ public class JobPostingUI {
     }
     
     public void displayTotalCountReport(int totalAdded, int totalRemoved, int netChange) {
-        System.out.println("____________________________________________________________________\n");
+        System.out.println("\n____________________________________________________________________\n");
         System.out.printf(" Total Job Posting Added: %-3d                                  \n", totalAdded);
         System.out.printf(" Total Job Posting Removed: %-3d                                \n", totalRemoved);
         System.out.printf(" Net Change: %+2d                                              \n", netChange);

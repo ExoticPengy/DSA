@@ -442,20 +442,35 @@ public class JobManagement {
             int rowNum = 1;
             for (int i = 1; i <= employers.getCount(); i++) {
                 Employer employer = employers.getPosition(i);
-                int oldCount = countOldPostings(employer);
-                int newCount = countCurrentPostings(employer);
-                int change = newCount - oldCount;
 
-                if (change != 0) {
+                // Count added jobs for this employer
+                int addedCount = 0;
+                for (int j = 1; j <= newAddedJobPostings.getCount(); j++) {
+                    if (newAddedJobPostings.getPosition(j).getEmployer().equals(employer)) {
+                        addedCount++;
+                    }
+                }
+
+                // Count removed jobs for this employer
+                int removedCount = 0;
+                for (int j = 1; j <= deletedJobPostings.getCount(); j++) {
+                    if (deletedJobPostings.getPosition(j).getEmployer().equals(employer)) {
+                        removedCount++;
+                    }
+                }
+
+                // Only show if there were any changes for this employer
+                if (addedCount > 0 || removedCount > 0) {
                     jobPostingUI.displaySummaryReport(
                         rowNum++,
                         employer.getName(),
-                        oldCount,
-                        newCount,
-                        change
+                        addedCount,
+                        removedCount,
+                        addedCount - removedCount
                     );
                 }
             }
+
             jobPostingUI.displayTotalCountReport(totalAdded, totalRemoved, netChange);
             jobPostingUI.displaySummaryReportFooter();
         } else {
@@ -466,49 +481,4 @@ public class JobManagement {
         jobPostingUI.continueKey();
     }
 
-    // Count job postings in previous state 
-    private int countOldPostings(Employer employer) {
-        int count = 0;
-
-        // Count in current postings
-        for (int i = 1; i <= jobPostings.getCount(); i++) {
-            if (jobPostings.getPosition(i).getEmployer().equals(employer)) {
-                count++;
-            }
-        }
-
-        // Subtract jobs that were newly added
-        for (int i = 1; i <= newAddedJobPostings.getCount(); i++) {
-            if (newAddedJobPostings.getPosition(i).getEmployer().equals(employer)) {
-                count--;
-            }
-        }
-
-        // Add back jobs that were recently deleted
-        for (int i = 1; i <= deletedJobPostings.getCount(); i++) {
-            if (deletedJobPostings.getPosition(i).getEmployer().equals(employer)) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    // Count job postings in current state
-    private int countCurrentPostings(Employer employer) {
-        int count = 0;
-        for (int i = 1; i <= jobPostings.getCount(); i++) {
-            if (jobPostings.getPosition(i).getEmployer().equals(employer)) {
-                count++;
-            }
-        }
-        return count;
-    }
-    
-    
-    
-    
-    
-    
-    
-    
 }
