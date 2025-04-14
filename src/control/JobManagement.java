@@ -42,6 +42,30 @@ public class JobManagement {
         return jobPostings;
     }
     
+    public void startJobManagement(Employer employer) {
+         switch (jobPostingUI.displayJobsMenu()) {
+            case 1:
+                createJobPosting(employer); 
+                break;
+            case 2:
+                updateJobPosting(employer);
+                break;
+            case 3:
+                removeJobPosting(employer);
+                break;
+            case 4:
+                viewEmployerJobPosting(employer);
+                break;
+            case 5:
+                sortedJobPosting(employer); 
+                break;
+            case 6:
+                return; 
+            default:
+                System.out.println("Invalid choice. Please try again.");
+        }
+    }
+    
     public void createJobPosting(Employer employer) {
        
         boolean keepCreating = true;
@@ -438,40 +462,34 @@ public class JobManagement {
             int totalRemoved = deletedJobPostings.getCount();
             int netChange = totalAdded - totalRemoved;
 
-            // Prepare data for employer graphs
-            DoublyLinkedListInterface<Integer> addedCounts = new DoublyLinkedList<>();
-            DoublyLinkedListInterface<Integer> removedCounts = new DoublyLinkedList<>();
-
             int rowNum = 1;
             for (int i = 1; i <= employers.getCount(); i++) {
                 Employer employer = employers.getPosition(i);
-                int added = 0, removed = 0;
+                int addedCount = 0;
+                int removedCount = 0;
 
                 // Count added jobs
                 for (int j = 1; j <= newAddedJobPostings.getCount(); j++) {
                     if (newAddedJobPostings.getPosition(j).getEmployer().equals(employer)) {
-                        added++;
+                        addedCount++;
                     }
                 }
 
                 // Count removed jobs
                 for (int j = 1; j <= deletedJobPostings.getCount(); j++) {
                     if (deletedJobPostings.getPosition(j).getEmployer().equals(employer)) {
-                        removed++;
+                        removedCount++;
                     }
                 }
 
-                addedCounts.insertBack(added);
-                removedCounts.insertBack(removed);
-
-                // Display in summary table if changes exist
-                if (added > 0 || removed > 0) {
+                // Only show if there were any changes for this employer
+                if (addedCount > 0 || removedCount > 0) {
                     jobPostingUI.displaySummaryReport(
                         rowNum++,
                         employer.getName(),
-                        added,
-                        removed,
-                        added - removed
+                        addedCount,
+                        removedCount,
+                        addedCount - removedCount
                     );
                 }
             }
@@ -480,8 +498,8 @@ public class JobManagement {
 
             // Display all graphs
             jobPostingUI.reportGraph(totalAdded, totalRemoved, netChange);
-            jobPostingUI.displayEmployerAddedGraph(employers, addedCounts);
-            jobPostingUI.displayEmployerRemovedGraph(employers, removedCounts);
+            jobPostingUI.displayEmployerAddedGraph(employers, newAddedJobPostings);
+            jobPostingUI.displayEmployerRemovedGraph(employers, deletedJobPostings);
 
             jobPostingUI.displaySummaryReportFooter();
         } else {

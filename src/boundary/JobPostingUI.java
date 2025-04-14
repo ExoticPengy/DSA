@@ -20,9 +20,8 @@ import java.time.format.DateTimeFormatter;
 public class JobPostingUI {
 
     private Scanner scanner = new Scanner(System.in);
-    private JobManagement jobManagement = new JobManagement();
 
-    public void displayJobsMenu() {
+    public int displayJobsMenu() {
         while (true) {
             System.out.println("+----------------------------+");
             System.out.println("|      Job Posting Menu      |\n");
@@ -30,42 +29,23 @@ public class JobPostingUI {
             System.out.println("| 1. Create Job Posting      |");
             System.out.println("| 2. Update Job Posting      |");
             System.out.println("| 3. Remove Job Posting      |");
-            System.out.println("| 4. Search Jobs             |");
-            System.out.println("| 5. View Job Post           |");
-            System.out.println("| 6. View Sorted Jobs        |");
-            System.out.println("| 7. Report                  |");
-            System.out.println("| 8. Back tO menu            |");
+            System.out.println("| 4. View Job Posting        |");
+            System.out.println("| 5. Sort Jobs               |");
+            System.out.println("| 6. Back to menu            |");
             System.out.println("+----------------------------+");
-            System.out.print("Choose an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); 
+            System.out.print("Choose an option: "); 
 
-            switch (choice) {
-                case 1:
-                    jobManagement.createJobPosting(employer); 
-                    break;
-                case 2:
-                    //jobManagement.updateJobPosting(employer);
-                    break;
-                case 3:
-                    //jobManagement.removeJobPosting(employer);
-                    break;
-                case 4:
-                    //jobManagement.SearchJobs();
-                    break;
-                case 5:
-                    //jobManagement.viewEmployerJobPosting(employer);
-                    break;
-                case 6:
-                    //jobManagement.viewSortedJobs(employer); 
-                    break;
-                case 7:
-                    //jobManagement.report(); 
-                    break;
-                case 8:
-                    return; 
-                default:
-                    System.out.println("Invalid choice. Please try again.");
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+                if (choice < 1 || choice > 6) {
+                    return choice;
+                } else {
+                    System.out.println("Invalid option, please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Not a number. Please try again.");
+                scanner.nextLine(); 
             }
         }
     }    
@@ -481,7 +461,7 @@ public class JobPostingUI {
     }
     
     public void reportGraph(int totalAdded, int totalRemoved, int netChange) {
-        System.out.println("\n> All Job Postings Changes Visualization:\n");
+        System.out.println("\n> Graph all Job Postings Changes:\n");
 
         int maxHeight = Math.max(totalAdded, totalRemoved);
         maxHeight = Math.max(maxHeight, 1); // Minimum height
@@ -495,35 +475,51 @@ public class JobPostingUI {
         }
 
         // Print x-axis
-        System.out.println(" --+--------+----------> Changes");
+        System.out.println(" --+--------+--------|--> Changes");
         System.out.println("     Added    Removed");
     }
     
     public void displayEmployerAddedGraph(DoublyLinkedListInterface<Employer> employers, 
-                                    DoublyLinkedListInterface<Integer> addedCounts) {
-        System.out.println("\n> Each Employers Added Job Postings Visualization:\n");
-
-        int maxAdded = 0;
+                                    DoublyLinkedListInterface<JobPosting> newAddedJobs) {
+        System.out.println("\n\n> Each Employers Added Job Postings Visualization:\n");
+        
         String topEmployer = "";
+        int maxAdded = 0;
 
-        // Find max height and top employer
+        // First pass to find max added count and active employers
         for (int i = 1; i <= employers.getCount(); i++) {
-            int count = addedCounts.getPosition(i);
-            if (count > maxAdded) {
-                maxAdded = count;
-                topEmployer = employers.getPosition(i).getName();
+            Employer employer = employers.getPosition(i);
+            int count = 0;
+
+            for (int j = 1; j <= newAddedJobs.getCount(); j++) {
+                if (newAddedJobs.getPosition(j).getEmployer().equals(employer)) {
+                    count++;
+                }
+            }
+
+            if (count > 0) {
+                if (count > maxAdded) {
+                    maxAdded = count;
+                    topEmployer = employer.getName();
+                }
             }
         }
-        maxAdded = Math.max(maxAdded, 1); // Minimum height
 
         // Print y-axis with values
         for (int i = maxAdded; i >= 1; i--) {
             System.out.printf("%3d|", i);
             for (int j = 1; j <= employers.getCount(); j++) {
-                if (addedCounts.getPosition(j) >= i) {
-                    System.out.print("   *");
-                } else {
-                    System.out.print("    ");
+                Employer employer = employers.getPosition(j);
+                int count = 0;
+
+                for (int k = 1; k <= newAddedJobs.getCount(); k++) {
+                    if (newAddedJobs.getPosition(k).getEmployer().equals(employer)) {
+                        count++;
+                    }
+                }
+
+                if (count > 0) {
+                    System.out.print(count >= i ? "   *   |" : "        |");
                 }
             }
             System.out.println();
@@ -532,45 +528,86 @@ public class JobPostingUI {
         // Print x-axis
         System.out.print(" --+");
         for (int i = 1; i <= employers.getCount(); i++) {
-            System.out.print("----");
-        }
-        System.out.println("> Added Job Posting Changes");
+            Employer employer = employers.getPosition(i);
+            int count = 0;
 
-        // Print employer names
-        System.out.print("    ");
-        for (int i = 1; i <= employers.getCount(); i++) {
-            System.out.printf("%-4s", employers.getPosition(i).getName());
-        }
-        System.out.println();
+            for (int j = 1; j <= newAddedJobs.getCount(); j++) {
+                if (newAddedJobs.getPosition(j).getEmployer().equals(employer)) {
+                    count++;
+                }
+            }
 
-        System.out.println("> Highest total job added is: " + topEmployer);
-    }
-
-    public void displayEmployerRemovedGraph(DoublyLinkedListInterface<Employer> employers, 
-                                          DoublyLinkedListInterface<Integer> removedCounts) {
-        System.out.println("\n> Each Employers Removed Job Postings Visualization:\n");
-
-        int maxRemoved = 0;
-        String topEmployer = "";
-
-        // Find max height and top employer
-        for (int i = 1; i <= employers.getCount(); i++) {
-            int count = removedCounts.getPosition(i);
-            if (count > maxRemoved) {
-                maxRemoved = count;
-                topEmployer = employers.getPosition(i).getName();
+            if (count > 0) {
+                System.out.print("----------+");
             }
         }
-        maxRemoved = Math.max(maxRemoved, 1); // Minimum height
+        System.out.println("> Added Job Count");
 
+        // Print employer names
+        System.out.print("     ");
+        for (int i = 1; i <= employers.getCount(); i++) {
+            Employer employer = employers.getPosition(i);
+            int count = 0;
+
+            for (int j = 1; j <= newAddedJobs.getCount(); j++) {
+                if (newAddedJobs.getPosition(j).getEmployer().equals(employer)) {
+                    count++;
+                }
+            }
+
+            if (count > 0) {
+                String name = employer.getName();
+                // Format name to 7 characters, centered
+                String formattedName = String.format("%-7.7s", name);
+                System.out.print(" " + formattedName + " |");
+            }
+        }
+
+        System.out.println("\n Highest total job added is: " + topEmployer);
+    }
+
+
+    public void displayEmployerRemovedGraph(DoublyLinkedListInterface<Employer> employers, 
+                                      DoublyLinkedListInterface<JobPosting> removedJobs) {
+        System.out.println("\n\n> Graph Each Employers Removed Job Postings:\n");
+       
+
+        String topEmployer = "";
+        int maxRemoved = 0;
+
+        // First pass to find max removed count and active employers
+        for (int i = 1; i <= employers.getCount(); i++) {
+            Employer employer = employers.getPosition(i);
+            int count = 0;
+
+            for (int j = 1; j <= removedJobs.getCount(); j++) {
+                if (removedJobs.getPosition(j).getEmployer().equals(employer)) {
+                    count++;
+                }
+            }
+
+            if (count > 0) {
+                if (count > maxRemoved) {
+                    maxRemoved = count;
+                    topEmployer = employer.getName();
+                }
+            }
+        }
         // Print y-axis with values
         for (int i = maxRemoved; i >= 1; i--) {
             System.out.printf("%3d|", i);
             for (int j = 1; j <= employers.getCount(); j++) {
-                if (removedCounts.getPosition(j) >= i) {
-                    System.out.print("   *");
-                } else {
-                    System.out.print("    ");
+                Employer employer = employers.getPosition(j);
+                int count = 0;
+
+                for (int k = 1; k <= removedJobs.getCount(); k++) {
+                    if (removedJobs.getPosition(k).getEmployer().equals(employer)) {
+                        count++;
+                    }
+                }
+
+                if (count > 0) {
+                    System.out.print(count >= i ? "   *   |" : "        |");
                 }
             }
             System.out.println();
@@ -579,18 +616,41 @@ public class JobPostingUI {
         // Print x-axis
         System.out.print(" --+");
         for (int i = 1; i <= employers.getCount(); i++) {
-            System.out.print("----");
+            Employer employer = employers.getPosition(i);
+            int count = 0;
+
+            for (int j = 1; j <= removedJobs.getCount(); j++) {
+                if (removedJobs.getPosition(j).getEmployer().equals(employer)) {
+                    count++;
+                }
+            }
+
+            if (count > 0) {
+                System.out.print("----------+");
+            }
         }
-        System.out.println("> Removed Job Posting Changes");
+        System.out.println("> Removed Jobs Count");
 
         // Print employer names
-        System.out.print("    ");
+        System.out.print("     ");
         for (int i = 1; i <= employers.getCount(); i++) {
-            System.out.printf("%-4s", employers.getPosition(i).getName());
-        }
-        System.out.println();
+            Employer employer = employers.getPosition(i);
+            int count = 0;
 
-        System.out.println("> Highest total job removed is: " + topEmployer);
+            for (int j = 1; j <= removedJobs.getCount(); j++) {
+                if (removedJobs.getPosition(j).getEmployer().equals(employer)) {
+                    count++;
+                }
+            }
+
+            if (count > 0) {
+                String name = employer.getName();
+                // Format name to 7 characters, centered
+                String formattedName = String.format("%-4.7s", name);
+                System.out.print(" " + formattedName + " |");
+            }
+        }
+        System.out.println("\nHighest total job removed is: " + topEmployer);
     }
     
     public void displaySummaryReportFooter() {
