@@ -472,6 +472,7 @@ public class JobManagement {
             }
 
             jobPostingUI.displayTotalCountReport(totalAdded, totalRemoved, netChange);
+            jobPostingUI.reportGraph(totalAdded, totalRemoved, netChange);
             jobPostingUI.displaySummaryReportFooter();
         } else {
             jobPostingUI.displayNoChangesSummary();

@@ -470,6 +470,25 @@ public class JobPostingUI {
         System.out.println("____________________________________________________________________");
     }
     
+    public void reportGraph(int totalAdded, int totalRemoved, int netChange){
+        System.out.println("\nJob Posting Changes Visualization:");
+        System.out.println("   ^");
+        System.out.println("   |");
+
+        int maxHeight = Math.max(totalAdded, totalRemoved);
+        maxHeight = Math.max(maxHeight, 3); // Minimum height for chart
+
+        for (int i = maxHeight; i >= 1; i--) {
+            System.out.print("   |");
+            if (totalAdded >= i) System.out.print("   *"); else System.out.print("    ");
+            if (totalRemoved >= i) System.out.print("         *"); else System.out.print("         ");
+            System.out.println();
+        }
+
+        System.out.println("   +-----------------------------------> Changes");
+        System.out.println("      Added     Removed");
+    } 
+    
     public void displaySummaryReportFooter() {
         System.out.println("\n+------------------------------------------------------------------+");
         System.out.println("                          End of the report                        ");
