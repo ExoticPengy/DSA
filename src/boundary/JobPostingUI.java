@@ -10,6 +10,7 @@ import entity.JobPosting;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import utility.MessageUI;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -406,8 +407,17 @@ public class JobPostingUI {
     
     //report function
     public void displayReportHeader() {
+        // Get current date and time
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEEE");
+        String currentDateTime = java.time.LocalDateTime.now().format(dateFormatter);
+        String currentDay = java.time.LocalDateTime.now().format(dayFormatter);
+
         System.out.println("\n+==================================================================+");
+        System.out.println("|                                                                  |");
         System.out.println("|                     JOB POSTING SUMMARY REPORT                   |");
+        System.out.println("|                                                                  |");
+        System.out.printf("|  Generated on: %-9s %39s |\n", currentDay, currentDateTime);
         System.out.println("+==================================================================+");
     }
     
@@ -436,12 +446,12 @@ public class JobPostingUI {
     }
 
     public void displayNoNewAdditions() {
-        System.out.println("\nNo newly added job postings.");
+        System.out.println("\n No newly added job postings.");
         System.out.println("********************************************************************");
     }
 
     public void displayNoRemovals() {
-        System.out.println("\nNo recently removed job postings.");
+        System.out.println("\n No recently removed job postings.");
         System.out.println("********************************************************************");
     }
 
@@ -471,7 +481,8 @@ public class JobPostingUI {
     }
     
     public void reportGraph(int totalAdded, int totalRemoved, int netChange){
-        System.out.println("\nJob Posting Changes Visualization:");
+        System.out.println("\n> Job Posting Changes Visualization:\n");
+        System.out.println("Total");
         System.out.println("   ^");
         System.out.println("   |");
 
@@ -485,13 +496,13 @@ public class JobPostingUI {
             System.out.println();
         }
 
-        System.out.println("   +-----------------------------------> Changes");
-        System.out.println("      Added     Removed");
+        System.out.println("   +---------------------------------> Changes");
+        System.out.println("          Added     Removed");
     } 
     
     public void displaySummaryReportFooter() {
         System.out.println("\n+------------------------------------------------------------------+");
-        System.out.println("                          End of the report                        ");
+        System.out.println("|                          End of the report                       |");
         System.out.println("+==================================================================+\n");
     }
     
