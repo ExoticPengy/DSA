@@ -399,9 +399,8 @@ public class JobManagement {
     
     //report
     public void jobPostingReport() {
-        
         jobPostingUI.displayReportHeader(); 
-        
+
         boolean hasChanges = !newAddedJobPostings.isEmpty() || !deletedJobPostings.isEmpty();
 
         if (!hasChanges && jobPostings.isEmpty()) {
@@ -409,7 +408,7 @@ public class JobManagement {
             return;
         }
 
-        // Display newly added jobs section only if there are any
+        // Display newly added jobs section
         if (!newAddedJobPostings.isEmpty()) {
             jobPostingUI.displayAddedJobsHeader(newAddedJobPostings.getCount());
             for (int i = 1; i <= newAddedJobPostings.getCount(); i++) {
@@ -420,7 +419,7 @@ public class JobManagement {
             jobPostingUI.displayNoNewAdditions();
         }
 
-        // Display removed jobs section only if there are any
+        // Display removed jobs section
         if (!deletedJobPostings.isEmpty()) {
             jobPostingUI.displayRemovedJobsHeader(deletedJobPostings.getCount());
             for (int i = 1; i <= deletedJobPostings.getCount(); i++) {
@@ -439,40 +438,51 @@ public class JobManagement {
             int totalRemoved = deletedJobPostings.getCount();
             int netChange = totalAdded - totalRemoved;
 
+            // Prepare data for employer graphs
+            DoublyLinkedListInterface<Integer> addedCounts = new DoublyLinkedList<>();
+            DoublyLinkedListInterface<Integer> removedCounts = new DoublyLinkedList<>();
+
             int rowNum = 1;
             for (int i = 1; i <= employers.getCount(); i++) {
                 Employer employer = employers.getPosition(i);
+                int added = 0, removed = 0;
 
-                // Count added jobs for this employer
-                int addedCount = 0;
+                // Count added jobs
                 for (int j = 1; j <= newAddedJobPostings.getCount(); j++) {
                     if (newAddedJobPostings.getPosition(j).getEmployer().equals(employer)) {
-                        addedCount++;
+                        added++;
                     }
                 }
 
-                // Count removed jobs for this employer
-                int removedCount = 0;
+                // Count removed jobs
                 for (int j = 1; j <= deletedJobPostings.getCount(); j++) {
                     if (deletedJobPostings.getPosition(j).getEmployer().equals(employer)) {
-                        removedCount++;
+                        removed++;
                     }
                 }
 
-                // Only show if there were any changes for this employer
-                if (addedCount > 0 || removedCount > 0) {
+                addedCounts.insertBack(added);
+                removedCounts.insertBack(removed);
+
+                // Display in summary table if changes exist
+                if (added > 0 || removed > 0) {
                     jobPostingUI.displaySummaryReport(
                         rowNum++,
                         employer.getName(),
-                        addedCount,
-                        removedCount,
-                        addedCount - removedCount
+                        added,
+                        removed,
+                        added - removed
                     );
                 }
             }
 
             jobPostingUI.displayTotalCountReport(totalAdded, totalRemoved, netChange);
+
+            // Display all graphs
             jobPostingUI.reportGraph(totalAdded, totalRemoved, netChange);
+            jobPostingUI.displayEmployerAddedGraph(employers, addedCounts);
+            jobPostingUI.displayEmployerRemovedGraph(employers, removedCounts);
+
             jobPostingUI.displaySummaryReportFooter();
         } else {
             jobPostingUI.displayNoChangesSummary();

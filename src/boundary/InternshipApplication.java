@@ -336,7 +336,7 @@ public class InternshipApplication {
                         //applicant management module
                         break;
                     case 3:
-                        //job management module
+                        jobManagement.jobPostingReport();
                         break;
                     case 4:
                         //applicant management module
