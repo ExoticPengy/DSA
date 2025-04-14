@@ -109,7 +109,7 @@ public class MatchingUI {
         DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEEE");
         String currentDateTime = java.time.LocalDateTime.now().format(dateFormatter);
         String currentDay = java.time.LocalDateTime.now().format(dayFormatter);
-        String timestamp = currentDay + currentDateTime;
+        String timestamp = currentDay + " " + currentDateTime;
         System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
         System.out.println("|                                                             TUNKU ABDUL RAHMAN UNIVERSITY OF MANAGEMENT AND TECHNOLOGY                                                        |");
         System.out.println("|                                                                         INTERNSHIP APPLICATION PROGRAM                                                                        |");
@@ -194,7 +194,7 @@ public class MatchingUI {
             }
             System.out.printf("%-157s |\n", barBuilder.toString());
         }
-        
+        System.out.println("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
         System.out.printf("| Highest discrepancies: %d (Set %d)%-142s|\n", maxValue, maxSet, "");
         System.out.println("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
     }

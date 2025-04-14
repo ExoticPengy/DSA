@@ -24,8 +24,8 @@ public class JobPostingUI {
     public int displayJobsMenu() {
         while (true) {
             System.out.println("+----------------------------+");
-            System.out.println("|      Job Posting Menu      |\n");
-            System.out.println("+----------------------------+\n");
+            System.out.println("|      Job Posting Menu      |");
+            System.out.println("+----------------------------+");
             System.out.println("| 1. Create Job Posting      |");
             System.out.println("| 2. Update Job Posting      |");
             System.out.println("| 3. Remove Job Posting      |");
@@ -38,7 +38,7 @@ public class JobPostingUI {
             try {
                 int choice = scanner.nextInt();
                 scanner.nextLine();
-                if (choice < 1 || choice > 6) {
+                if (choice > 0 || choice <= 6) {
                     return choice;
                 } else {
                     System.out.println("Invalid option, please try again.");
@@ -52,9 +52,9 @@ public class JobPostingUI {
     
     public int adminJobPosting(){
         while (true) {
+            System.out.println("\n+----------------------------+");
+            System.out.println("|   Admin Job Posting Menu   |");
             System.out.println("+----------------------------+");
-            System.out.println("|      Job Posting Menu      |\n");
-            System.out.println("+----------------------------+\n");
             System.out.println("| 1. Update Job Posting      |");
             System.out.println("| 2. Remove Job Posting      |");
             System.out.println("| 3. Search Job Posting      |");
@@ -65,7 +65,7 @@ public class JobPostingUI {
             try {
                 int choice = scanner.nextInt();
                 scanner.nextLine();
-                if (choice < 1 || choice > 4) {
+                if (choice > 0 || choice <= 4) {
                     return choice;
                 } else {
                     System.out.println("Invalid option, please try again.");
@@ -419,12 +419,15 @@ public class JobPostingUI {
         DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEEE");
         String currentDateTime = java.time.LocalDateTime.now().format(dateFormatter);
         String currentDay = java.time.LocalDateTime.now().format(dayFormatter);
+        String dateTime = currentDay + " " + currentDateTime;
 
-        System.out.println("\n+==================================================================+");
+        System.out.println("\n+==================================================================+");;
+        System.out.println("|    TUNKU ABDUL RAHMAN UNIVERSITY OF MANAGEMENT AND TECHNOLOGY    |");
+        System.out.println("|                 INTERNSHIP APPLICATION PROGRAM                   |");
         System.out.println("|                                                                  |");
-        System.out.println("|                     JOB POSTING SUMMARY REPORT                   |");
+        System.out.println("|                   JOB POSTING SUMMARY REPORT                     |");
         System.out.println("|                                                                  |");
-        System.out.printf("|  Generated on: %-9s %39s |\n", currentDay, currentDateTime);
+        System.out.printf("|  Generated on: %-49s |\n", dateTime);
         System.out.println("+==================================================================+");
     }
     
