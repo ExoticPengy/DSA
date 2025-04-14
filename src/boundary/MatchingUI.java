@@ -8,6 +8,7 @@ import entity.JobPosting;
 import entity.JobSeeker;
 import entity.Match;
 import entity.MatchScore;
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -103,17 +104,19 @@ public class MatchingUI {
                 "Applicant", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
     }
     
-    private String getCurrentTimestamp() {
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(new java.util.Date());
-    }
-    
     public void printReportHeader() {
-        String timestamp = getCurrentTimestamp();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEEE");
+        String currentDateTime = java.time.LocalDateTime.now().format(dateFormatter);
+        String currentDay = java.time.LocalDateTime.now().format(dayFormatter);
+        String timestamp = currentDay + currentDateTime;
         System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                             TUNKU ABDUL RAHMAN UNIVERSITY OF MANAGEMENT AND TECHNOLOGY                                                        |");
+        System.out.println("|                                                                         INTERNSHIP APPLICATION PROGRAM                                                                        |");
+        System.out.println("|                                                                                                                                                                               |");
         System.out.println("|                                                                         MATCH SCORE DISCREPANCY REPORT                                                                        |");
         System.out.println("|                                                                                                                                                                               |");
-        System.out.printf("| Generated on: %-20s                                                                                                                                            |\n", timestamp);
+        System.out.printf("| Generated on: %-30s                                                                                                                                  |\n", timestamp);
         System.out.println("+----------------+----------------+--------------------------------+----------------------+--------------------------------+---------------------------+-----+--------+---------+");
         System.out.printf("| %-14s | %-14s | %-30s | %-20s | %-30s | %-25s | %-3s | %-6s | %-7s |\n", 
                 "Applicant", "Company", "Job Posting", "Location", "Qualification", "Skills", "Set","Score", "Changes");
