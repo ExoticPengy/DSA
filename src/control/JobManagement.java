@@ -66,6 +66,25 @@ public class JobManagement {
         }
     }
     
+    public void adminJobManagement() {
+        viewAllJobs();
+        switch (jobPostingUI.adminJobPosting()) {
+           case 1:
+               updateAllJobPosting();
+               break;
+           case 2:
+               removeAllJobPosting();
+               break;
+           case 3:
+               searchJobPosting();
+               break;
+           case 4:
+               return; 
+           default:
+               System.out.println("Invalid choice. Please try again.");
+       }
+    }
+    
     public void createJobPosting(Employer employer) {
        
         boolean keepCreating = true;
@@ -155,6 +174,7 @@ public class JobManagement {
         }
     }
     
+    //update SPECIFIC EMPLOYER job posting
     public void updateJobPosting(Employer currentEmployer) {
         if (jobPostings.isEmpty()) {
             jobPostingUI.noJobPosting();
@@ -243,7 +263,96 @@ public class JobManagement {
           
         }
     }
+    //update all the job posting
+    public void updateJobPosting(Employer currentEmployer) {
+        if (jobPostings.isEmpty()) {
+            jobPostingUI.noJobPosting();
+            return;
+        }
 
+        boolean keepUpdating = true;
+        while (keepUpdating) {
+            // Display a list of job titles
+            jobPostingUI.displayListJobsHead();
+            int jobNumber = 0;
+            for (int i = 1; i <= jobPostings.getCount(); i++) {
+                JobPosting job = jobPostings.getPosition(i);
+                if (job.getEmployer().equals(currentEmployer)) {
+                    jobNumber++;
+                    jobPostingUI.displayJobsNumber(jobNumber, job);
+                }
+            }
+            int choice =jobPostingUI.updateChoice(jobNumber, "\nEnter the job posting number you want to update: ");
+
+            int count = 0;
+            int jobIndex = 0;
+            // Get the job posting index to remove
+            for(int i = 1; i <= jobPostings.getCount(); i++) {
+                JobPosting job = jobPostings.getPosition(i);
+                if (job.getEmployer().equals(currentEmployer)) {
+                    count++;
+                    if (count == choice) {
+                        jobIndex = i;
+                    }
+                }
+            }
+           
+            JobPosting jobToUpdate = jobPostings.getPosition(jobIndex);
+
+            // Display the selected job posting
+            jobPostingUI.displaySelectedJobsHead();
+            jobPostingUI.viewJobPosting(jobToUpdate, 0);
+            jobPostingUI.displayViewJobPostingFoot();
+
+            int updateChoice = jobPostingUI.selectToUpdate();
+
+            switch (updateChoice) {
+                case 1:
+                    String newTitle = jobPostingUI.addTitle();
+                    jobToUpdate.setTitle(newTitle);
+                    break;
+                case 2:
+                    String newDescription = jobPostingUI.addDescription();
+                    jobToUpdate.setDescription(newDescription);
+                    break;
+                case 3:
+                    String newSalaryRange = jobPostingUI.addSalaryRange();
+                    jobToUpdate.setSalaryRange(newSalaryRange);
+                    break;
+                case 4:
+                    String newQualification = jobPostingUI.addQualification();
+                    jobToUpdate.setQualification(newQualification);
+                    break;
+                case 5:
+                    int selectSkill = jobPostingUI.selectSkillToUpdate(jobToUpdate);
+                    Skill selectedSkill = jobToUpdate.getSkills().getPosition(selectSkill);
+
+                    int newProficiency = jobPostingUI.proficiencyUpdate();
+                    selectedSkill.setProficiency(newProficiency);  
+                    break;
+
+                default:
+                    jobPostingUI.invalidChoice();
+                    return;
+            }
+
+            // Replace the old job posting with the updated one
+            jobPostings.replacePosition(jobToUpdate, jobIndex);
+            
+            // Display all job postings after updating
+            jobPostingUI.newUpdateJobTitle();
+            viewEmployerJobPosting(currentEmployer);
+            jobPostingUI.successUpdate();
+            jobPostingUI.continueKey();
+
+            // Ask repeat
+            if (jobPostingUI.askChoice("\nDo you want to update another job posting?") == 2) {
+                keepUpdating = false;
+            }
+          
+        }
+    }
+    
     public void removeJobPosting(Employer currentEmployer) {
         if (jobPostings.isEmpty()) {
             jobPostingUI.noJobPosting();

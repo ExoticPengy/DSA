@@ -50,6 +50,33 @@ public class JobPostingUI {
         }
     }    
     
+    public int adminJobPosting(){
+        while (true) {
+            System.out.println("+----------------------------+");
+            System.out.println("|      Job Posting Menu      |\n");
+            System.out.println("+----------------------------+\n");
+            System.out.println("| 1. Update Job Posting      |");
+            System.out.println("| 2. Remove Job Posting      |");
+            System.out.println("| 3. Search Job Posting      |");
+            System.out.println("| 4. Back to menu            |");
+            System.out.println("+----------------------------+");
+            System.out.print("Choose an option: "); 
+
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+                if (choice < 1 || choice > 4) {
+                    return choice;
+                } else {
+                    System.out.println("Invalid option, please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Not a number. Please try again.");
+                scanner.nextLine(); 
+            }
+        }
+    }
+    
     public void noJobPosting(){
         System.out.println("No job postings found.");
     }
