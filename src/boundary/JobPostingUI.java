@@ -580,7 +580,7 @@ public class JobPostingUI {
         System.out.println("-> Employers");
 
         // Print employer names
-        System.out.print("     ");
+        System.out.print("    ");
         for (int i = 1; i <= employers.getCount(); i++) {
             Employer employer = employers.getPosition(i);
             int count = 0;
@@ -669,7 +669,7 @@ public class JobPostingUI {
         System.out.println("-> Employers");
 
         // Print employer names
-        System.out.print("     ");
+        System.out.print("    ");
         for (int i = 1; i <= employers.getCount(); i++) {
             Employer employer = employers.getPosition(i);
             int count = 0;
