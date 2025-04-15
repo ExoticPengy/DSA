@@ -20,24 +20,6 @@ public class JobSeeker {
     private String qualification;
     private DoublyLinkedListInterface<Skill> skills;
 
-    //filter
-//    public boolean inLocation(String targetLocation) {
-//        return location.equalsIgnoreCase(targetLocation);
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "Applicant {"
-//                + "ID:'" + jobSeekerID + '\''
-//                + ", Name:'" + name + '\''
-//                + ", Age:" + age
-//                + ", Gender:'" + gender + '\''
-//                + ", Email:'" + email + '\''
-//                + ", Location:'" + location + '\''
-//                + ", QualificationID:'" + qualificationID + '\''
-//                + '}';
-//    }
-
     public JobSeeker(String name, int age, String gender, String email, String location, String qualification, DoublyLinkedListInterface<Skill> skills) {
         this.name = name;
         this.age = age;
