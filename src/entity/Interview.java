@@ -8,7 +8,7 @@ import adt.DoublyLinkedListInterface;
 
 /**
  *
- * @author mings
+ * @author Chea Ming Shen
  */
 public class Interview {
     private DoublyLinkedListInterface<JobPosting> jobPostingList;

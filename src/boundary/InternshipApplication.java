@@ -17,7 +17,7 @@ import entity.JobSeeker;
 
 /**
  *
- * @author Chea Ming Shen
+ * @author All Members
  */
 public class InternshipApplication {
 
@@ -100,17 +100,17 @@ public class InternshipApplication {
         do {
             if (isNum) {
                 int i;
-                System.out.println("\n+------------------------+");
-                System.out.println("|  Student               |");
-                System.out.println("+------------------------+");
-                System.out.println("|  What is your name?    |");
+                System.out.println("\n+----------------------------+");
+                System.out.println("|  Student                   |");
+                System.out.println("+----------------------------+");
+                System.out.println("|  What is your name?        |");
                 for (i = 1; i <= jobSeekerList.getCount(); i++) {
-                    System.out.printf("|  %d. %-15s    |\n", i, jobSeekerList.getPosition(i).getName());
+                    System.out.printf("|  %02d. %-20s  |\n", i, jobSeekerList.getPosition(i).getName());
                 }
-                System.out.println("|                        |");
-                System.out.println("|  " + i++ + ". Register           |");
-                System.out.println("|  " + i++ + ". Back to Main Menu  |");
-                System.out.println("+------------------------+\n");
+                System.out.println("|                            |");
+                System.out.println("|  " + i++ + ". Register              |");
+                System.out.println("|  " + i++ + ". Back to Main Menu     |");
+                System.out.println("+----------------------------+\n");
             }
             System.out.print("Enter a choice: ");
 
@@ -241,7 +241,7 @@ public class InternshipApplication {
         do {
             if (isNum) {
                 System.out.println("\n+--------------------------+");
-                System.out.printf("|  %-10s              |\n", employer.getName());
+                System.out.printf("|  %-13s           |\n", employer.getName());
                 System.out.println("+--------------------------+\n"
                         + "|  What do you want?       |\n"
                         + "|  1. Job Posting          |\n"

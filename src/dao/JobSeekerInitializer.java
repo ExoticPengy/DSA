@@ -11,7 +11,7 @@ import entity.Skill;
 
 /**
  *
- * @author cx
+ * @author chienxing
  */
 public class JobSeekerInitializer {
 

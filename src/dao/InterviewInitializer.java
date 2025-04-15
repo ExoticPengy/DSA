@@ -7,7 +7,6 @@ package dao;
 import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
 import entity.Interview;
-import entity.JobApplication;
 import entity.JobPosting;
 import entity.JobSeeker;
 import entity.Status;
@@ -15,7 +14,7 @@ import entity.Time;
 
 /**
  *
- * @author mings
+ * @author Chea Ming Shen
  */
 public class InterviewInitializer {
     
@@ -52,13 +51,13 @@ public class InterviewInitializer {
         timeList.insertBack(time);
         interviewTimeList.insertFront(timeList);
         
-        status.setStatus("Hired");
+        status.setStatus("Scheduled");
         status.setScore(0);
         statusList.insertFront(status);
         
         status = new Status();
-        status.setStatus("Hired");
-        status.setScore(80);
+        status.setStatus("Scheduled");
+        status.setScore(0);
         statusList.insertBack(status);
         interviewStatusList.insertFront(statusList);
         
@@ -87,18 +86,18 @@ public class InterviewInitializer {
         timeList.insertFront(time);
         
         time = new Time();
-        time.setDate("27-04-2025");
+        time.setDate("16-04-2025");
         time.setStartTime(1000);
         time.setEndTime(1100);
         timeList.insertBack(time);
         interviewTimeList.insertFront(timeList);
         
-        status.setStatus("Hired");
-        status.setScore(90);
+        status.setStatus("Scheduled");
+        status.setScore(0);
         statusList.insertFront(status);
         
         status = new Status();
-        status.setStatus("Hired");
+        status.setStatus("Scheduled");
         status.setScore(0);
         statusList.insertBack(status);
         interviewStatusList.insertFront(statusList);

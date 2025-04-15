@@ -11,7 +11,7 @@ import entity.Match;
 
 /**
  *
- * @author USER
+ * @author MingLi
  */
 public class JobApplicationInitializer {
     

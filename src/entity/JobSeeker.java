@@ -9,7 +9,7 @@ import adt.DoublyLinkedListInterface;
 
 /**
  *
- * @author mings
+ * @author chienxing
  */
 public class JobSeeker {
     private String name;

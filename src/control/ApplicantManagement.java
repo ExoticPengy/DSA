@@ -12,7 +12,7 @@ import entity.JobSeeker;
 
 /**
  *
- * @author mings
+ * @author chienxing
  */
 public class ApplicantManagement {
     private JobSeekerInitializer jobSeekerInitializer;

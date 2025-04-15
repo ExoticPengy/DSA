@@ -19,7 +19,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author USER
+ * @author MingLi
  */
 public class MatchingUI {
     

@@ -4,9 +4,7 @@
  */
 package boundary;
 
-import adt.DoublyLinkedList;
 import adt.DoublyLinkedListInterface;
-import entity.Employer;
 import entity.Interview;
 import entity.JobPosting;
 import entity.JobSeeker;
@@ -23,7 +21,7 @@ import utility.MessageUI;
 
 /**
  *
- * @author Taruc
+ * @author Chea Ming Shen
  */
 public class InterviewArrangementUI {
 
@@ -33,10 +31,10 @@ public class InterviewArrangementUI {
     public String RED = "\u001B[31m";
     public String GREEN = "\u001B[32m";
 
-    public void initializeUI(DoublyLinkedListInterface<Interview> interviewList) {
+    public void initializeUI(DoublyLinkedListInterface<Interview> interviewList, String title) {
         int m = 1;
         System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("|                                                                                 Initialized Interview                                                                                   |");
+        System.out.printf("|                                                                         %-29s                                                                                   |\n", title);
         System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
         System.out.println("| No | Date       | Time      | Job Title                                | Company       | Applicant       | Qualification                       | Skills           | Status      | Score |");
         System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");

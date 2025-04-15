@@ -6,7 +6,7 @@ package entity;
 
 /**
  *
- * @author USER
+ * @author MingLi
  */
 public class MatchScore {
     private JobPosting jobPosting;

@@ -10,7 +10,7 @@ import entity.Employer;
 
 /**
  *
- * @author mings
+ * @author Chea Ming Shen
  */
 public class EmployerInitializer {
 

@@ -6,7 +6,7 @@ package entity;
 
 /**
  *
- * @author mings
+ * @author Chea Ming Shen
  */
 public class Status {
     private String status;

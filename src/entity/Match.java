@@ -10,7 +10,7 @@ import adt.DoublyLinkedListInterface;
 
 /**
  *
- * @author USER
+ * @author MingLi
  */
 public class Match {
     private DoublyLinkedListInterface<JobSeeker> jobSeekerList;
