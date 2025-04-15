@@ -30,28 +30,28 @@ public class MatchingUI {
     }
     
     public void displayMatchHead() {
-        System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("|                                                                                   Matched Job Postings                                                                                        |");
-        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
-        System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s | %-6s |\n",
-                "No", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
+        System.out.println("\n+---------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                              Matched Job Postings                                                           |");
+        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+---------------------------+--------+");
+        System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-25s | %-6s |\n",
+                "No", "Company", "Location", "Title", "Qualification", "Skills", "Score");
     }
     
     public void displayInitializeMatchHead() {
-        System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("|                                                                                     Initialized Match List                                                                                    |");
+        System.out.println("\n+---------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                           Initialized Match List                                                            |");
     }
     
     public void displayInitializeApplicationHead() {
-        System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("|                                                                                    Initialized Application List                                                                                           |");
-        System.out.println("+----------------+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
-        System.out.printf("| %-14s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s | %-6s |\n",
-                "Applicant", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
+        System.out.println("\n+---------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                  Initialized Application List                                                           |");
+        System.out.println("+----------------+----------------+----------------+--------------------------------+--------------------------------+---------------------------+--------+");
+        System.out.printf("| %-14s | %-14s | %-14s | %-30s | %-30s | %-25s | %-6s |\n",
+                "Applicant", "Company", "Location", "Title", "Qualification", "Skills", "Score");
     }
     
     public void displayJobSeekerHead(JobSeeker jobSeeker, int index) {
-        System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("+---------------------------------------------------------------------------------------------------------------------------------------------+");
         System.out.printf("| %-2s | %-14s | %-14s | %-40s | %-25s |\n", "No", "Applicant", "Location", "Qualification", "Skills");
         System.out.println("+-------------------------------------------------------------------------------------------------------------+");
         System.out.printf("| %-2d ", index);
@@ -69,17 +69,17 @@ public class MatchingUI {
                 }
             }
         }
-        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
-        System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s | %-6s |\n",
-                "No", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
+        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+---------------------------+--------+");
+        System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-25s | %-6s |\n",
+                "No", "Company", "Location", "Title", "Qualification", "Skills", "Score");
     }
     
     public void displayMatchFoot() {
-        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
+        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+---------------------------+--------+");
     }
     
     public void displayApplicationFoot() {
-        System.out.println("+----------------+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
+        System.out.println("+----------------+----------------+----------------+--------------------------------+--------------------------------+---------------------------+--------+");
     }
     
     public void displayApplicationHead() {
@@ -97,11 +97,11 @@ public class MatchingUI {
     }
     
     public void displayApplyListHead() {
-        System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("|                                                                                           Your Applications                                                                                               |");
-        System.out.println("+----------------+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
-        System.out.printf("| %-14s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s | %-25s | %-6s |\n",
-                "Applicant", "Company", "Location", "Title", "Description", "Salary Range", "Qualification", "Skills", "Score");
+        System.out.println("\n+---------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                    Your Applications                                                                    |");
+        System.out.println("+----------------+----------------+----------------+--------------------------------+--------------------------------+---------------------------+--------+");
+        System.out.printf("| %-14s | %-14s | %-14s | %-30s | %-30s | %-25s | %-6s |\n",
+                "Applicant", "Company", "Location", "Title", "Qualification", "Skills", "Score");
     }
     
     public void printReportHeader() {
@@ -228,17 +228,11 @@ public class MatchingUI {
                            job.getTitle().substring(0, 25) + "..." :
                            job.getTitle();
         
-        String shortDesc = job.getDescription().length() > 29 ? 
-                       job.getDescription().substring(0, 25) + "..." : 
-                       job.getDescription();
-        
-        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
+        System.out.println("+----+----------------+----------------+--------------------------------+--------------------------------+---------------------------+--------+");
         System.out.printf("| %-2d ", index);
         System.out.printf("| %-14s ", job.getEmployer().getName());
         System.out.printf("| %-14s ", job.getEmployer().getLocation());
         System.out.printf("| %-30s ", shortTitle);
-        System.out.printf("| %-30s ", shortDesc);
-        System.out.printf("| %-14s ", job.getSalaryRange());
         System.out.printf("| %-30s ", job.getQualification());
             
         for (int i = 1; i <= job.getSkills().getCount(); i++) {
@@ -253,8 +247,8 @@ public class MatchingUI {
                     System.out.printf("| %-6s |\n", "");
                 }
                 if (i < job.getSkills().getCount()) {
-                    System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s ",
-                            "", "", "", "", "", "", "");
+                    System.out.printf("| %-2s | %-14s | %-14s | %-30s | %-30s ",
+                            "", "", "", "", "");
                 }
             }
         }
@@ -351,17 +345,11 @@ public class MatchingUI {
                            job.getTitle().substring(0, 25) + "..." :
                            job.getTitle();
         
-        String shortDesc = job.getDescription().length() > 29 ? 
-                       job.getDescription().substring(0, 25) + "..." : 
-                       job.getDescription();
-        
-        System.out.println("+----------------+----------------+----------------+--------------------------------+--------------------------------+----------------+--------------------------------+---------------------------+--------+");
+        System.out.println("+----------------+----------------+----------------+--------------------------------+--------------------------------+---------------------------+--------+");
         System.out.printf("| %-14s ", jobApplication.getJobSeeker().getName());
         System.out.printf("| %-14s ", job.getEmployer().getName());
         System.out.printf("| %-14s ", job.getEmployer().getLocation());
         System.out.printf("| %-30s ", shortTitle);
-        System.out.printf("| %-30s ", shortDesc);
-        System.out.printf("| %-14s ", job.getSalaryRange());
         System.out.printf("| %-30s ", job.getQualification());
             
         for (int i = 1; i <= job.getSkills().getCount(); i++) {
@@ -376,7 +364,7 @@ public class MatchingUI {
                     System.out.printf("| %-6s |\n", "");
                 }
                 if (i < job.getSkills().getCount()) {
-                    System.out.printf("| %-14s | %-14s | %-14s | %-30s | %-30s | %-14s | %-30s ",
+                    System.out.printf("| %-14s | %-14s | %-14s | %-30s | %-30s ",
                             "", "", "", "", "", "", "");
                 }
             }
