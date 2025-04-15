@@ -43,26 +43,28 @@ public class JobManagement {
     }
     
     public void startJobManagement(Employer employer) {
-         switch (jobPostingUI.displayJobsMenu()) {
-            case 1:
-                createJobPosting(employer); 
-                break;
-            case 2:
-                updateJobPosting(employer);
-                break;
-            case 3:
-                removeJobPosting(employer);
-                break;
-            case 4:
-                viewEmployerJobPosting(employer);
-                break;
-            case 5:
-                sortedJobPosting(employer); 
-                break;
-            case 6:
-                return; 
-            default:
-                System.out.println("Invalid choice. Please try again.");
+        while(true) {
+            switch (jobPostingUI.displayJobsMenu()) {
+               case 1:
+                   createJobPosting(employer); 
+                   break;
+               case 2:
+                   updateJobPosting(employer);
+                   break;
+               case 3:
+                   removeJobPosting(employer);
+                   break;
+               case 4:
+                   viewEmployerJobPosting(employer);
+                   break;
+               case 5:
+                   sortedJobPosting(employer); 
+                   break;
+               case 6:
+                   return; 
+               default:
+                   System.out.println("Invalid choice. Please try again.");
+           }
         }
     }
     

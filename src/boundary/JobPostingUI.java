@@ -58,7 +58,7 @@ public class JobPostingUI {
             System.out.println("| 1. Update Job Posting      |");
             System.out.println("| 2. Remove Job Posting      |");
             System.out.println("| 3. Search Job Posting      |");
-            System.out.println("| 4. Back to menu            |");
+            System.out.println("| 4. Back to Menu            |");
             System.out.println("+----------------------------+");
             System.out.print("Choose an option: "); 
 
@@ -311,13 +311,18 @@ public class JobPostingUI {
             System.out.println("4. Qualification");
             System.out.println("5. Skills");
             System.out.print("\nEnter your choice: ");
-            updateChoice = scanner.nextInt();
-            scanner.nextLine(); 
-
-            if(updateChoice >= 1&& updateChoice <= 5) {
-                return updateChoice;
-            } else {
-                System.out.print("Invalid input! Please enter number 1-5.\n");
+            
+            try {
+                updateChoice = scanner.nextInt();
+                scanner.nextLine(); 
+                if(updateChoice >= 1&& updateChoice <= 5) {
+                    return updateChoice;
+                } else {
+                    System.out.print("Invalid input! Please enter number 1-5.\n");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a valid number.");
+                scanner.nextLine(); 
             }
         }
     }
@@ -491,7 +496,7 @@ public class JobPostingUI {
     }
     
     public void reportGraph(int totalAdded, int totalRemoved, int netChange) {
-        System.out.println("\n> Graph all Job Postings Changes:\n");
+        System.out.println("\n1. Graph all Job Postings Changes:\n");
 
         int maxHeight = Math.max(totalAdded, totalRemoved);
         maxHeight = Math.max(maxHeight, 1); // Minimum height
@@ -505,13 +510,14 @@ public class JobPostingUI {
         }
 
         // Print x-axis
-        System.out.println(" --+--------+--------|--> Changes");
+        System.out.println(" --+--------+---------|--> Changes");
         System.out.println("     Added    Removed");
     }
     
     public void displayEmployerAddedGraph(DoublyLinkedListInterface<Employer> employers, 
                                     DoublyLinkedListInterface<JobPosting> newAddedJobs) {
-        System.out.println("\n\n> Each Employers Added Job Postings Visualization:\n");
+        System.out.println("\n--------------------------------------------------------------------\n");
+        System.out.println("2. Graph of job postings ADDED by each employers: \n");
         
         String topEmployer = "";
         int maxAdded = 0;
@@ -549,7 +555,7 @@ public class JobPostingUI {
                 }
 
                 if (count > 0) {
-                    System.out.print(count >= i ? "   *   |" : "        |");
+                    System.out.print(count >= i ? "    *    |" : "         |");
                 }
             }
             System.out.println();
@@ -568,10 +574,10 @@ public class JobPostingUI {
             }
 
             if (count > 0) {
-                System.out.print("----------+");
+                System.out.print("---------+");
             }
         }
-        System.out.println("> Added Job Count");
+        System.out.println("-> Employers");
 
         // Print employer names
         System.out.print("     ");
@@ -593,13 +599,14 @@ public class JobPostingUI {
             }
         }
 
-        System.out.println("\n Highest total job added is: " + topEmployer);
+        System.out.println("\n\n Highest total job added is: " + topEmployer);
     }
 
 
     public void displayEmployerRemovedGraph(DoublyLinkedListInterface<Employer> employers, 
                                       DoublyLinkedListInterface<JobPosting> removedJobs) {
-        System.out.println("\n\n> Graph Each Employers Removed Job Postings:\n");
+        System.out.println("\n--------------------------------------------------------------------\n");
+        System.out.println("3. Graph of job postings REMOVED by each employers: \n");
        
 
         String topEmployer = "";
@@ -637,7 +644,7 @@ public class JobPostingUI {
                 }
 
                 if (count > 0) {
-                    System.out.print(count >= i ? "   *   |" : "        |");
+                    System.out.print(count >= i ? "    *    |" : "         |");
                 }
             }
             System.out.println();
@@ -656,10 +663,10 @@ public class JobPostingUI {
             }
 
             if (count > 0) {
-                System.out.print("----------+");
+                System.out.print("---------+");
             }
         }
-        System.out.println("> Removed Jobs Count");
+        System.out.println("-> Employers");
 
         // Print employer names
         System.out.print("     ");
@@ -680,12 +687,12 @@ public class JobPostingUI {
                 System.out.print(" " + formattedName + " |");
             }
         }
-        System.out.println("\nHighest total job removed is: " + topEmployer);
+        System.out.println("\n\n Highest total job removed is: " + topEmployer);
     }
     
     public void displaySummaryReportFooter() {
-        System.out.println("\n+------------------------------------------------------------------+");
-        System.out.println("|                          End of the report                       |");
+        System.out.println("\n+==================================================================+");
+        System.out.println("|                         End of the report                        |");
         System.out.println("+==================================================================+\n");
     }
     
