@@ -82,7 +82,7 @@ public class JobPostingUI {
     }
     
     public void invalidChoice(){
-        System.out.println("Invalid input! Please enter a valid number.");
+        System.out.println("Invalid input! Please enter a valid number.\n");
     }
     
     public void displayCreateJobsHead() {

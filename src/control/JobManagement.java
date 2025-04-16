@@ -63,7 +63,7 @@ public class JobManagement {
                case 6:
                    return; 
                default:
-                   System.out.println("Invalid choice. Please try again.");
+                   jobPostingUI.invalidChoice();
            }
         }
     }
@@ -88,7 +88,7 @@ public class JobManagement {
                case 4:
                    return; 
                default:
-                   System.out.println("Invalid choice. Please try again.");
+                   jobPostingUI.invalidChoice();
             }
         }
     }
