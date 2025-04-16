@@ -264,11 +264,9 @@ public class JobManagement {
             jobPostingUI.successUpdate();
             jobPostingUI.continueKey();
 
-            // Ask repeat
             if (jobPostingUI.askChoice("\nDo you want to update another job posting?") == 2) {
                 keepUpdating = false;
             }
-          
         }
     }
     
@@ -343,7 +341,6 @@ public class JobManagement {
             if (jobPostingUI.askChoice("\nDo you want to update another job posting?") == 2) {
                 keepUpdating = false;
             }
-          
         }
     }
     
@@ -405,7 +402,6 @@ public class JobManagement {
                 break;
         }
     
-        // Ask repeat
         if (jobPostingUI.askChoice("\nDo you want to remove another job posting?") == 2) {
             keepRemoving = false;
         }
@@ -428,7 +424,6 @@ public class JobManagement {
         for (int i = 1; i <= jobPostings.getCount(); i++) {
             JobPosting job = jobPostings.getPosition(i);
             jobPostingUI.displayJobsNumber(i,job);
-            
         }
 
         int choice = jobPostingUI.updateChoice(jobPostings.getCount(), "\nEnter the job posting number you want to remove: ");
@@ -456,11 +451,9 @@ public class JobManagement {
                 break;
         }
     
-        // Ask repeat
         if (jobPostingUI.askChoice("\nDo you want to remove another job posting?") == 2) {
             keepRemoving = false;
         }
-     
       }
     }
         
@@ -655,7 +648,6 @@ public class JobManagement {
             jobPostingUI.reportGraph(totalAdded, totalRemoved, netChange);
             jobPostingUI.displayEmployerAddedGraph(employers, newAddedJobPostings);
             jobPostingUI.displayEmployerRemovedGraph(employers, deletedJobPostings);
-
             jobPostingUI.displaySummaryReportFooter();
         } else {
             jobPostingUI.displayNoChangesSummary();
@@ -664,5 +656,4 @@ public class JobManagement {
         }
         jobPostingUI.continueKey();
     }
-
 }
