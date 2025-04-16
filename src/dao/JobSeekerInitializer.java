@@ -50,7 +50,7 @@ public class JobSeekerInitializer {
 
         //JobSeeker 6
         skills = new DoublyLinkedList<>();
-        skills.insertFront(new Skill("`Communication`",8));
+        skills.insertFront(new Skill("Communication",8));
         skills.insertBack(new Skill("Programming",6));
         applicants.insertBack(new JobSeeker("Lily Williams", 26, "Female", "lily@example.com", "Petaling Jaya", "Bachelor in Information System", skills));
 
