@@ -5,7 +5,6 @@
 package boundary;
 
 import adt.DoublyLinkedListInterface;
-import control.JobManagement;
 import entity.Employer;
 import entity.JobPosting;
 import java.util.InputMismatchException;

@@ -9,7 +9,7 @@ import adt.DoublyLinkedListInterface;
 
 /**
  *
- * 
+ * @author Elaine
  */
 public class JobPosting {
     private Employer employer;
