@@ -333,7 +333,7 @@ public class InternshipApplication {
                         //job management module
                         break;
                     case 2:
-                        //applicant management module
+                        applicantManagement.updateJobSeeker(currentApplicant);
                         break;
                     case 3:
                         //job management module
