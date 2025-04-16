@@ -33,15 +33,15 @@ public class InterviewArrangementUI {
 
     public void initializeUI(DoublyLinkedListInterface<Interview> interviewList, String title) {
         int m = 1;
-        System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.printf("|                                                                         %-29s                                                                                   |\n", title);
-        System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("| No | Date       | Time      | Job Title                                | Company       | Applicant       | Qualification                       | Skills           | Status      | Score |");
-        System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.printf("|                                                                            %-29s                                                                                      |\n", title);
+        System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("| No  | Date       | Time      | Job Title                                | Company       | Applicant            | Qualification                       | Skills           | Status      | Score |");
+        System.out.println("+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
         for (int i = 1; i <= interviewList.getCount(); i++) {
             for (int j = 1; j <= interviewList.getPosition(i).getTimeList().getCount(); j++) {
                 for (int k = 1; k <= interviewList.getPosition(i).getTimeList().getPosition(j).getCount(); k++) {
-                    System.out.printf("| %02d | %-10s | %04d-%4d | %-40s | %-13s | %-15s | %-35s | %-13s %2d | %-11s | %5d |\n",
+                    System.out.printf("| %03d | %-10s | %04d-%4d | %-40s | %-13s | %-20s | %-35s | %-13s %2d | %-11s | %5d |\n",
                             m,
                             interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k).getDate(),
                             interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k).getStartTime(),
@@ -57,10 +57,10 @@ public class InterviewArrangementUI {
 
                     if (interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills().getCount() > 1) {
                         for (int l = 2; l <= interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills().getCount(); l++) {
-                            System.out.printf("|    |            |           |                                          |               |                 |                                     | %-13s %2d |             |       |\n", interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills().getPosition(l).getName(), interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills().getPosition(l).getProficiency());
+                            System.out.printf("|     |            |           |                                          |               |                      |                                     | %-13s %2d |             |       |\n", interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills().getPosition(l).getName(), interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills().getPosition(l).getProficiency());
                         }
                     }
-                    System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+                    System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
                     m++;
                 }
             }
@@ -176,11 +176,11 @@ public class InterviewArrangementUI {
             DoublyLinkedListInterface<Status> companyStatusList) {
         if (!companyTimeList.isEmpty()) {
             if (num == 1) {
-                System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-                System.out.println("| No | Date       | Time      | Job Title                                | Applicant       | Qualification                       | Skills           | Status      |");
-                System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+                System.out.println("\n+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+                System.out.println("| No | Date       | Time      | Job Title                                | Applicant            | Qualification                       | Skills           | Status      |");
+                System.out.println("+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
                 for (int i = 1; i <= companyTimeList.getCount(); i++) {
-                    System.out.printf("| %02d | %-10s | %04d-%4s | %-40s | %-15s | %-35s | %-13s %2d | %-11s |\n",
+                    System.out.printf("| %02d | %-10s | %04d-%4s | %-40s | %-20s | %-35s | %-13s %2d | %-11s |\n",
                             i,
                             companyTimeList.getPosition(i).getDate(),
                             companyTimeList.getPosition(i).getStartTime(),
@@ -194,10 +194,10 @@ public class InterviewArrangementUI {
 
                     if (companySkillList.getPosition(i).getCount() > 1) {
                         for (int j = 2; j <= companySkillList.getPosition(i).getCount(); j++) {
-                            System.out.printf("|    |            |           |                                          |                 |                                     | %-13s %2d |             |\n", companySkillList.getPosition(i).getPosition(j).getName(), companySkillList.getPosition(i).getPosition(j).getProficiency());
+                            System.out.printf("|    |            |           |                                          |                      |                                     | %-13s %2d |             |\n", companySkillList.getPosition(i).getPosition(j).getName(), companySkillList.getPosition(i).getPosition(j).getProficiency());
                         }
                     }
-                    System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+                    System.out.println("+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
                 }
             } else {
                 scheduleUI(companyTimeList, companyJobList, companyJobSeekerList, companySkillList, companyStatusList);
@@ -272,11 +272,11 @@ public class InterviewArrangementUI {
             DoublyLinkedListInterface<JobSeeker> companyJobSeekerList,
             DoublyLinkedListInterface<DoublyLinkedListInterface<Skill>> companySkillList,
             DoublyLinkedListInterface<Status> companyStatusList) {
-        System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("| No | Date       | Time      | Job Title                                | Applicant       | Qualification                       | Skills           | Status      | Score |");
-        System.out.println("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("\n+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("| No | Date       | Time      | Job Title                                | Applicant            | Qualification                       | Skills           | Status      | Score |");
+        System.out.println("+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
         for (int i = 1; i <= companyTimeList.getCount(); i++) {
-            System.out.printf("| %02d | %-10s | %04d-%4d | %-40s | %-15s | %-35s | %-13s %2d | %-11s | %5d |\n",
+            System.out.printf("| %02d | %-10s | %04d-%4d | %-40s | %-20s | %-35s | %-13s %2d | %-11s | %5d |\n",
                     i,
                     companyTimeList.getPosition(i).getDate(),
                     companyTimeList.getPosition(i).getStartTime(),
@@ -290,10 +290,10 @@ public class InterviewArrangementUI {
                     companyStatusList.getPosition(i).getScore());
             if (companySkillList.getPosition(i).getCount() > 1) {
                 for (int j = 2; j <= companySkillList.getPosition(i).getCount(); j++) {
-                    System.out.printf("|    |            |           |                                          |                 |                                     | %-13s %2d |             |       |\n", companySkillList.getPosition(i).getPosition(j).getName(), companySkillList.getPosition(i).getPosition(j).getProficiency());
+                    System.out.printf("|    |            |           |                                          |                      |                                     | %-13s %2d |             |       |\n", companySkillList.getPosition(i).getPosition(j).getName(), companySkillList.getPosition(i).getPosition(j).getProficiency());
                 }
             }
-            System.out.println("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+            System.out.println("+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
         }
     }
 
@@ -303,11 +303,11 @@ public class InterviewArrangementUI {
             DoublyLinkedListInterface<DoublyLinkedListInterface<Skill>> companySkillList,
             DoublyLinkedListInterface<MatchScore> matchList) {
         if (!companyJobList.isEmpty()) {
-            System.out.println("\n+----------------------------------------------------------------------------------------------------------------------------------------+");
-            System.out.println("| No | Job Title                                | Applicant       | Qualification                       | Skills           | Match Score |");
-            System.out.println("+----------------------------------------------------------------------------------------------------------------------------------------+");
+            System.out.println("\n+---------------------------------------------------------------------------------------------------------------------------------------------+");
+            System.out.println("| No | Job Title                                | Applicant            | Qualification                       | Skills           | Match Score |");
+            System.out.println("+---------------------------------------------------------------------------------------------------------------------------------------------+");
             for (int i = 1; i <= companyJobList.getCount(); i++) {
-                System.out.printf("| %02d | %-40s | %-15s | %-35s | %-13s %2d | %-11s |\n",
+                System.out.printf("| %02d | %-40s | %-20s | %-35s | %-13s %2d | %-11s |\n",
                         i,
                         companyJobList.getPosition(i).getTitle(),
                         companyJobSeekerList.getPosition(i).getName(),
@@ -317,10 +317,10 @@ public class InterviewArrangementUI {
                         matchList.getPosition(i).getScore());
                 if (companySkillList.getPosition(i).getCount() > 1) {
                     for (int j = 2; j <= companySkillList.getPosition(i).getCount(); j++) {
-                        System.out.printf("|    |                                          |                 |                                     | %-13s %2d |             |\n", companySkillList.getPosition(i).getPosition(j).getName(), companySkillList.getPosition(i).getPosition(j).getProficiency());
+                        System.out.printf("|    |                                          |                      |                                     | %-13s %2d |             |\n", companySkillList.getPosition(i).getPosition(j).getName(), companySkillList.getPosition(i).getPosition(j).getProficiency());
                     }
                 }
-                System.out.println("+----------------------------------------------------------------------------------------------------------------------------------------+");
+                System.out.println("+---------------------------------------------------------------------------------------------------------------------------------------------+");
             }
             System.out.println("|  Shortlist Candidate?  |");
             System.out.println("+------------------------+");
@@ -486,10 +486,10 @@ public class InterviewArrangementUI {
     public void newInterviewUI(DoublyLinkedListInterface<Interview> interviewList, int i, int j) {
         int k = interviewList.getPosition(i).getTimeList().getPosition(j).getCount();
 
-        System.out.println("\n+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("| No | Date       | Time      | Job Title                                | Company       | Applicant       | Qualification                       | Skills           | Status      | Score |");
-        System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.printf("| 01 | %-10s | %04d-%4d | %-40s | %-13s | %-15s | %-35s | %-13s %2d | %-11s | %5d |\n",
+        System.out.println("\n+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("| No | Date       | Time      | Job Title                                | Company       | Applicant            | Qualification                       | Skills           | Status      | Score |");
+        System.out.println("+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.printf("| 01 | %-10s | %04d-%4d | %-40s | %-13s | %-20s | %-35s | %-13s %2d | %-11s | %5d |\n",
                 interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k).getDate(),
                 interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k).getStartTime(),
                 interviewList.getPosition(i).getTimeList().getPosition(j).getPosition(k).getEndTime(),
@@ -503,10 +503,10 @@ public class InterviewArrangementUI {
                 interviewList.getPosition(i).getStatusList().getPosition(j).getPosition(k).getScore());
         if (interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills().getCount() > 1) {
             for (int l = 2; l <= interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills().getCount(); l++) {
-                System.out.printf("|    |            |           |                                          |               |                 |                                     | %-13s %2d |             |       |\n", interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills().getPosition(l).getName(), interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills().getPosition(l).getProficiency());
+                System.out.printf("|    |            |           |                                          |               |                      |                                     | %-13s %2d |             |       |\n", interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills().getPosition(l).getName(), interviewList.getPosition(i).getJobSeekerList().getPosition(j).getPosition(k).getSkills().getPosition(l).getProficiency());
             }
         }
-        System.out.println("+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
         MessageUI.pressEnterContinue();
         sc.nextLine();
     }
@@ -594,10 +594,10 @@ public class InterviewArrangementUI {
             JobSeeker companyJobSeeker,
             DoublyLinkedListInterface<Skill> companySkill,
             Status companyStatus) {
-        System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("| No | Date       | Time      | Job Title                                | Applicant       | Qualification                       | Skills           | Status      | Score |");
-        System.out.println("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-        System.out.printf("| 01 | %-10s | %04d-%4d | %-40s | %-15s | %-35s | %-13s %2d | %-11s | %5d |\n",
+        System.out.println("\n+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("| No | Date       | Time      | Job Title                                | Applicant            | Qualification                       | Skills           | Status      | Score |");
+        System.out.println("+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.printf("| 01 | %-10s | %04d-%4d | %-40s | %-20s | %-35s | %-13s %2d | %-11s | %5d |\n",
                 companyTime.getDate(),
                 companyTime.getStartTime(),
                 companyTime.getEndTime(),
@@ -610,10 +610,10 @@ public class InterviewArrangementUI {
                 companyStatus.getScore());
         if (companySkill.getCount() > 1) {
             for (int j = 2; j <= companySkill.getCount(); j++) {
-                System.out.printf("|    |            |           |                                          |                 |                                     | %-13s %2d |             |       |\n", companySkill.getPosition(j).getName(), companySkill.getPosition(j).getProficiency());
+                System.out.printf("|    |            |           |                                          |                      |                                     | %-13s %2d |             |       |\n", companySkill.getPosition(j).getName(), companySkill.getPosition(j).getProficiency());
             }
         }
-        System.out.println("+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
         System.out.println("Score Assigned Successfully!\n");
         System.out.println("+--------------------+");
         System.out.println("|  Continue Assign?  |");
@@ -696,110 +696,109 @@ public class InterviewArrangementUI {
     }
 
     public void reportHeaderUI(String dateTime, String day) {
-        System.out.println("\n+---------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("|                             TUNKU ABDUL RAHMAN UNIVERSITY OF MANAGEMENT AND TECHNOLOGY                              |");
-        System.out.println("|                                           INTERNSHIP APPLICATION PROGRAM                                            |");
-        System.out.println("|                                                                                                                     |");
-        System.out.println("|                                         INTERVIEW ARRANGEMENT MODULE REPORT                                         |");
-        System.out.println("|                                      -----------------------------------------                                      |");
-        System.out.println("|                                                                                                                     |");
-        System.out.printf("|  Generated at: %9s, %18s                                                                        |\n", day, dateTime);
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("\n+--------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                               TUNKU ABDUL RAHMAN UNIVERSITY OF MANAGEMENT AND TECHNOLOGY                                 |");
+        System.out.println("|                                             INTERNSHIP APPLICATION PROGRAM                                               |");
+        System.out.println("|                                                                                                                          |");
+        System.out.println("|                                           INTERVIEW ARRANGEMENT MODULE REPORT                                            |");
+        System.out.println("|                                        -----------------------------------------                                         |");
+        System.out.println("|                                                                                                                          |");
+        System.out.printf("|  Generated at: %9s, %18s                                                                             |\n", day, dateTime);
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------+");
     }
 
     public void reportScheduleHeaderUI() {
-        System.out.println("|                                                                                                                     |");
-        System.out.println("|                                                 Interview Schedule                                                  |");
-        System.out.println("|                                              ------------------------                                               |");
+        System.out.println("|                                                                                                                          |");
+        System.out.println("|                                                   Interview Schedule                                                     |");
+        System.out.println("|                                                ------------------------                                                  |");
     }
 
     public void reportScheduleContentHeaderUI(String employer) {
-        System.out.println("|                                                                                                                     |");
-        System.out.printf("|                                                    %-13s                                                    |\n", employer);
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("|  Job Title                                 |  Date        |  Time       |  Applicant        |  Number of Applicant  |");
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                                                                          |");
+        System.out.printf("|                                                      %-13s                                                       |\n", employer);
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|  Job Title                                 |  Date        |  Time       |  Applicant             |  Number of Applicant  |");
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------+");
     }
 
     public void reportScheduleUI(
             DoublyLinkedListInterface<JobPosting> jobList,
             DoublyLinkedListInterface<Time> timeList,
             DoublyLinkedListInterface<JobSeeker> jobSeekerList,
-            int num,
-            int positionNum,
-            int interviewNum,
-            int uniqueNum) {
+            int num) {
         for (int i = 1; i <= jobList.getCount(); i++) {
-            System.out.printf("|  %-40s  |  %-10s  |  %04d-%4d  |  %-15s  |                  %3d  |\n", jobList.getPosition(i).getTitle(), timeList.getPosition(1).getDate(), timeList.getPosition(1).getStartTime(), timeList.getPosition(1).getEndTime(), jobSeekerList.getPosition(1).getName(), num);
+            System.out.printf("|  %-40s  |  %-10s  |  %04d-%4d  |  %-20s  |                  %3d  |\n", jobList.getPosition(i).getTitle(), timeList.getPosition(1).getDate(), timeList.getPosition(1).getStartTime(), timeList.getPosition(1).getEndTime(), jobSeekerList.getPosition(1).getName(), num);
             if (jobSeekerList.getCount() > 1) {
                 for (int j = 2; j <= jobSeekerList.getCount(); j++) {
-                    System.out.printf("|                                            |  %-10s  |  %04d-%4d  |  %-15s  |                       |\n", timeList.getPosition(j).getDate(), timeList.getPosition(j).getStartTime(), timeList.getPosition(j).getEndTime(), jobSeekerList.getPosition(j).getName());
+                    System.out.printf("|                                            |  %-10s  |  %04d-%4d  |  %-20s  |                       |\n", timeList.getPosition(j).getDate(), timeList.getPosition(j).getStartTime(), timeList.getPosition(j).getEndTime(), jobSeekerList.getPosition(j).getName());
                 }
             }
         }
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------+");
-        System.out.printf("|  Number of positions opened     : %-3d                                                                               |\n", positionNum);
-        System.out.printf("|  Number of interviews scheduled : %-3d                                                                               |\n", interviewNum);
-        System.out.printf("|  Number of unique applicants    : %-3d                                                                               |\n", uniqueNum);
-        System.out.printf("|  Number of duplicate applicants : %-3d                                                                               |\n", jobSeekerList.getCount() - uniqueNum);
+    }
+    
+    public void reportScheduleNumberUI(
+            int positionNum,
+            int interviewNum){
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------+");
+        System.out.printf("|  Number of positions opened     : %-3d                                                                                    |\n", positionNum);
+        System.out.printf("|  Number of interviews scheduled : %-3d                                                                                    |\n", interviewNum);
     }
 
-    public void reportScheduleTotalUI(int positionCount, int interviewCount, int applicantCount, int uniqueCount) {
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------+");
-        System.out.printf("|  Total number of positions opened     : %-3d                                                                         |\n", positionCount);
-        System.out.printf("|  Total number of interviews scheduled : %-3d                                                                         |\n", interviewCount);
-        System.out.printf("|  Total applicants                     : %-3d                                                                         |\n", applicantCount);
-        System.out.printf("|  Total unique applicants              : %-3d                                                                         |\n", uniqueCount);
-        System.out.printf("|  Total duplicate applicants           : %-3d                                                                         |\n", applicantCount - uniqueCount);
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------+");
+    public void reportScheduleTotalUI(int positionCount, int interviewCount, int applicantCount) {
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------+");
+        System.out.printf("|  Total number of positions opened     : %-3d                                                                              |\n", positionCount);
+        System.out.printf("|  Total number of interviews scheduled : %-3d                                                                              |\n", interviewCount);
+        System.out.printf("|  Total applicants                     : %-3d                                                                              |\n", applicantCount);
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------+");
     }
 
     public void reportHiredHeaderUI() {
-        System.out.println("|                                                                                                                     |");
-        System.out.println("|                                                Successful Applicant                                                 |");
-        System.out.println("|                                             --------------------------                                              |");
+        System.out.println("|                                                                                                                          |");
+        System.out.println("|                                                  Successful Applicant                                                    |");
+        System.out.println("|                                               --------------------------                                                 |");
     }
 
     public void reportHiredContentHeaderUI(String employer) {
-        System.out.println("|                                                                                                                     |");
-        System.out.printf("|                                                    %-13s                                                    |\n", employer);
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------+");
-        System.out.println("|  Job Title                                              |  Hired Applicant  |  Score  |  Number of Hired Applicant  |");
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                                                                          |");
+        System.out.printf("|                                                      %-13s                                                       |\n", employer);
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|  Job Title                                              |  Hired Applicant       |  Score  |  Number of Hired Applicant  |");
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------+");
     }
 
     public void reportHiredUI(
             DoublyLinkedListInterface<JobPosting> jobList,
             DoublyLinkedListInterface<JobSeeker> jobSeekerList,
             DoublyLinkedListInterface<Status> statusList,
-            int num,
-            int positionNum,
-            int applicantNum) {
+            int num) {
         for (int i = 1; i <= jobList.getCount(); i++) {
-            System.out.printf("|  %-53s  |  %-15s  |    %3d  |                        %3d  |\n", jobList.getPosition(i).getTitle(), jobSeekerList.getPosition(1).getName(), statusList.getPosition(1).getScore(), num);
+            System.out.printf("|  %-53s  |  %-20s  |    %3d  |                        %3d  |\n", jobList.getPosition(i).getTitle(), jobSeekerList.getPosition(1).getName(), statusList.getPosition(1).getScore(), num);
             if (jobSeekerList.getCount() > 1) {
                 for (int j = 2; j <= jobSeekerList.getCount(); j++) {
-                    System.out.printf("|                                                         |  %-15s  |    %3d  |                             |\n", jobSeekerList.getPosition(j).getName(), statusList.getPosition(j).getScore());
+                    System.out.printf("|                                                         |  %-20s  |    %3d  |                             |\n", jobSeekerList.getPosition(j).getName(), statusList.getPosition(j).getScore());
                 }
             }
         }
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------+");
-        System.out.printf("|  Number of positions hired  : %-3d                                                                                   |\n", positionNum);
-        System.out.printf("|  Number of applicants hired : %-3d                                                                                   |\n", applicantNum);
+    }
+    
+    public void reportHiredNumberUI(int positionNum, int applicantNum){
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------+");
+        System.out.printf("|  Number of positions hired  : %-3d                                                                                        |\n", positionNum);
+        System.out.printf("|  Number of applicants hired : %-3d                                                                                        |\n", applicantNum);
     }
 
     public void reportHiredTotalUI(int positionCount, int applicantCount) {
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------+");
-        System.out.printf("|  Total number of positions hired  : %-3d                                                                             |\n",positionCount);
-        System.out.printf("|  Total number of applicants hired : %-3d                                                                             |\n", applicantCount);
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------+");
+        System.out.printf("|  Total number of positions hired  : %-3d                                                                                  |\n",positionCount);
+        System.out.printf("|  Total number of applicants hired : %-3d                                                                                  |\n", applicantCount);
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------+");
     }
 
     public void reportFooterUI() {
-        System.out.println("|                                                                                                                     |");
-        System.out.println("|                                                  END OF THE REPORT                                                  |");
-        System.out.println("|                                                                                                                     |");
-        System.out.println("+---------------------------------------------------------------------------------------------------------------------+");
+        System.out.println("|                                                                                                                          |");
+        System.out.println("|                                                    END OF THE REPORT                                                     |");
+        System.out.println("|                                                                                                                          |");
+        System.out.println("+--------------------------------------------------------------------------------------------------------------------------+");
         MessageUI.pressEnterContinue();
         sc.nextLine();
     }
