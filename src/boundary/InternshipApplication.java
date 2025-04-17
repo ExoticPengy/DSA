@@ -333,13 +333,13 @@ public class InternshipApplication {
                         //job management module
                         break;
                     case 2:
-                        applicantManagement.updateJobSeeker(currentApplicant);
+                        //applicantManagement.updateJobSeeker(currentApplicant);
                         break;
                     case 3:
                         //job management module
                         break;
                     case 4:
-                        //applicant management module
+                        applicantManagement.jobSeekerReport();
                         break;
                     case 5:
                         matchingEngine.generateMatchReport();

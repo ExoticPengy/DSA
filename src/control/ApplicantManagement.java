@@ -43,7 +43,7 @@ public class ApplicantManagement {
     public DoublyLinkedListInterface<JobSeeker> getJobSeekerList() {
         return jobSeekerList;
     }
-
+   
     //applicant management create profile
     public void createJobSeeker(JobSeeker jobSeekerList) {
        
@@ -95,6 +95,27 @@ public class ApplicantManagement {
                 jobSeekerUI.viewJobSeeker(job, count);
             }
             jobSeekerUI.displayViewJobSeekerFoot();
+        }
+    }
+
+    public void adminJobSeeker(){
+        viewAllJobs();
+        boolean repeat = true;
+        while(repeat){
+            switch (jobSeekerUI.adminJobSeeker()){
+                case 1:
+                    updateJobSeeker();
+                    repeat = false;
+                    break;
+                case 2 :
+                    removeJobSeeker();
+                    repeat = false;
+                    break;
+                case 3 :
+                    return;
+                default:
+                    jobSeekerUI.invalidChoice();
+            }
         }
     }
     
