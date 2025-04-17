@@ -18,7 +18,7 @@ import control.ApplicantManagement;
 public class JobSeekerUI {
     private Scanner scanner = new Scanner(System.in);
     
-     public void displayMenu() {
+     public int displayMenu() {
         while (true) {
             System.out.println("+----------------------------+");
             System.out.println("|      Job Seeker Menu       |\n");
@@ -32,35 +32,47 @@ public class JobSeekerUI {
             System.out.println("| 7. Exit                    |");
             System.out.println("+----------------------------+");
             System.out.print("Choose an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); 
-
-            switch (choice) {
-                case 1:
-                    //applicantManagement.createJobSeeker(JobSeeker); 
-                    break;
-                case 2:
-                    //applicantManagement.updateJobSeeker(JobSeeker);
-                    break;
-                case 3:
-                    //applicantManagement.removeJobSeeker(JobSeeker);
-                    break;
-                case 4:
-                    //applicantManagement.viewJobSeekers(JobSeeker);
-                    break;
-                case 5:
-                    //applicantManagement.viewSortedJobs(JobSeeker); 
-                    break;
-                case 6:
-                    //applicantManagement.jobSeekerReport(); 
-                    break;
-                case 7:
-                    System.out.println("Exiting...");
-                    //applicantManagement.closeScanner(); 
-                    return;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
+            
+            
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+                if (choice > 0 || choice <= 4) {
+                    return choice;
+                } else {
+                    System.out.println("Invalid option, please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Not a number. Please try again.");
+                scanner.nextLine(); 
             }
+
+//            switch (choice) {
+//                case 1:
+//                    //applicantManagement.createJobSeeker(JobSeeker); 
+//                    break;
+//                case 2:
+//                    //applicantManagement.updateJobSeeker(JobSeeker);
+//                    break;
+//                case 3:
+//                    //applicantManagement.removeJobSeeker(JobSeeker);
+//                    break;
+//                case 4:
+//                    //applicantManagement.viewJobSeekers(JobSeeker);
+//                    break;
+//                case 5:
+//                    //applicantManagement.viewSortedJobs(JobSeeker); 
+//                    break;
+//                case 6:
+//                    //applicantManagement.jobSeekerReport(); 
+//                    break;
+//                case 7:
+//                    System.out.println("Exiting...");
+//                    //applicantManagement.closeScanner(); 
+//                    return;
+//                default:
+//                    System.out.println("Invalid choice. Please try again.");
+//            }
         }
     }    
     

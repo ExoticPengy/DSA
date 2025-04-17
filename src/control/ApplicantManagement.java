@@ -102,7 +102,7 @@ public class ApplicantManagement {
         viewAllJobs();
         boolean repeat = true;
         while(repeat){
-            switch (jobSeekerUI.adminJobSeeker()){
+            switch (jobSeekerUI.displayMenu()){
                 case 1:
                     updateJobSeeker();
                     repeat = false;
