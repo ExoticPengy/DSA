@@ -382,7 +382,7 @@ public class JobPostingUI {
     
     //search function
     public String searchEmployer(){
-        System.out.print("Enter an employer name to search: ");
+        System.out.print("Enter a company name to search: ");
         String searchEmployerName = scanner.nextLine();
         return searchEmployerName;
     }
