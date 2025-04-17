@@ -127,7 +127,7 @@ public class InternshipApplication {
                         if (studentNameNum >= 1 && studentNameNum <= jobSeekerList.getCount()) {
                             studentMenu(jobSeekerList.getPosition(studentNameNum));
                         } else if (studentNameNum == jobSeekerList.getCount() + 1) {
-                            //applicant management create profile
+                            applicantManagement.createNewJobSeeker();
                         } else if (studentNameNum == jobSeekerList.getCount() + 2) {
 
                         } else {
@@ -269,7 +269,7 @@ public class InternshipApplication {
                         jobManagement.startJobManagement(employer);
                         break;
                     case 2:
-                        //applicant management module
+                        applicantManagement.viewAllJobs();
                         break;
                     case 3:
                         interviewArrangement.implementSchedule(employer);
