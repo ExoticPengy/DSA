@@ -22,7 +22,7 @@ public class JobSeekerInitializer {
         //JobSeeker 1
         skills.insertFront(new Skill("Communication",7));
         skills.insertBack(new Skill("Programming",9));
-        applicants.insertFront(new JobSeeker("John Doe", 22, "Male", "john@example.com", "Kuala Lumpur", "Diploma in Computer Science", skills));
+        applicants.insertBack(new JobSeeker("John Doe", 22, "Male", "john@example.com", "Kuala Lumpur", "Diploma in Computer Science", skills));
 
         //JobSeeker 2
         skills = new DoublyLinkedList<>();
