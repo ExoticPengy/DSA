@@ -95,7 +95,7 @@ public class InterviewArrangement {
         interviewList = interviewInitializer.getInterview(jobList, jobSeekerList);
         jobApplicationList = applicationList;
 
-        interviewUI.initializeUI(interviewList,"Initialized Interview");
+        interviewUI.initializeUI(interviewList, "Initialized Interview");
 
         for (int i = 1; i <= interviewList.getCount(); i++) {
             for (int j = 1; j <= interviewList.getPosition(i).getTimeList().getCount(); j++) {
@@ -665,6 +665,7 @@ public class InterviewArrangement {
                         searchJobSeekerList.insertBack(jobSeekerList.getPosition(i));
                         searchSkillList.insertBack(skillList.getPosition(i));
                         searchStatusList.insertBack(statusList.getPosition(i));
+                        break;
                     }
                 }
             } else if (num == 2) {
@@ -684,6 +685,7 @@ public class InterviewArrangement {
                         searchJobSeekerList.insertBack(jobSeekerList.getPosition(i));
                         searchSkillList.insertBack(skillList.getPosition(i));
                         searchStatusList.insertBack(statusList.getPosition(i));
+                        break;
                     }
                 }
             }
@@ -759,7 +761,7 @@ public class InterviewArrangement {
             mergeSortCompany(6, filterTimeList, filterJobList, filterJobSeekerList, filterSkillList, filterStatusList);
             interviewUI.scheduleUI(filterTimeList, filterJobList, filterJobSeekerList, filterSkillList, filterStatusList);
 
-            if (num == 8) {
+            if (num == 9) {
                 recruitNum = interviewUI.recruitUI();
                 if (recruitNum == 1) {
                     applicantNum = interviewUI.recruitApplicantUI(filterTimeList.getCount());
@@ -1120,7 +1122,7 @@ public class InterviewArrangement {
                     positionCount += interviewJobList.getCount();
                     interviewCount += interviewTimeList.getCount();
                     applicantCount += interviewJobSeekerList.getCount();
-                    
+
                     totalPositionCount += interviewJobList.getCount();
                     totalInterviewCount += interviewTimeList.getCount();
                     totalApplicantCount += interviewJobSeekerList.getCount();
@@ -1180,7 +1182,7 @@ public class InterviewArrangement {
 
                     positionCount2 += hiredJobList.getCount();
                     applicantCount2 += hiredJobSeekerList.getCount();
-                    
+
                     totalPositionCount2 += hiredJobList.getCount();
                     totalApplicantCount2 += hiredJobSeekerList.getCount();
                 }
