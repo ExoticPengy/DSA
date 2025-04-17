@@ -29,7 +29,8 @@ public class ApplicantManagement {
         jobSeekerInitializer = new JobSeekerInitializer();
         jobSeekers = new DoublyLinkedList<>();
         jobSeekerList = new DoublyLinkedList<>();
-        deletedJobSeekers = new DoublyLinkedList<>(); 
+        deletedJobSeekers = new DoublyLinkedList<>();
+        internshipApplication = new InternshipApplication();
     }
     
     public void initializeApplicantManagement() {
@@ -43,12 +44,96 @@ public class ApplicantManagement {
     public DoublyLinkedListInterface<JobSeeker> getJobSeekerList() {
         return jobSeekerList;
     }
+
+    public void setJobSeekerUI(JobSeekerUI ui) {
+        this.jobSeekerUI = ui;
+    }
    
     //applicant management create profile
-    public void createJobSeeker(JobSeeker jobSeekerList) {
-       
+    // public void createJobSeeker(JobSeeker jobSeekerList) {
+              
+    //     newAddedJobSeekers = new DoublyLinkedList<>();
+    //     boolean keepCreating = true;
+
+    //     while (keepCreating)  {
+    //         String name = jobSeekerUI.addName();
+    //         int age = jobSeekerUI.addAge();
+    //         String gender = jobSeekerUI.addGender();
+    //         String email = jobSeekerUI.addEmail();
+    //         String location = jobSeekerUI.addLocation();
+    //         String qualification = jobSeekerUI.addQualification();
+
+    //         DoublyLinkedListInterface<Skill> skills = new DoublyLinkedList<>();
+    //         boolean addMoreSkills = true;
+            
+    //         while(addMoreSkills) {
+    //             String skillName = jobSeekerUI.askSkills();
+    //             int proficiency = jobSeekerUI.askProficiency();
+    //             skills.insertBack(new Skill(skillName, proficiency));
+                
+    //             if (jobSeekerUI.askChoice("\nDo you want to add another skill?") == 2) {
+    //                 addMoreSkills = false;
+    //             }
+    //         }
+
+    //         JobSeeker job = new JobSeeker(name, age, gender, email, location, qualification, skills);
+    //         jobSeekers.insertBack(job);
+    //         newAddedJobSeekers.insertBack(job);
+
+    //         jobSeekerUI.displayCreateJobsHead();
+    //         jobSeekerUI.viewJobSeeker(job, jobSeekers.getCount());
+    //         jobSeekerUI.displayViewJobSeekerFoot();
+    //         jobSeekerUI.continueKey();
+
+    //         if (jobSeekerUI.askChoice("\nDo you want to add another job seeker?") == 2) {
+    //             keepCreating = false;
+    //         }
+    //     }
+    // }
+
+    // public void createNewJobSeeker() {
+    //     String name = jobSeekerUI.addName();
+    //     int age = jobSeekerUI.addAge();
+    //     String gender = jobSeekerUI.addGender();
+    //     String email = jobSeekerUI.addEmail();
+    //     String location = jobSeekerUI.addLocation();
+    //     String qualification = jobSeekerUI.addQualification();
+
+    //     DoublyLinkedListInterface<Skill> skills = new DoublyLinkedList<>();
+    //     boolean addMoreSkills = true;
+        
+    //     while(addMoreSkills) {
+    //         String skillName = jobSeekerUI.askSkills();
+    //         int proficiency = jobSeekerUI.askProficiency();
+    //         skills.insertBack(new Skill(skillName, proficiency));
+            
+    //         if (jobSeekerUI.askChoice("\nDo you want to add another skill?") == 2) {
+    //             addMoreSkills = false;
+    //         }
+    //     }
+        
+    //     JobSeeker newJobSeeker = new JobSeeker(name, age, gender, email, location, qualification, skills);
+    //     createJobSeeker(newJobSeeker);
+    // }
+
+    public void createJobSeeker(JobSeeker newJobSeeker) {
+        if (newAddedJobSeekers == null) {
+            newAddedJobSeekers = new DoublyLinkedList<>();
+        }
+        
+        jobSeekers.insertBack(newJobSeeker);
+        jobSeekerList.insertBack(newJobSeeker);
+        newAddedJobSeekers.insertBack(newJobSeeker);
+
+        jobSeekerUI.displayCreateJobsHead();
+        jobSeekerUI.viewJobSeeker(newJobSeeker, jobSeekerList.getCount());
+        jobSeekerUI.displayViewJobSeekerFoot();
+        jobSeekerUI.continueKey();
+    }
+
+    public void createNewJobSeeker() {
         boolean keepCreating = true;
-        while (keepCreating)  {
+        while (keepCreating) {
             String name = jobSeekerUI.addName();
             int age = jobSeekerUI.addAge();
             String gender = jobSeekerUI.addGender();
@@ -56,23 +141,22 @@ public class ApplicantManagement {
             String location = jobSeekerUI.addLocation();
             String qualification = jobSeekerUI.addQualification();
 
-            boolean repeat = true;
             DoublyLinkedListInterface<Skill> skills = new DoublyLinkedList<>();
-        
-            // Create a new JobSeeker object
-            JobSeeker job = new JobSeeker(name, age, gender, email, location, qualification, skills);
-
-            // Add the job seeker to the list
-            jobSeekers.insertUniqueBack(job);
-            newAddedJobSeekers.insertUniqueBack(job);
-
-            // Display created job
-            jobSeekerUI.displayCreateJobsHead();
-            jobSeekerUI.viewJobSeeker(job, 0);          
-            jobSeekerUI.displayViewJobSeekerFoot();
-            jobSeekerUI.continueKey();
+            boolean addMoreSkills = true;
             
-            //ask repeat
+            while(addMoreSkills) {
+                String skillName = jobSeekerUI.askSkills();
+                int proficiency = jobSeekerUI.askProficiency();
+                skills.insertBack(new Skill(skillName, proficiency));
+                
+                if (jobSeekerUI.askChoice("\nDo you want to add another skill?") == 2) {
+                    addMoreSkills = false;
+                }
+            }
+
+            JobSeeker newJobSeeker = new JobSeeker(name, age, gender, email, location, qualification, skills);
+            createJobSeeker(newJobSeeker);
+
             if (jobSeekerUI.askChoice("\nDo you want to add another job seeker?") == 2) {
                 keepCreating = false;
             }
@@ -102,16 +186,25 @@ public class ApplicantManagement {
         viewAllJobs();
         boolean repeat = true;
         while(repeat){
-            switch (jobSeekerUI.displayMenu()){
+            int choice = jobSeekerUI.displayMenu();
+            switch (choice) {
                 case 1:
+                    createNewJobSeeker();
+                    break;
+                case 2:
                     updateJobSeeker();
-                    repeat = false;
                     break;
-                case 2 :
+                case 3:
                     removeJobSeeker();
-                    repeat = false;
                     break;
-                case 3 :
+                case 4:
+                    viewAllJobs();
+                    break;
+                case 5:
+                    jobSeekerReport();
+                    break;
+                case 6:
+                    System.out.println("Returning to admin menu...");
                     return;
                 default:
                     jobSeekerUI.invalidChoice();
@@ -122,55 +215,36 @@ public class ApplicantManagement {
     //applicant management view applicant
     //display ALL job seekers for admin use
     public void viewAllJobs() { 
-        if (jobSeekers.isEmpty()) {
+        if (jobSeekerList.isEmpty()) {
             jobSeekerUI.noJobSeeker();
         } else {
             jobSeekerUI.displayViewJobSeekerHead();
-            for (int i = 1; i <= jobSeekers.getCount(); i++) { 
-                JobSeeker job = jobSeekers.getPosition(i);
+            for (int i = 1; i <= jobSeekerList.getCount(); i++) { 
+                JobSeeker job = jobSeekerList.getPosition(i);
                 jobSeekerUI.viewJobSeeker(job, i);                
             }
             jobSeekerUI.displayViewJobSeekerFoot();
         }
     }
     
-    //applicant mangement update/remove applicant
-    public void updateJobSeeker(JobSeeker currentApplicant) {
-        if (jobSeekers.isEmpty()) {
+    //applicant mangement update applicant
+    public void updateJobSeeker() {
+        if (jobSeekerList.isEmpty()) {
             jobSeekerUI.noJobSeeker();
             return;
         }
 
         boolean keepUpdating = true;
         while (keepUpdating) {
-            // Display a list of job titles
             jobSeekerUI.displayListJobsHead();
-            int jobNumber = 0;
-            for (int i = 1; i <= jobSeekers.getCount(); i++) {
-                JobSeeker job = jobSeekers.getPosition(i);
-                if (job.getName().equals(currentApplicant)) {
-                    jobNumber++;
-                    jobSeekerUI.displayJobsNumber(jobNumber, job);
-                }
+            for (int i = 1; i <= jobSeekerList.getCount(); i++) {
+                JobSeeker job = jobSeekerList.getPosition(i);
+                jobSeekerUI.displayJobsNumber(i, job);
             }
-            int choice =jobSeekerUI.updateChoice(jobNumber, "\nEnter the job seeker number you want to update: ");
+            
+            int choice = jobSeekerUI.updateChoice(jobSeekerList.getCount(), "\nEnter the job seeker number you want to update: ");
+            JobSeeker jobToUpdate = jobSeekerList.getPosition(choice);
 
-            int count = 0;
-            int jobIndex = 0;
-            // Get the job seeker index to remove
-            for(int i = 1; i <= jobSeekers.getCount(); i++) {
-                JobSeeker job = jobSeekers.getPosition(i);
-                if (job.getName().equals(currentApplicant)) {
-                    count++;
-                    if (count == choice) {
-                        jobIndex = i;
-                    }
-                }
-            }
-           
-            JobSeeker jobToUpdate = jobSeekers.getPosition(jobIndex);
-
-            // Display the selected job seeker
             jobSeekerUI.displaySelectedJobsHead();
             jobSeekerUI.viewJobSeeker(jobToUpdate, 0);
             jobSeekerUI.displayViewJobSeekerFoot();
@@ -183,118 +257,76 @@ public class ApplicantManagement {
                     jobToUpdate.setName(newName);
                     break;
                 case 2:
-                    int newAge = jobSeekerUI.addAge();
-                    jobToUpdate.setAge(newAge);
-                    break;
-                case 3:
-                    String newGender = jobSeekerUI.addGender();
-                    jobToUpdate.setGender(newGender);
-                    break;
-                case 4:
                     String newEmail = jobSeekerUI.addEmail();
                     jobToUpdate.setEmail(newEmail);
                     break;
-                case 5:
+                case 3:
                     String newLocation = jobSeekerUI.addLocation();
                     jobToUpdate.setLocation(newLocation);
                     break;
-                case 6:
+                case 4:
                     String newQualification = jobSeekerUI.addQualification();
                     jobToUpdate.setQualification(newQualification);
                     break;
-                case 7:
+                case 5:
                     int selectSkill = jobSeekerUI.selectSkillToUpdate(jobToUpdate);
                     Skill selectedSkill = jobToUpdate.getSkills().getPosition(selectSkill);
-
                     int newProficiency = jobSeekerUI.proficiencyUpdate();
                     selectedSkill.setProficiency(newProficiency);  
                     break;
-
                 default:
                     jobSeekerUI.invalidChoice();
                     return;
             }
 
-            // Replace the old job seeker with the updated one
-            jobSeekers.replacePosition(jobToUpdate, jobIndex);
+            jobSeekerList.replacePosition(jobToUpdate, choice);
             
-            // Display all job seekers after updating
-            jobSeekerUI.newUpdateJobTitle();
-            viewJobSeekers(currentApplicant);
+            jobSeekerUI.newUpdateJobSeeker();
+            viewAllJobs();
             jobSeekerUI.successUpdate();
             jobSeekerUI.continueKey();
 
-            // Ask repeat
             if (jobSeekerUI.askChoice("\nDo you want to update another job seeker?") == 2) {
                 keepUpdating = false;
             }
-          
         }
     }
 
-    public void removeJobSeeker(JobSeeker currentApplicant) {
-        if (jobSeekers.isEmpty()) {
+    public void removeJobSeeker() {
+        if (jobSeekerList.isEmpty()) {
             jobSeekerUI.noJobSeeker();
             return;
         }
         
-      boolean keepRemoving = true;
-      while (keepRemoving)  {
-        // Display a list of job titles
-        jobSeekerUI.displayListJobsHead();
-        int jobNumber = 0;
-        for (int i = 1; i <= jobSeekers.getCount(); i++) {
-            JobSeeker job = jobSeekers.getPosition(i);
-            if (job.getName().equals(currentApplicant)) {
-                jobNumber++;
-                jobSeekerUI.displayJobsNumber(jobNumber,job);
-            }
-        }
+        boolean keepRemoving = true;
+        while (keepRemoving)  {
+         // Display a list of job titles
+         jobSeekerUI.displayListJobsHead();
+         for (int i = 1; i <= jobSeekerList.getCount(); i++) {
+             JobSeeker job = jobSeekerList.getPosition(i);
+             jobSeekerUI.displayJobsNumber(i, job);
+         }
 
-        int choice = jobSeekerUI.updateChoice(jobNumber, "\nEnter the job seeker number you want to remove: ");
-
-        int count = 0;
-        int jobIndex = 0;
-        // Get the job seeker index to remove
-        for(int i = 1; i <= jobSeekers.getCount(); i++) {
-            JobSeeker job = jobSeekers.getPosition(i);
-            if (job.getName().equals(currentApplicant)) {
-                count++;
-                if (count == choice) {
-                    jobIndex = i;
-                }
-            }
+         int choice = jobSeekerUI.updateChoice(jobSeekerList.getCount(), "\nEnter the job seeker number you want to remove: ");
+         
+         JobSeeker jobToRemove = jobSeekerList.getPosition(choice);
+         // Display the selected job seeker
+         jobSeekerUI.displaySelectedJobsHead();
+         jobSeekerUI.viewJobSeeker(jobToRemove, 0);
+         jobSeekerUI.displayViewJobSeekerFoot();
+         
+         if (jobSeekerUI.askChoice("\nConfirm remove this job seeker?") == 1) {
+            deletedJobSeekers.insertBack(jobToRemove); // Store deleted job seeker
+            jobSeekerList.deletePosition(choice);
+            System.out.println("\nJob seeker '" + jobToRemove.getName() + "' has been removed successfully.");
+            jobSeekerUI.continueKey();
         }
         
-        JobSeeker jobToRemove = jobSeekers.getPosition(jobIndex);
-        // Display the selected job seeker
-        jobSeekerUI.displaySelectedJobsHead();
-        jobSeekerUI.viewJobSeeker(jobToRemove, 0);
-        jobSeekerUI.displayViewJobSeekerFoot();
-        
-        int removeChoice = jobSeekerUI.askChoice("\nConfirm remove this job seeker?");
-            
-        switch(removeChoice) {
-            case 1:
-                deletedJobSeekers.insertBack(jobSeekers.deletePosition(jobIndex)); 
-                jobSeekerUI.newUpdateJobTitle();//displaying
-                viewJobSeekers(currentApplicant);
-                jobSeekerUI.successRemove();
-                jobSeekerUI.continueKey();
-                break;
-            case 2:
-                jobSeekerUI.cancelRemove();
-                break;
-            default: 
-                break;
-        }
-    
-        // Ask repeat
         if (jobSeekerUI.askChoice("\nDo you want to remove another job seeker?") == 2) {
             keepRemoving = false;
         }
-     
-      }
+        }
+        adminJobSeeker();
     }
 
     //applicant management report
@@ -332,7 +364,7 @@ public class ApplicantManagement {
         }
 
         // Display summary report 
-        jobSeekerUI.displaySummaryReportHeader();
+        //jobSeekerUI.displaySummaryReportHeader();
 
         if (hasChanges) {
             int totalAdded = newAddedJobSeekers.getCount();

@@ -26,6 +26,7 @@ public class InternshipApplication {
     private static MatchingEngine matchingEngine = new MatchingEngine();
     private static InterviewArrangement interviewArrangement = new InterviewArrangement();
     private static EmployerManagement employerManagement = new EmployerManagement();
+    private static JobSeekerUI jobSeekerUI = new JobSeekerUI();
 
     private static Scanner sc = new Scanner(System.in);
     private static boolean isNum = true;
@@ -35,6 +36,9 @@ public class InternshipApplication {
         applicantManagement.initializeApplicantManagement();
         jobManagement.runJobManagement(employerManagement.getEmployerList());
         
+        jobSeekerUI.setApplicantManagement(applicantManagement);
+        applicantManagement.setJobSeekerUI(jobSeekerUI);
+
         matchingEngine.initializeMatchingEngine(
                 applicantManagement.getJobSeekerList(), 
                 jobManagement.getJobPostingList()
@@ -333,7 +337,7 @@ public class InternshipApplication {
                         //job management module
                         break;
                     case 2:
-                        //applicantManagement.updateJobSeeker(currentApplicant);
+                        applicantManagement.adminJobSeeker();
                         break;
                     case 3:
                         //job management module
