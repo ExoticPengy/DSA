@@ -13,7 +13,7 @@ import control.ApplicantManagement;
 
 /**
  *
- * @author cx
+ * @author chienxing
  */
 
 
@@ -38,7 +38,6 @@ public class JobSeekerUI {
             System.out.println("| 2. Update Job Seeker       |");
             System.out.println("| 3. Remove Job Seeker       |");
             System.out.println("| 4. View Job Seeker         |");
-            //System.out.println("| 5. View Sorted Jobs        |");
             System.out.println("| 5. View Report             |");
             System.out.println("| 6. Back                    |");
             System.out.println("+----------------------------+");
@@ -155,7 +154,7 @@ public class JobSeekerUI {
         }
     }
 
-    //ask to repeat again
+    //Ask to repeat again
     public int askChoice(String question) {
         while (true) {
             System.out.print(question
@@ -180,7 +179,7 @@ public class JobSeekerUI {
         }
     }
     
-    //add function
+    //Add function
     public String askSkills() {
         int choice;
         while (true) {
@@ -272,8 +271,8 @@ public class JobSeekerUI {
         System.out.print("\nThis skill has already been created. Please choose another skill to add. ");        
     }
     
-    //update function
-    public void newUpdateJobSeeker(){
+    //Update function
+    public void displayUpdatedJobSeekerHeader(){
         System.out.println("\nUpdated Job Seekers:");
     }
     
@@ -354,7 +353,7 @@ public class JobSeekerUI {
         System.out.println("Job seeker update successfully!\n");
     }
     
-    //remove function
+    //Remove function
     public void successRemove(){
         System.out.println("Job seeker remove successfully!\n");
     }
@@ -364,7 +363,7 @@ public class JobSeekerUI {
     }
     
     
-    //report function
+    //Report function
     public void displayReportHeader() {
         System.out.println("\n+==================================================================+");
         System.out.println("|                     Job Seeker Summary Report                   |");
@@ -405,13 +404,6 @@ public class JobSeekerUI {
         System.out.println("********************************************************************");
     }
 
-    // public void displaySummaryReportHeader() {
-    //     System.out.println("\n*Job Seeker Comparing*                 ");
-    //     System.out.println("+----+------------------+-----------+-----------+------------------+");
-    //     System.out.println("| No | Name          | Old Count | New Count | Change (+/-)     |");
-    //     System.out.println("+----+------------------+-----------+-----------+------------------+");
-    // }
-
     public void displaySummaryReport(int index, String name, int oldCount, int newCount, int change) {
         System.out.printf("| %-2d | %-14s   | %-9d | %-9d | %2d %-8s      |\n",
                 index, name, oldCount, newCount, change, change > 0 ? "(Added)" : "(Removed)");
@@ -436,7 +428,7 @@ public class JobSeekerUI {
         System.out.println("+==============================================================+\n");
     }
 
-    //job seeker list
+    //Job seeker list
     public void displayJobSeekersHeader() {
         System.out.println("\n------------------------------------------------------------------------------------------");
         System.out.println("|                                 JobSeeker Listing                                       |");
