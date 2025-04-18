@@ -21,17 +21,17 @@ public class JobSeekerUI {
     private ApplicantManagement applicantManagement;
     
     // UI Constants for consistent formatting
-    private static final String HORIZONTAL_LINE = "═";
-    private static final String VERTICAL_LINE = "║";
-    private static final String TOP_LEFT_CORNER = "╔";
-    private static final String TOP_RIGHT_CORNER = "╗";
-    private static final String BOTTOM_LEFT_CORNER = "╚";
-    private static final String BOTTOM_RIGHT_CORNER = "╝";
-    private static final String T_LEFT = "╠";
-    private static final String T_RIGHT = "╣";
-    private static final String T_TOP = "╦";
-    private static final String T_BOTTOM = "╩";
-    private static final String CROSS = "╬";
+    private static final String HORIZONTAL_LINE = "-";
+    private static final String VERTICAL_LINE = "|";
+    private static final String TOP_LEFT_CORNER = "+";
+    private static final String TOP_RIGHT_CORNER = "+";
+    private static final String BOTTOM_LEFT_CORNER = "+";
+    private static final String BOTTOM_RIGHT_CORNER = "+";
+    private static final String T_LEFT = "+";
+    private static final String T_RIGHT = "+";
+    private static final String T_TOP = "+";
+    private static final String T_BOTTOM = "+";
+    private static final String CROSS = "+";
 
     public void setApplicantManagement(ApplicantManagement applicantManagement) {
         this.applicantManagement = applicantManagement;
