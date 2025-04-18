@@ -514,15 +514,19 @@ public class JobSeekerUI {
         System.out.println(T_LEFT + createHorizontalLine(60) + T_RIGHT);
     }
     
+    public void displayAddedJobRow(int index, String name, String email, int age, String gender, int skillsCount) {
+        System.out.printf(VERTICAL_LINE + " %-3d | %-20s | %-30s | %-3d | %-6s | %-5d " + VERTICAL_LINE + "\n", 
+                index, name, email, age, gender, skillsCount);
+        System.out.println(T_LEFT + createHorizontalLine(80) + T_RIGHT);
+    }
 
     public void displayRemovedJobsHeader(int count) {
-        System.out.println("\n" + TOP_LEFT_CORNER + createHorizontalLine(60) + TOP_RIGHT_CORNER);
-        System.out.println(VERTICAL_LINE + centerText("RECENTLY REMOVED JOB SEEKERS (" + count + ")", 60) + VERTICAL_LINE);
-        System.out.println(T_LEFT + createHorizontalLine(60) + T_RIGHT);
-        System.out.printf(VERTICAL_LINE + " %-3s | %-20s | %-30s " + VERTICAL_LINE + "\n", 
-                "No", "Name", "Email");
+        System.out.println("\n" + TOP_LEFT_CORNER + createHorizontalLine(80) + TOP_RIGHT_CORNER);
+        System.out.println(VERTICAL_LINE + centerText("RECENTLY REMOVED JOB SEEKERS (" + count + ")", 80) + VERTICAL_LINE);
+        System.out.println(T_LEFT + createHorizontalLine(80) + T_RIGHT);
+        System.out.printf(VERTICAL_LINE + " %-3s | %-20s | %-30s | %-3s | %-6s | %-5s " + VERTICAL_LINE + "\n", 
+                "No", "Name", "Email", "Age", "Gender", "Skills");
     }
-    
 
     public void displayRemovedJobRow(int index, String name, String email) {
         System.out.printf(VERTICAL_LINE + " %-3d | %-20s | %-30s " + VERTICAL_LINE + "\n", 
@@ -530,6 +534,11 @@ public class JobSeekerUI {
         System.out.println(T_LEFT + createHorizontalLine(60) + T_RIGHT);
     }
     
+    public void displayRemovedJobRow(int index, String name, String email, int age, String gender, int skillsCount) {
+        System.out.printf(VERTICAL_LINE + " %-3d | %-20s | %-30s | %-3d | %-6s | %-5d " + VERTICAL_LINE + "\n", 
+                index, name, email, age, gender, skillsCount);
+        System.out.println(T_LEFT + createHorizontalLine(80) + T_RIGHT);
+    }
 
     public void displayNoNewAdditions() {
         System.out.println("\n" + TOP_LEFT_CORNER + createHorizontalLine(50) + TOP_RIGHT_CORNER);
@@ -559,14 +568,34 @@ public class JobSeekerUI {
     }
     
 
-    public void displayTotalCountReport(int totalAdded, int totalRemoved, int netChange) {
+    public void displayTotalCountReport(int totalAdded, int totalRemoved) {
         System.out.println("\n" + TOP_LEFT_CORNER + createHorizontalLine(50) + TOP_RIGHT_CORNER);
         System.out.println(VERTICAL_LINE + centerText("SUMMARY STATISTICS", 50) + VERTICAL_LINE);
         System.out.println(T_LEFT + createHorizontalLine(50) + T_RIGHT);
         System.out.printf(VERTICAL_LINE + " Total Job Seekers Added: %-3d" + createSpaces(50 - 25 - String.valueOf(totalAdded).length()) + VERTICAL_LINE + "\n", totalAdded);
         System.out.printf(VERTICAL_LINE + " Total Job Seekers Removed: %-3d" + createSpaces(50 - 28 - String.valueOf(totalRemoved).length()) + VERTICAL_LINE + "\n", totalRemoved);
-        System.out.printf(VERTICAL_LINE + " Net Change: %+2d" + createSpaces(50 - 13 - String.valueOf(netChange).length()) + VERTICAL_LINE + "\n", netChange);
         System.out.println(BOTTOM_LEFT_CORNER + createHorizontalLine(50) + BOTTOM_RIGHT_CORNER);
+    }
+    
+
+    public void displayEnhancedTotalCountReport(int totalAdded, int totalRemoved,
+            double avgSkillsAdded, double avgSkillsRemoved) {
+        
+        System.out.println("\n" + TOP_LEFT_CORNER + createHorizontalLine(70) + TOP_RIGHT_CORNER);
+        System.out.println(VERTICAL_LINE + centerText("SUMMARY STATISTICS", 70) + VERTICAL_LINE);
+        System.out.println(T_LEFT + createHorizontalLine(70) + T_RIGHT);
+        
+        // Basic statistics
+        System.out.printf(VERTICAL_LINE + " Total Job Seekers Added: %-3d" + createSpaces(70 - 25 - String.valueOf(totalAdded).length()) + VERTICAL_LINE + "\n", totalAdded);
+        System.out.printf(VERTICAL_LINE + " Total Job Seekers Removed: %-3d" + createSpaces(70 - 28 - String.valueOf(totalRemoved).length()) + VERTICAL_LINE + "\n", totalRemoved);
+        
+        // Skills statistics
+        System.out.println(T_LEFT + createHorizontalLine(70) + T_RIGHT);
+        System.out.println(VERTICAL_LINE + centerText("SKILLS STATISTICS", 70) + VERTICAL_LINE);
+        System.out.printf(VERTICAL_LINE + " Average Skills of Added Job Seekers: %.1f" + createSpaces(70 - 37 - String.format("%.1f", avgSkillsAdded).length()) + VERTICAL_LINE + "\n", avgSkillsAdded);
+        System.out.printf(VERTICAL_LINE + " Average Skills of Removed Job Seekers: %.1f" + createSpaces(70 - 40 - String.format("%.1f", avgSkillsRemoved).length()) + VERTICAL_LINE + "\n", avgSkillsRemoved);
+        
+        System.out.println(BOTTOM_LEFT_CORNER + createHorizontalLine(70) + BOTTOM_RIGHT_CORNER);
     }
 
     public void displayJobSeekersHeader() {

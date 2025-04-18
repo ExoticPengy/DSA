@@ -342,52 +342,93 @@ public class ApplicantManagement {
             return;
         }
         
-        // Sort job seekers by name before displaying
+        // Create new lists for sorted job seekers
         DoublyLinkedListInterface<JobSeeker> sortedAddedJobSeekers = new DoublyLinkedList<>();
         DoublyLinkedListInterface<JobSeeker> sortedDeletedJobSeekers = new DoublyLinkedList<>();
         
-        // Sort added job seekers by name
+        // Sort added job seekers using selection sort approach
+        DoublyLinkedListInterface<JobSeeker> tempAddedList = new DoublyLinkedList<>();
+        // Copy all job seekers to temporary list
         for (int i = 1; i <= recentlyAddedJobSeekers.getCount(); i++) {
-            JobSeeker jobSeeker = recentlyAddedJobSeekers.getPosition(i);
-            boolean inserted = false;
-            
-            for (int j = 1; j <= sortedAddedJobSeekers.getCount(); j++) {
-                if (jobSeeker.getName().compareToIgnoreCase(sortedAddedJobSeekers.getPosition(j).getName()) < 0) {
-                    sortedAddedJobSeekers.insertPosition(jobSeeker, j);
-                    inserted = true;
-                    break;
-                }
-            }
-            
-            if (!inserted) {
-                sortedAddedJobSeekers.insertBack(jobSeeker);
-            }
+            tempAddedList.insertBack(recentlyAddedJobSeekers.getPosition(i));
         }
         
-        // Sort deleted job seekers by name
-        for (int i = 1; i <= recentlyDeletedJobSeekers.getCount(); i++) {
-            JobSeeker jobSeeker = recentlyDeletedJobSeekers.getPosition(i);
-            boolean inserted = false;
+        // Selection sort find the minimum and add to sorted list
+        while (!tempAddedList.isEmpty()) {
+            JobSeeker minJobSeeker = tempAddedList.getPosition(1);
+            int minIndex = 1;
             
-            for (int j = 1; j <= sortedDeletedJobSeekers.getCount(); j++) {
-                if (jobSeeker.getName().compareToIgnoreCase(sortedDeletedJobSeekers.getPosition(j).getName()) < 0) {
-                    sortedDeletedJobSeekers.insertPosition(jobSeeker, j);
-                    inserted = true;
-                    break;
+            // Find the job seeker with the minimum name
+            for (int i = 2; i <= tempAddedList.getCount(); i++) {
+                JobSeeker current = tempAddedList.getPosition(i);
+                if (current.getName().compareToIgnoreCase(minJobSeeker.getName()) < 0) {
+                    minJobSeeker = current;
+                    minIndex = i;
                 }
             }
             
-            if (!inserted) {
-                sortedDeletedJobSeekers.insertBack(jobSeeker);
-            }
+            // Add the minimum to the sorted list
+            sortedAddedJobSeekers.insertBack(minJobSeeker);
+            
+            // Remove the minimum from the temporary list
+            tempAddedList.deletePosition(minIndex);
         }
+        
+        // Sort deleted job seekers 
+        DoublyLinkedListInterface<JobSeeker> tempDeletedList = new DoublyLinkedList<>();
+        // Copy all job seekers to temporary list
+        for (int i = 1; i <= recentlyDeletedJobSeekers.getCount(); i++) {
+            tempDeletedList.insertBack(recentlyDeletedJobSeekers.getPosition(i));
+        }
+        
+        // Selection sort find the minimum and add to sorted list
+        while (!tempDeletedList.isEmpty()) {
+            JobSeeker minJobSeeker = tempDeletedList.getPosition(1);
+            int minIndex = 1;
+            
+            // Find the job seeker with the minimum name
+            for (int i = 2; i <= tempDeletedList.getCount(); i++) {
+                JobSeeker current = tempDeletedList.getPosition(i);
+                if (current.getName().compareToIgnoreCase(minJobSeeker.getName()) < 0) {
+                    minJobSeeker = current;
+                    minIndex = i;
+                }
+            }
+            
+            // Add the minimum to the sorted list
+            sortedDeletedJobSeekers.insertBack(minJobSeeker);
+            
+            // Remove the minimum from the temporary list
+            tempDeletedList.deletePosition(minIndex);
+        }
+        
+        // Calculate additional statistics
+        int totalSkillsAdded = 0;
+        int totalSkillsRemoved = 0;
+        
+        // Calculate statistics for added job seekers
+        for (int i = 1; i <= sortedAddedJobSeekers.getCount(); i++) {
+            JobSeeker jobSeeker = sortedAddedJobSeekers.getPosition(i);
+            totalSkillsAdded += jobSeeker.getSkills().getCount();
+        }
+        
+        // Calculate statistics for removed job seekers
+        for (int i = 1; i <= sortedDeletedJobSeekers.getCount(); i++) {
+            JobSeeker jobSeeker = sortedDeletedJobSeekers.getPosition(i);
+            totalSkillsRemoved += jobSeeker.getSkills().getCount();
+        }
+        
+        // Calculate averages
+        double avgSkillsAdded = sortedAddedJobSeekers.isEmpty() ? 0 : (double) totalSkillsAdded / sortedAddedJobSeekers.getCount();
+        double avgSkillsRemoved = sortedDeletedJobSeekers.isEmpty() ? 0 : (double) totalSkillsRemoved / sortedDeletedJobSeekers.getCount();
         
         // Display recently added job seekers
         if (!sortedAddedJobSeekers.isEmpty()) {
             jobSeekerUI.displayAddedJobsHeader(sortedAddedJobSeekers.getCount());
             for (int i = 1; i <= sortedAddedJobSeekers.getCount(); i++) {
                 JobSeeker jobSeeker = sortedAddedJobSeekers.getPosition(i);
-                jobSeekerUI.displayAddedJobRow(i, jobSeeker.getName(), jobSeeker.getEmail());
+                jobSeekerUI.displayAddedJobRow(i, jobSeeker.getName(), jobSeeker.getEmail(), 
+                        jobSeeker.getAge(), jobSeeker.getGender(), jobSeeker.getSkills().getCount());
             }
         } else {
             jobSeekerUI.displayNoNewAdditions();
@@ -398,17 +439,19 @@ public class ApplicantManagement {
             jobSeekerUI.displayRemovedJobsHeader(sortedDeletedJobSeekers.getCount());
             for (int i = 1; i <= sortedDeletedJobSeekers.getCount(); i++) {
                 JobSeeker jobSeeker = sortedDeletedJobSeekers.getPosition(i);
-                jobSeekerUI.displayRemovedJobRow(i, jobSeeker.getName(), jobSeeker.getEmail());
+                jobSeekerUI.displayRemovedJobRow(i, jobSeeker.getName(), jobSeeker.getEmail(), 
+                        jobSeeker.getAge(), jobSeeker.getGender(), jobSeeker.getSkills().getCount());
             }
         } else {
             jobSeekerUI.displayNoRemovals();
         }
         
-        // Display summary report
+        // Display summary report 
         int totalAdded = sortedAddedJobSeekers.getCount();
         int totalRemoved = sortedDeletedJobSeekers.getCount();
-        int netChange = totalAdded - totalRemoved;
         
-        jobSeekerUI.displayTotalCountReport(totalAdded, totalRemoved, netChange);
+        jobSeekerUI.displayEnhancedTotalCountReport(
+                totalAdded, totalRemoved, avgSkillsAdded, avgSkillsRemoved
+        );
     }
 }
