@@ -28,8 +28,6 @@ public class ApplicantManagement {
     private InternshipApplication internshipApplication;
     private JobSeekerUI jobSeekerUI;
     
-    // Constructor initializes all required data structures
-     
     public ApplicantManagement() {
         // Initialize data structures
         jobSeekerList = new DoublyLinkedList<>();
@@ -48,31 +46,28 @@ public class ApplicantManagement {
     
 
     //Runs the internship application with the current job seeker list
-
     public void runApplicantManagement() {
         internshipApplication.studentNameMenu(jobSeekerList);
     }
     
 
     //Returns the current job seeker list
-
     public DoublyLinkedListInterface<JobSeeker> getJobSeekerList() {
         return jobSeekerList;
     }
 
     
      // Sets the UI component for this management class
-     
     public void setJobSeekerUI(JobSeekerUI ui) {
         this.jobSeekerUI = ui;
     }
     
     
      // Main entry point for admin job seeker management
-     
     public void adminJobSeeker() {
         viewAllJobSeekers();
         
+        // Main management loop
         boolean continueManagement = true;
         while(continueManagement) {
             int choice = jobSeekerUI.displayMenu();
@@ -103,13 +98,11 @@ public class ApplicantManagement {
     }
     
     
-     // Creates a new job seeker with user input
-     
+     // Creates a new job seeker
     public void createNewJobSeeker() {
         boolean continueCreating = true;
         
         while (continueCreating) {
-            // Collect basic information
             String name = jobSeekerUI.addName();
             int age = jobSeekerUI.addAge();
             String gender = jobSeekerUI.addGender();
@@ -117,12 +110,21 @@ public class ApplicantManagement {
             String location = jobSeekerUI.addLocation();
             String qualification = jobSeekerUI.addQualification();
 
-            // Collect skills information
             DoublyLinkedListInterface<Skill> skills = collectSkills();
             
-            // Create and add the job seeker
+            // Create the job seeker
             JobSeeker newJobSeeker = new JobSeeker(name, age, gender, email, location, qualification, skills);
-            addJobSeeker(newJobSeeker);
+            
+            // Insert at the beginning of the list
+            jobSeekerList.insertFront(newJobSeeker);
+            recentlyAddedJobSeekers.insertFront(newJobSeeker);
+            
+            // Display the newly created job seeker
+            // Always show as position 1 since we insert at front
+            jobSeekerUI.displayCreateJobsHead();
+            jobSeekerUI.viewJobSeeker(newJobSeeker, 1); 
+            jobSeekerUI.displayViewJobSeekerFoot();
+            jobSeekerUI.continueKey();
             
             // Ask if user wants to create another job seeker
             if (jobSeekerUI.askChoice("\nDo you want to add another job seeker?") == 2) {
@@ -132,8 +134,7 @@ public class ApplicantManagement {
     }
     
     
-     // Helper method to collect skills from user input
-     
+     // Collect skills from user input
     private DoublyLinkedListInterface<Skill> collectSkills() {
         DoublyLinkedListInterface<Skill> skills = new DoublyLinkedList<>();
         boolean addMoreSkills = true;
@@ -152,8 +153,7 @@ public class ApplicantManagement {
     }
     
     
-     // Adds a job seeker to all relevant lists and displays the result
-     
+     // Adds a job seeker to lists and displays result    
     private void addJobSeeker(JobSeeker jobSeeker) {
         jobSeekerList.insertBack(jobSeeker);
         recentlyAddedJobSeekers.insertBack(jobSeeker);
@@ -165,9 +165,8 @@ public class ApplicantManagement {
         jobSeekerUI.continueKey();
     }
     
-    
-     // Displays all job seekers in the system
-     
+
+     // Displays all job seekers
     public void viewAllJobSeekers() { 
         if (jobSeekerList.isEmpty()) {
             jobSeekerUI.noJobSeeker();
@@ -184,7 +183,6 @@ public class ApplicantManagement {
     
     
      // Updates an existing job seeker's information
-     
     public void updateJobSeeker() {
         if (jobSeekerList.isEmpty()) {
             jobSeekerUI.noJobSeeker();
@@ -199,19 +197,56 @@ public class ApplicantManagement {
             // Get job seeker to update
             int choice = jobSeekerUI.updateChoice(jobSeekerList.getCount(), 
                     "\nEnter the job seeker number you want to update: ");
-            JobSeeker jobSeekerToUpdate = jobSeekerList.getPosition(choice);
-
+            
+            // Get the job seeker at the selected position
+            JobSeeker oldJobSeeker = jobSeekerList.getPosition(choice);
+            
             // Display selected job seeker
             jobSeekerUI.displaySelectedJobsHead();
-            jobSeekerUI.viewJobSeeker(jobSeekerToUpdate, 0);
+            jobSeekerUI.viewJobSeeker(oldJobSeeker, choice);
             jobSeekerUI.displayViewJobSeekerFoot();
-
-            // Get update choice and perform update
+            
+            // Get update choice
             int updateChoice = jobSeekerUI.selectToUpdate();
-            updateJobSeekerField(jobSeekerToUpdate, updateChoice);
-
-            // Update the job seeker in the list
-            jobSeekerList.replacePosition(jobSeekerToUpdate, choice);
+            
+            // Create a new job seeker with the same information
+            JobSeeker updatedJobSeeker = new JobSeeker(
+                oldJobSeeker.getName(),
+                oldJobSeeker.getAge(),
+                oldJobSeeker.getGender(),
+                oldJobSeeker.getEmail(),
+                oldJobSeeker.getLocation(),
+                oldJobSeeker.getQualification(),
+                oldJobSeeker.getSkills()
+            );
+            
+            // Update the specific field based on user choice
+            switch (updateChoice) {
+                case 1:
+                    updatedJobSeeker.setName(jobSeekerUI.addName());
+                    break;
+                case 2:
+                    updatedJobSeeker.setEmail(jobSeekerUI.addEmail());
+                    break;
+                case 3:
+                    updatedJobSeeker.setLocation(jobSeekerUI.addLocation());
+                    break;
+                case 4:
+                    updatedJobSeeker.setQualification(jobSeekerUI.addQualification());
+                    break;
+                case 5:
+                    // Update the existing skills list
+                    int selectSkill = jobSeekerUI.selectSkillToUpdate(updatedJobSeeker);
+                    Skill selectedSkill = updatedJobSeeker.getSkills().getPosition(selectSkill);
+                    int newProficiency = jobSeekerUI.proficiencyUpdate();
+                    selectedSkill.setProficiency(newProficiency);
+                    break;
+                default:
+                    jobSeekerUI.invalidChoice();
+            }
+            
+            // Replace the old job seeker with the updated one
+            jobSeekerList.replacePosition(updatedJobSeeker, choice);
             
             // Display updated information
             jobSeekerUI.displayUpdatedJobSeekerHeader();
@@ -226,9 +261,8 @@ public class ApplicantManagement {
         }
     }
     
-    
-     // Helper method to display the list of job seekers
-     
+
+    //Method to display the list of job seekers
     private void displayJobSeekerList() {
         jobSeekerUI.displayListJobsHead();
         for (int i = 1; i <= jobSeekerList.getCount(); i++) {
@@ -237,44 +271,9 @@ public class ApplicantManagement {
         }
     }
     
-    
-     // Helper method to update a specific field of a job seeker
-     
-    private void updateJobSeekerField(JobSeeker jobSeeker, int updateChoice) {
-        switch (updateChoice) {
-            case 1:
-                jobSeeker.setName(jobSeekerUI.addName());
-                break;
-            case 2:
-                jobSeeker.setEmail(jobSeekerUI.addEmail());
-                break;
-            case 3:
-                jobSeeker.setLocation(jobSeekerUI.addLocation());
-                break;
-            case 4:
-                jobSeeker.setQualification(jobSeekerUI.addQualification());
-                break;
-            case 5:
-                updateJobSeekerSkill(jobSeeker);
-                break;
-            default:
-                jobSeekerUI.invalidChoice();
-        }
-    }
-    
-    
-     // Helper method to update a job seeker's skill
-     
-    private void updateJobSeekerSkill(JobSeeker jobSeeker) {
-        int selectSkill = jobSeekerUI.selectSkillToUpdate(jobSeeker);
-        Skill selectedSkill = jobSeeker.getSkills().getPosition(selectSkill);
-        int newProficiency = jobSeekerUI.proficiencyUpdate();
-        selectedSkill.setProficiency(newProficiency);
-    }
-    
-    
-     // Removes a job seeker from the system
-     
+
+    //Removes a job seeker
+    //Creating a copy before removing
     public void removeJobSeeker() {
         if (jobSeekerList.isEmpty()) {
             jobSeekerUI.noJobSeeker();
@@ -302,7 +301,21 @@ public class ApplicantManagement {
             
             // Confirm and remove
             if (jobSeekerUI.askChoice("\nConfirm remove this job seeker?") == 1) {
-                recentlyDeletedJobSeekers.insertBack(jobSeekerToRemove);
+                // Create a copy of the job seeker before removing
+                JobSeeker removedJobSeeker = new JobSeeker(
+                    jobSeekerToRemove.getName(),
+                    jobSeekerToRemove.getAge(),
+                    jobSeekerToRemove.getGender(),
+                    jobSeekerToRemove.getEmail(),
+                    jobSeekerToRemove.getLocation(),
+                    jobSeekerToRemove.getQualification(),
+                    jobSeekerToRemove.getSkills()
+                );
+                
+                // Add to recently deleted list
+                recentlyDeletedJobSeekers.insertFront(removedJobSeeker);
+                
+                // Remove from main list
                 jobSeekerList.deletePosition(choice);
                 System.out.println("\nJob seeker '" + jobSeekerToRemove.getName() + "' has been removed successfully.");
                 jobSeekerUI.continueKey();
@@ -319,7 +332,6 @@ public class ApplicantManagement {
     
     
      // Generates a report of job seeker changes
-     
     public void generateJobSeekerReport() {
         jobSeekerUI.displayReportHeader();
         
@@ -330,11 +342,51 @@ public class ApplicantManagement {
             return;
         }
         
+        // Sort job seekers by name before displaying
+        DoublyLinkedListInterface<JobSeeker> sortedAddedJobSeekers = new DoublyLinkedList<>();
+        DoublyLinkedListInterface<JobSeeker> sortedDeletedJobSeekers = new DoublyLinkedList<>();
+        
+        // Sort added job seekers by name
+        for (int i = 1; i <= recentlyAddedJobSeekers.getCount(); i++) {
+            JobSeeker jobSeeker = recentlyAddedJobSeekers.getPosition(i);
+            boolean inserted = false;
+            
+            for (int j = 1; j <= sortedAddedJobSeekers.getCount(); j++) {
+                if (jobSeeker.getName().compareToIgnoreCase(sortedAddedJobSeekers.getPosition(j).getName()) < 0) {
+                    sortedAddedJobSeekers.insertPosition(jobSeeker, j);
+                    inserted = true;
+                    break;
+                }
+            }
+            
+            if (!inserted) {
+                sortedAddedJobSeekers.insertBack(jobSeeker);
+            }
+        }
+        
+        // Sort deleted job seekers by name
+        for (int i = 1; i <= recentlyDeletedJobSeekers.getCount(); i++) {
+            JobSeeker jobSeeker = recentlyDeletedJobSeekers.getPosition(i);
+            boolean inserted = false;
+            
+            for (int j = 1; j <= sortedDeletedJobSeekers.getCount(); j++) {
+                if (jobSeeker.getName().compareToIgnoreCase(sortedDeletedJobSeekers.getPosition(j).getName()) < 0) {
+                    sortedDeletedJobSeekers.insertPosition(jobSeeker, j);
+                    inserted = true;
+                    break;
+                }
+            }
+            
+            if (!inserted) {
+                sortedDeletedJobSeekers.insertBack(jobSeeker);
+            }
+        }
+        
         // Display recently added job seekers
-        if (!recentlyAddedJobSeekers.isEmpty()) {
-            jobSeekerUI.displayAddedJobsHeader(recentlyAddedJobSeekers.getCount());
-            for (int i = 1; i <= recentlyAddedJobSeekers.getCount(); i++) {
-                JobSeeker jobSeeker = recentlyAddedJobSeekers.getPosition(i);
+        if (!sortedAddedJobSeekers.isEmpty()) {
+            jobSeekerUI.displayAddedJobsHeader(sortedAddedJobSeekers.getCount());
+            for (int i = 1; i <= sortedAddedJobSeekers.getCount(); i++) {
+                JobSeeker jobSeeker = sortedAddedJobSeekers.getPosition(i);
                 jobSeekerUI.displayAddedJobRow(i, jobSeeker.getName(), jobSeeker.getEmail());
             }
         } else {
@@ -342,10 +394,10 @@ public class ApplicantManagement {
         }
         
         // Display recently deleted job seekers
-        if (!recentlyDeletedJobSeekers.isEmpty()) {
-            jobSeekerUI.displayRemovedJobsHeader(recentlyDeletedJobSeekers.getCount());
-            for (int i = 1; i <= recentlyDeletedJobSeekers.getCount(); i++) {
-                JobSeeker jobSeeker = recentlyDeletedJobSeekers.getPosition(i);
+        if (!sortedDeletedJobSeekers.isEmpty()) {
+            jobSeekerUI.displayRemovedJobsHeader(sortedDeletedJobSeekers.getCount());
+            for (int i = 1; i <= sortedDeletedJobSeekers.getCount(); i++) {
+                JobSeeker jobSeeker = sortedDeletedJobSeekers.getPosition(i);
                 jobSeekerUI.displayRemovedJobRow(i, jobSeeker.getName(), jobSeeker.getEmail());
             }
         } else {
@@ -353,11 +405,10 @@ public class ApplicantManagement {
         }
         
         // Display summary report
-        int totalAdded = recentlyAddedJobSeekers.getCount();
-        int totalRemoved = recentlyDeletedJobSeekers.getCount();
+        int totalAdded = sortedAddedJobSeekers.getCount();
+        int totalRemoved = sortedDeletedJobSeekers.getCount();
         int netChange = totalAdded - totalRemoved;
         
         jobSeekerUI.displayTotalCountReport(totalAdded, totalRemoved, netChange);
-
     }
 }
