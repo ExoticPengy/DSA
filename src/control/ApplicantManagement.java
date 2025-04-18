@@ -371,7 +371,11 @@ public class ApplicantManagement {
             sortedAddedJobSeekers.insertBack(minJobSeeker);
             
             // Remove the minimum from the temporary list
-            tempAddedList.deletePosition(minIndex);
+            if (tempAddedList.getCount() == 1) {
+                tempAddedList.clear();
+            } else {
+                tempAddedList.deletePosition(minIndex);
+            }
         }
         
         // Sort deleted job seekers 
@@ -399,7 +403,11 @@ public class ApplicantManagement {
             sortedDeletedJobSeekers.insertBack(minJobSeeker);
             
             // Remove the minimum from the temporary list
-            tempDeletedList.deletePosition(minIndex);
+            if (tempDeletedList.getCount() == 1) {
+                tempDeletedList.clear();
+            } else {
+                tempDeletedList.deletePosition(minIndex);
+            }
         }
         
         // Calculate additional statistics
