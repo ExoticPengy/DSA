@@ -269,7 +269,8 @@ public class InternshipApplication {
                         jobManagement.startJobManagement(employer);
                         break;
                     case 2:
-                        applicantManagement.viewAllJobs();
+                        
+                        applicantManagement.viewAllJobSeekers();
                         break;
                     case 3:
                         interviewArrangement.implementSchedule(employer);
@@ -335,7 +336,7 @@ public class InternshipApplication {
                         jobManagement.jobPostingReport();
                         break;
                     case 4:
-                        applicantManagement.jobSeekerReport();
+                        applicantManagement.generateJobSeekerReport();
                         break;
                     case 5:
                         matchingEngine.generateMatchReport();
