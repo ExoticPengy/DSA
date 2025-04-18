@@ -358,6 +358,6 @@ public class ApplicantManagement {
         int netChange = totalAdded - totalRemoved;
         
         jobSeekerUI.displayTotalCountReport(totalAdded, totalRemoved, netChange);
-        jobSeekerUI.displaySummaryReportFooter();
+
     }
 }

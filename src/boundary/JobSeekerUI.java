@@ -568,13 +568,6 @@ public class JobSeekerUI {
         System.out.printf(VERTICAL_LINE + " Net Change: %+2d" + createSpaces(50 - 13 - String.valueOf(netChange).length()) + VERTICAL_LINE + "\n", netChange);
         System.out.println(BOTTOM_LEFT_CORNER + createHorizontalLine(50) + BOTTOM_RIGHT_CORNER);
     }
-    
-
-    public void displaySummaryReportFooter() {
-        System.out.println("\n" + TOP_LEFT_CORNER + createHorizontalLine(50) + TOP_RIGHT_CORNER);
-        System.out.println(VERTICAL_LINE + centerText("END OF REPORT", 50) + VERTICAL_LINE);
-        System.out.println(BOTTOM_LEFT_CORNER + createHorizontalLine(50) + BOTTOM_RIGHT_CORNER);
-    }
 
     public void displayJobSeekersHeader() {
         System.out.println("\n" + TOP_LEFT_CORNER + createHorizontalLine(70) + TOP_RIGHT_CORNER);

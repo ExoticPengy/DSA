@@ -275,13 +275,10 @@ public class InternshipApplication {
                         jobManagement.jobPostingReport();
                         break;
                     case 2:
-<<<<<<< Updated upstream
                         //jobManagement.viewEmployerJobPosting(employer);
                         //applicant management module
                         jobManagement.createJobPosting(employer);
-=======
                         applicantManagement.viewAllJobSeekers();
->>>>>>> Stashed changes
                         break;
                     case 3:
                         interviewArrangement.implementSchedule(employer);
@@ -347,7 +344,6 @@ public class InternshipApplication {
                         //job management module
                         break;
                     case 4:
-                        applicantManagement.jobSeekerReport();
                         applicantManagement.generateJobSeekerReport();
                         break;
                     case 5:
